@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 public class Persona {
 	
-	private int cedula, telefono;
-	private String nombre, apellido;
+	private int cedula;
+	private String nombre, apellido, telefono;
 	private Producto [] producto;
 	
 	public Persona() {}
 	
-	public Persona(int cedula, int telefono, String nombre, String apellido, Producto [] producto) {
+	public Persona(int cedula, String telefono, String nombre, String apellido, Producto [] producto) {
 		this.cedula = cedula;
 		this.telefono = telefono;
 		this.nombre = nombre;
@@ -20,7 +20,7 @@ public class Persona {
 	
 	
 
-	public Persona(int cedula, int telefono, String nombre, String apellido) {
+	public Persona(int cedula, String telefono, String nombre, String apellido) {
 		this.cedula = cedula;
 		this.telefono = telefono;
 		this.nombre = nombre;
@@ -35,11 +35,11 @@ public class Persona {
 		this.cedula = cedula;
 	}
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

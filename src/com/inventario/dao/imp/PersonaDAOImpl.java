@@ -36,7 +36,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			mistatement.setInt(1, persona.getCedula());
 			mistatement.setString(2, persona.getNombre());
 			mistatement.setString(3, persona.getApellido());
-			mistatement.setInt(4, persona.getTelefono());
+			mistatement.setString(4, persona.getTelefono());
 
 			
 			mistatement.execute();
@@ -75,7 +75,30 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 	@Override
 	public void salvar(Persona persona) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("UPDATE persona set nombre = ?, apellido = ?, telefono = ? where cedula = ?");
+			
+			mistatement.setString(1, persona.getNombre());
+			mistatement.setString(2, persona.getApellido());
+			mistatement.setString(3, persona.getTelefono());
+			mistatement.setInt(4, persona.getCedula());
+			
+			mistatement.executeUpdate();
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -104,7 +127,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				int cedula = filas.getInt("cedula");
 				String nombre = filas.getString("nombre");
 				String apellido = filas.getString("apellido");
-				int telefono = filas.getInt("telefono");
+				String telefono = filas.getString("telefono");
 				
 				Persona p = new Persona (cedula, telefono, nombre, apellido);
 				
@@ -156,7 +179,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			if(filas.next()) {
 				
 				int cedula = filas.getInt("cedula");
-				int telefono = filas.getInt("telefono");
+				String telefono = filas.getString("telefono");
 				String nombre = filas.getString("nombre");
 				String apellido = filas.getString("apellido");
 				

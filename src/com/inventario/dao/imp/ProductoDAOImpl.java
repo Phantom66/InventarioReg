@@ -204,7 +204,63 @@ public class ProductoDAOImpl implements ProducotDAO {
 
 	@Override
 	public Producto buscarPorClave(String id) {
-		// TODO Auto-generated method stub
+		
+		Producto p = null;
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		ResultSet filas = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("SELECT * FROM producto WHERE id = ?");
+			
+			mistatement.setString(1, id);
+			filas = mistatement.executeQuery();
+			
+			if(filas.next()) {
+				
+				int identificador = filas.getInt("id");
+				String nombre = filas.getString("nombre");
+				String estatus = filas.getString("estatus");
+				String descripcion = filas.getString("descripcion");
+				
+				p = new Producto(identificador,nombre,estatus,descripcion);
+			}else {
+				
+				throw new Exception(" Producto no se consigue " + id);
+			}
+			
+			return p;
+			
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+			
+		}finally {
+			
+			try {
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		
 		return null;
 	}
 

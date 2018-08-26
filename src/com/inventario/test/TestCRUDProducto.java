@@ -39,6 +39,11 @@ public class TestCRUDProducto {
 			}
 		*/
 		
+		//Buscando Producto por Id
+		Producto p = proDao.buscarPorClave("6");
+		
+		System.out.println(" Producot del id: "+p.getIdentificador()  + " Modelo: "+ p.getNombre());
+		
 	}
 
 }

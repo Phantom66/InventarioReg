@@ -30,7 +30,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 
-			mistatement = conn.getConnection().prepareStatement("INSERT INTO producto(nombre, estatus, descripcion)VALUES (?,?,?)");
+			mistatement = this.conn.getConnection().prepareStatement("INSERT INTO producto(nombre, estatus, descripcion)VALUES (?,?,?)");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
@@ -44,7 +44,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.getConnection().close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -65,7 +65,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 			
-			mistatement = conn.getConnection().prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id = ?");
+			mistatement = this.conn.getConnection().prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id = ?");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
@@ -82,7 +82,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.getConnection().close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -104,7 +104,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 
-			mistatement = conn.getConnection().prepareStatement("DELETE FROM producto WHERE id = ?");
+			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM producto WHERE id = ?");
 			
 			mistatement.setInt(1, producto.getIdentificador());
 			
@@ -118,7 +118,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.getConnection().close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -141,7 +141,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 
-			mistatement = conn.getConnection().prepareStatement("SELECT * FROM producto");
+			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM producto");
 			
 			filas = mistatement.executeQuery();
 			
@@ -166,7 +166,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.getConnection().close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -191,7 +191,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 
-			mistatement = conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id = ?");
+			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id = ?");
 			
 			mistatement.setString(1, id);
 			filas = mistatement.executeQuery();
@@ -228,7 +228,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.getConnection().close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {

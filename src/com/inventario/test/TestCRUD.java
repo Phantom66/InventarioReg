@@ -1,12 +1,14 @@
 package com.inventario.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.inventario.bo.Persona;
-import com.inventario.bo.Producto;
 import com.inventario.dao.imp.PersonaDAOImpl;
 
+
+/**
+ * Clases creadas para realizar prueba del CRUD Persona.
+ * @author phantom
+ *
+ */
 public class TestCRUD {
 
 	public static void main(String[] args) {

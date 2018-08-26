@@ -12,7 +12,7 @@ public class Producto {
 	
 	
 
-	public Producto(int identificador, String nombre, String estatus, String descripcion, Persona persona) {
+	public Producto(int identificador, String nombre, String estatus, String descripcion) {
 		super();
 		this.identificador = identificador;
 		this.nombre = nombre;
@@ -23,8 +23,8 @@ public class Producto {
 
 
 
-	public Producto(int identificador, String nombre, String estatus, String descripcion) {
-		this.identificador = identificador;
+	public Producto( String nombre, String estatus, String descripcion) {
+		//this.identificador = identificador;
 		this.nombre = nombre;
 		this.estatus = estatus;
 		this.descripcion = descripcion;

@@ -1,21 +1,92 @@
 package com.inventario.dao.imp;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.inventario.bo.Producto;
 import com.inventario.dao.ProducotDAO;
 
 public class ProductoDAOImpl implements ProducotDAO {
+	
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
+	
+	
 
 	@Override
 	public void insertar(Producto producto) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("INSERT INTO producto(nombre, estatus, descripcion)VALUES (?,?,?)");
+			
+			mistatement.setString(1, producto.getNombre());
+			mistatement.setString(2, producto.getEstatus());
+			mistatement.setString(3, producto.getDescripcion());
+			mistatement.executeUpdate();
+			
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			
+			try {
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
 		
 	}
 
 	@Override
 	public void salvar(Producto producto) {
-		// TODO Auto-generated method stub
+		
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id = ?");
+			
+			mistatement.setString(1, producto.getNombre());
+			mistatement.setString(2, producto.getEstatus());
+			mistatement.setString(3, producto.getDescripcion());
+			mistatement.setInt(4, producto.getIdentificador());
+			
+			mistatement.executeUpdate();
+			
+			
+		} catch (ClassNotFoundException e) {
+		
+			e.printStackTrace();
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 

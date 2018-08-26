@@ -9,35 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.inventario.bo.Producto;
+import com.inventario.con.DataBase;
 import com.inventario.dao.ProducotDAO;
 
 public class ProductoDAOImpl implements ProducotDAO {
 	
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
 	
+	
+	private DataBase conn = new DataBase();
 	
 
 	@Override
 	public void insertar(Producto producto) {
-		Connection conn = null;
+
 		PreparedStatement mistatement = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("INSERT INTO producto(nombre, estatus, descripcion)VALUES (?,?,?)");
+
+			mistatement = conn.getConnection().prepareStatement("INSERT INTO producto(nombre, estatus, descripcion)VALUES (?,?,?)");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
 			mistatement.setString(3, producto.getDescripcion());
 			mistatement.executeUpdate();
-			
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			
 			
 		} catch (SQLException e) {
@@ -46,7 +40,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -62,14 +56,12 @@ public class ProductoDAOImpl implements ProducotDAO {
 
 	@Override
 	public void salvar(Producto producto) {
-		
-		Connection conn = null;
+
 		PreparedStatement mistatement = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id = ?");
+			
+			mistatement = conn.getConnection().prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id = ?");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
@@ -79,18 +71,14 @@ public class ProductoDAOImpl implements ProducotDAO {
 			mistatement.executeUpdate();
 			
 			
-		} catch (ClassNotFoundException e) {
-		
-			e.printStackTrace();
-			
-		} catch (SQLException e) {
+		}  catch (SQLException e) {
 
 			e.printStackTrace();
 			
 		}finally {
 			
 			try {
-				conn.close();
+				conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -108,22 +96,16 @@ public class ProductoDAOImpl implements ProducotDAO {
 	@Override
 	public void borrar(Producto producto) {
 		
-		Connection conn = null ;
 		PreparedStatement mistatement = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("DELETE FROM producto WHERE id = ?");
+
+			mistatement = conn.getConnection().prepareStatement("DELETE FROM producto WHERE id = ?");
 			
 			mistatement.setInt(1, producto.getIdentificador());
 			
 			mistatement.execute();
 			
-			
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
 			
 		} catch (SQLException e) {
 
@@ -132,7 +114,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -150,14 +132,12 @@ public class ProductoDAOImpl implements ProducotDAO {
 	public List<Producto> buscarTodos() {
 		
 		List<Producto>producto = new ArrayList<Producto>();
-		Connection conn = null;
 		PreparedStatement mistatement = null;
 		ResultSet filas = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("SELECT * FROM producto");
+
+			mistatement = conn.getConnection().prepareStatement("SELECT * FROM producto");
 			
 			filas = mistatement.executeQuery();
 			
@@ -175,10 +155,6 @@ public class ProductoDAOImpl implements ProducotDAO {
 			
 			return producto;
 			
-		} catch (ClassNotFoundException e) {
-	
-			e.printStackTrace();
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -186,7 +162,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -206,14 +182,12 @@ public class ProductoDAOImpl implements ProducotDAO {
 	public Producto buscarPorClave(String id) {
 		
 		Producto p = null;
-		Connection conn = null;
 		PreparedStatement mistatement = null;
 		ResultSet filas = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("SELECT * FROM producto WHERE id = ?");
+
+			mistatement = conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id = ?");
 			
 			mistatement.setString(1, id);
 			filas = mistatement.executeQuery();
@@ -226,6 +200,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 				String descripcion = filas.getString("descripcion");
 				
 				p = new Producto(identificador,nombre,estatus,descripcion);
+				
 			}else {
 				
 				throw new Exception(" Producto no se consigue " + id);
@@ -249,7 +224,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {

@@ -29,7 +29,7 @@ public class TestCRUDProducto {
 		//Borrar Producto
 		//proDao.borrar(productoDos);
 		
-		/*ListarTodosLosProductos
+		/*ListarTodosLosProductos*/
 			List<Producto> p = proDao.buscarTodos();
 			
 			for (Producto e: p) {
@@ -37,12 +37,12 @@ public class TestCRUDProducto {
 				System.out.println("Nombre: " + e.getNombre() + " Estatus: " + e.getEstatus());
 				
 			}
-		*/
+		
 		
 		//Buscando Producto por Id
-		Producto p = proDao.buscarPorClave("6");
+		//Producto p = proDao.buscarPorClave("6");
 		
-		System.out.println(" Producot del id: "+p.getIdentificador()  + " Modelo: "+ p.getNombre());
+		//System.out.println(" Producot del id: "+p.getIdentificador()  + " Modelo: "+ p.getNombre());
 		
 	}
 

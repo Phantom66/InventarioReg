@@ -20,9 +20,12 @@ public class TestCRUDProducto {
 		//InsertandoProducto
 		//proDao.insertar(producto);
 		
-		
+		Producto productoDos = new Producto(2, "Estante","En Buen Estado"," Oficina Principal");
 		//ActualizarProducto
-		//proDao.salvar(new Producto(2, "Estante","En Buen Estado"," Oficina Principal"));
+		//proDao.salvar(productoDos);
+		
+		//Borrar Producto
+		proDao.borrar(productoDos);
 		
 	}
 

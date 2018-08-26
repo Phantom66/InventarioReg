@@ -84,6 +84,19 @@ public class ProductoDAOImpl implements ProducotDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			
+		}finally {
+			
+			try {
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+			
+			
 		}
 		
 		
@@ -92,7 +105,42 @@ public class ProductoDAOImpl implements ProducotDAO {
 
 	@Override
 	public void borrar(Producto producto) {
-		// TODO Auto-generated method stub
+		
+		Connection conn = null ;
+		PreparedStatement mistatement = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("DELETE FROM producto WHERE id = ?");
+			
+			mistatement.setInt(1, producto.getIdentificador());
+			
+			mistatement.execute();
+			
+			
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			
+		}finally {
+			
+			try {
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
 		
 	}
 

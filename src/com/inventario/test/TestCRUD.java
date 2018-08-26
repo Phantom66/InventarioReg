@@ -38,10 +38,10 @@ public class TestCRUD {
 		
 		
 		//Prueba Persona Eliminada
-		perDao.borrar(persona);
+		//perDao.borrar(persona);
 		
-		Persona per = perDao.buscarPorClave("17639604");
-		System.out.println(" Nombre de persona encontrada " + per.getNombre() + " Teléfono: " + per.getTelefono() );
+		//Persona per = perDao.buscarPorClave("17639604");
+		//System.out.println(" Nombre de persona encontrada " + per.getNombre() + " Teléfono: " + per.getTelefono() );
 	}
 
 }

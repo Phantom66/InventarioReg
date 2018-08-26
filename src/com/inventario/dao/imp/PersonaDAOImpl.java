@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
 

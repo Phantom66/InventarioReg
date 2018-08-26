@@ -37,13 +37,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			mistatement.setString(3, persona.getApellido());
 			mistatement.setString(4, persona.getTelefono());
 
-			
 			mistatement.execute();
 		
-			
+	
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			
 		} catch (SQLException e) {
@@ -54,22 +53,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		}finally {
 			
 			try {
-			conn.close();
-			mistatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-		
-		/*
-			for(Producto p: persona.getProducto()) {
+				conn.close();
+				mistatement.close();
 				
-				System.out.println("Insertando Persona "+ persona.getNombre()+" producto asignados "+ p.getNombre());
-				
-				
+			} catch (SQLException e) {
+	
+				e.printStackTrace();
 			}
-			*/
+		}
 	}
 
 	@Override
@@ -92,20 +83,23 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
+			
 		}finally {
 			
 			try {
-			conn.close();
-			mistatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+		
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -126,20 +120,23 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			mistatement.executeUpdate();
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		}finally {
 			
 			try {
-			conn.close();
-			mistatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -174,18 +171,21 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			return persona;
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		}finally {
 			
 			try {
 				conn.close();
 				mistatement.close();
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -207,9 +207,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			mistatement = conn.prepareStatement("SELECT * FROM persona WHERE cedula = ?");
-			
 			mistatement.setString(1, id);
-		
 			filas = mistatement.executeQuery();
 			
 			if(filas.next()) {
@@ -226,26 +224,27 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				throw new Exception("Cedula no encontrada" + id);
 			}
 			
-			
-			
+					
 			return persona;
 			
 		} catch (SQLException e) {
 			
-
 			e.printStackTrace();
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		}finally {
 			
 			try {
-			conn.close();
-			mistatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
 		}
 		
 		return null;

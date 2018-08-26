@@ -16,8 +16,12 @@ public class ProductoDAOImpl implements ProducotDAO {
 	
 	
 	
-	private DataBase conn = new DataBase();
-	
+	private DataBase conn;
+
+	public ProductoDAOImpl() {
+		
+		this.conn = new DataBase();
+	}
 
 	@Override
 	public void insertar(Producto producto) {

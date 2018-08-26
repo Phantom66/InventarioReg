@@ -1,36 +1,35 @@
 package com.inventario.dao.imp;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import com.inventario.bo.Persona;
-import com.inventario.bo.Producto;
+import com.inventario.con.DataBase;
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
+	private DataBase conn;
+	
+	public PersonaDAOImpl() {
+		
+		this.conn = new DataBase();
+		
+	}
+	
 
 	@Override
 	public void insertar(Persona persona) {
 		
-		Connection conn = null;
 		PreparedStatement mistatement = null;
 		
 		String sql = "INSERT INTO persona(cedula, nombre, apellido, telefono) VALUES  (?,?,?,?)";
 		try {
 			
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement(sql);
+			mistatement = this.conn.getConnection().prepareStatement(sql);
 			
 			mistatement.setInt(1, persona.getCedula());
 			mistatement.setString(2, persona.getNombre());
@@ -41,10 +40,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		
 	
 			
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -53,7 +48,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -65,13 +60,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 	@Override
 	public void salvar(Persona persona) {
-		Connection conn = null;
+		
 		PreparedStatement mistatement = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("UPDATE persona set nombre = ?, apellido = ?, telefono = ? where cedula = ?");
+
+			mistatement = this.conn.getConnection().prepareStatement("UPDATE persona set nombre = ?, apellido = ?, telefono = ? where cedula = ?");
 			
 			mistatement.setString(1, persona.getNombre());
 			mistatement.setString(2, persona.getApellido());
@@ -82,10 +76,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			
 			
 			
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-			
 		} catch (SQLException e) {
 	
 			e.printStackTrace();
@@ -93,7 +83,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -107,21 +97,15 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	@Override
 	public void borrar(Persona persona) {
 		
-		Connection conn = null;
 		PreparedStatement mistatement = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("DELETE FROM persona WHERE cedula = ?");
+
+			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
 			
 			mistatement.setInt(1, persona.getCedula());
 			
 			mistatement.executeUpdate();
-			
-		} catch (ClassNotFoundException e) {
-		
-			e.printStackTrace();
 			
 		} catch (SQLException e) {
 			
@@ -130,7 +114,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -145,14 +129,11 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	public List<Persona> buscarTodos() {
 		
 		List<Persona>persona = new ArrayList<Persona>();
-		Connection conn = null;
 		Statement mistatement = null;
 		ResultSet filas = null;
 		
 		try {
-			Class.forName(DRIVER);
-			conn= DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.createStatement();
+			mistatement = this.conn.getConnection().createStatement();
 			filas = mistatement.executeQuery("SELECT * FROM persona");
 			
 			while(filas.next()) {
@@ -170,10 +151,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			
 			return persona;
 			
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -181,7 +158,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {
@@ -200,13 +177,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	public Persona buscarPorClave(String id) {
 		
 		Persona persona = null;
-		Connection conn = null;
 		PreparedStatement mistatement = null;
 		ResultSet filas = null;
 		
 		try {
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			mistatement = conn.prepareStatement("SELECT * FROM persona WHERE cedula = ?");
+			
+			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM persona WHERE cedula = ?");
 			mistatement.setString(1, id);
 			filas = mistatement.executeQuery();
 			
@@ -238,7 +214,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		}finally {
 			
 			try {
-				conn.close();
+				this.conn.getConnection().close();
 				mistatement.close();
 				
 			} catch (SQLException e) {

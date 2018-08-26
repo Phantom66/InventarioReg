@@ -11,7 +11,7 @@ public interface PersonaDAO {
 	public abstract void borrar(Persona persona);
 	
 	public List<Persona>buscarTodos();
-	public abstract void buscarPorClave(int id);
+	public abstract Persona buscarPorClave(String id);
 	
 	
 }

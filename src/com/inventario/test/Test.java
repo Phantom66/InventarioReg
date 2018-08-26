@@ -17,15 +17,24 @@ public class Test {
 		
 		PersonaDAOImpl perDao = new PersonaDAOImpl();
 		
+		//Prueba InsertarPersona
 		//perDao.insertar(persona);
 		
 		
-		
+		/*Prueba MostrarTodasLasPersona
 		List<Persona>per = perDao.buscarTodos();;
 		for( Persona e: per) {
 			
 			System.out.println(e.getNombre() + " "+e.getApellido());
 		}
+		*/
+		
+		//Buscar Persona
+		
+		Persona per = perDao.buscarPorClave("20044824");
+		
+		System.out.println(" Nombre de persona encontrada " + per.getNombre() );
+		
 	}
 
 }

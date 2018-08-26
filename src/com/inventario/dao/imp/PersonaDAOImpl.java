@@ -138,9 +138,50 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public void buscarPorClave(int id) {
-		// TODO Auto-generated method stub
+	public Persona buscarPorClave(String id) {
+		
+		Persona persona = null;
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		ResultSet filas = null;
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("SELECT * FROM persona WHERE cedula = ?");
+			
+			mistatement.setString(1, id);
+		
+			filas = mistatement.executeQuery();
+			
+			if(filas.next()) {
+				
+				int cedula = filas.getInt("cedula");
+				int telefono = filas.getInt("telefono");
+				String nombre = filas.getString("nombre");
+				String apellido = filas.getString("apellido");
+				
+				persona = new Persona(cedula,telefono,nombre,apellido);
+				
+			}else {
+				
+				throw new Exception("Cedula no encontrada" + id);
+			}
+			
+			
+			
+			return persona;
+			
+		} catch (SQLException e) {
+			
 
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+		
 	}
 
 }

@@ -98,13 +98,50 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			
+			try {
+			conn.close();
+			mistatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 
 	}
 
 	@Override
 	public void borrar(Persona persona) {
-		// TODO Auto-generated method stub
+		
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("DELETE FROM persona WHERE cedula = ?");
+			
+			mistatement.setInt(1, persona.getCedula());
+			
+			mistatement.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			try {
+			conn.close();
+			mistatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
 
 	}
 
@@ -201,6 +238,15 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			
+			try {
+			conn.close();
+			mistatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 		
 		return null;

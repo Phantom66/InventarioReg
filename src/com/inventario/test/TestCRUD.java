@@ -33,8 +33,12 @@ public class TestCRUD {
 		//Persona per = perDao.buscarPorClave("17639604");
 		//System.out.println(" Nombre de persona encontrada " + per.getNombre() );
 		
+		//Prueba PersonaActualizada
+		//perDao.salvar(new Persona(17639604, "04269089653", "Andres", "Leotur"));
 		
-		perDao.salvar(new Persona(17639604, "04269089653", "Andres", "Leotur"));
+		
+		//Prueba Persona Eliminada
+		perDao.borrar(persona);
 		
 		Persona per = perDao.buscarPorClave("17639604");
 		System.out.println(" Nombre de persona encontrada " + per.getNombre() + " Teléfono: " + per.getTelefono() );

@@ -1,5 +1,7 @@
 package com.inventario.test;
 
+import java.util.List;
+
 import com.inventario.bo.Producto;
 import com.inventario.dao.imp.ProductoDAOImpl;
 
@@ -13,7 +15,7 @@ public class TestCRUDProducto {
 	public static void main(String[] args) {
 		
 		
-		Producto producto = new Producto("Mesa","En Buen Estado"," Oficina Principal");
+		Producto producto = new Producto("Estante","En Buen Estado"," Oficina Principal");
 		ProductoDAOImpl proDao = new ProductoDAOImpl();
 		
 		
@@ -25,7 +27,17 @@ public class TestCRUDProducto {
 		//proDao.salvar(productoDos);
 		
 		//Borrar Producto
-		proDao.borrar(productoDos);
+		//proDao.borrar(productoDos);
+		
+		/*ListarTodosLosProductos
+			List<Producto> p = proDao.buscarTodos();
+			
+			for (Producto e: p) {
+				
+				System.out.println("Nombre: " + e.getNombre() + " Estatus: " + e.getEstatus());
+				
+			}
+		*/
 		
 	}
 

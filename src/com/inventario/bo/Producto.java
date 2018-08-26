@@ -18,7 +18,7 @@ public class Producto {
 		this.nombre = nombre;
 		this.estatus = estatus;
 		this.descripcion = descripcion;
-		this.persona = persona;
+		//this.persona = persona;
 	}
 
 

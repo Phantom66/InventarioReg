@@ -3,7 +3,9 @@ package com.inventario.dao.imp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.inventario.bo.Producto;
@@ -146,7 +148,57 @@ public class ProductoDAOImpl implements ProducotDAO {
 
 	@Override
 	public List<Producto> buscarTodos() {
-		// TODO Auto-generated method stub
+		
+		List<Producto>producto = new ArrayList<Producto>();
+		Connection conn = null;
+		PreparedStatement mistatement = null;
+		ResultSet filas = null;
+		
+		try {
+			Class.forName(DRIVER);
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			mistatement = conn.prepareStatement("SELECT * FROM producto");
+			
+			filas = mistatement.executeQuery();
+			
+			while(filas.next()) {
+				
+				String nombre = filas.getString("nombre");
+				String estatus = filas.getString("estatus");
+				String descripcion = filas.getString("descripcion");
+				
+				Producto p = new Producto(nombre,estatus,descripcion);
+				
+				producto.add(p);
+				
+			}
+			
+			return producto;
+			
+		} catch (ClassNotFoundException e) {
+	
+			e.printStackTrace();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}finally {
+			
+			try {
+				conn.close();
+				mistatement.close();
+				
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		
+		
 		return null;
 	}
 

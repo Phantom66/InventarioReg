@@ -1,5 +1,7 @@
 package com.inventario.test;
 
+import java.util.List;
+
 import com.inventario.bo.Persona;
 import com.inventario.dao.imp.PersonaDAOImpl;
 

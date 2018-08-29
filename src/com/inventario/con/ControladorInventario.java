@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.inventario.bo.Persona;
+import com.inventario.dao.PersonaDAO;
 import com.inventario.dao.imp.PersonaDAOImpl;
 
 /**
@@ -35,10 +36,9 @@ public class ControladorInventario extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		PersonaDAOImpl persona = new PersonaDAOImpl();
+		PersonaDAO persona = new PersonaDAOImpl();
 		List<Persona> personas = persona.buscarTodos();
-		
-		//String [] producto = {"Motor","Bicicleta", "Taladro", "Tornillo"};
+
 		request.setAttribute("Lista_Productos",personas);
 		
 		RequestDispatcher miDispatcher = request.getRequestDispatcher("/index.jsp"); 

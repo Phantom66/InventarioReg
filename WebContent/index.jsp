@@ -10,11 +10,9 @@
 </head>
 <body>
 
-	hola mundo 
-	
 	<c:forEach var="personas" items="${Lista_Productos}">
 		
-		${personas.nombre}
+		${personas}<br>
 	</c:forEach>
 
 </body>

@@ -6,7 +6,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ControladorInventario</servlet-name>
-		<url-pattern>/controlador</url-pattern>
+		<url-pattern>/principal.do</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
    		 <welcome-file>*.jsp</welcome-file>

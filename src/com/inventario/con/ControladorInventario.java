@@ -41,7 +41,7 @@ public class ControladorInventario extends HttpServlet {
 
 		request.setAttribute("Lista_Productos",personas);
 		
-		RequestDispatcher miDispatcher = request.getRequestDispatcher("/index.jsp"); 
+		RequestDispatcher miDispatcher = request.getRequestDispatcher("/resources/principal.jsp"); 
 		
 		miDispatcher.forward(request, response);
 	}

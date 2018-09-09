@@ -1,4 +1,6 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,10 +14,10 @@
 <title>Top navbar example for Bootstrap</title>
 
 <!-- Bootstrap core CSS -->
-<link href="./css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="./css/navbar-top.css" rel="stylesheet">
+<link href="resources/css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>
@@ -55,72 +57,35 @@
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Apellido</th>
+					<th scope="col">Telefono</th>
+					<th scope="col"></th>
+					<th scope="col"></th>
+					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<table class="table">
-			<thead class="thead-light">
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-				</tr>
+				<c:forEach var="temporal" items="${Lista_Productos}">
+					<tr>
+						<th scope="row">1</th>
+						<td>${temporal.nombre}</td>
+						<td>${temporal.apellido}</td>
+						<td>${temporal.telefono}</td>
+						<td><a class="btn btn-primary" href="#" role="button">Mostrar</a></td>
+						<td><a class="btn btn-primary" href="#" role="button">Editar</a></td>
+						<td><a class="btn btn-primary" href="#" role="button">Eliminar</a></td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 
 		<!--Pagination -->
 		<nav aria-label="...">
 			<ul class="pagination justify-content-center">
-				<li class="page-item disabled"><a class="page-link" href="#"
-					tabindex="-1">Previous</a></li>
+				<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
 				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item active"><a class="page-link" href="#">2
-						<span class="sr-only">(current)</span>
+				<li class="page-item active"><a class="page-link" href="#">2<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="page-item"><a class="page-link" href="#">3</a></li>
 				<li class="page-item"><a class="page-link" href="#">Next</a></li>

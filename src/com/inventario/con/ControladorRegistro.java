@@ -32,12 +32,12 @@ public class ControladorRegistro extends HttpServlet {
 		String estatus = request.getParameter("status");
 		String descripcion = request.getParameter("descripcion");
 		
-		//PersonaDAOImpl insertar = new PersonaDAOImpl();
+		PersonaDAOImpl insertar = new PersonaDAOImpl();
 		
-		//insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
+		insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
 		
-		ProductoDAOImpl product = new ProductoDAOImpl();
-		product.insertar(new Producto(0, producto,estatus,descripcion));
+		//ProductoDAOImpl product = new ProductoDAOImpl();
+		//product.insertar(new Producto(0, producto,estatus,descripcion));
 		
 	}
 

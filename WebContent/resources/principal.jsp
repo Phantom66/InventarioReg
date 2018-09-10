@@ -21,8 +21,6 @@
 </head>
 
 <body>
-
-
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
 		<a class="navbar-brand" href="#">Top navbar</a>
@@ -47,11 +45,8 @@
 			</form>
 		</div>
 	</nav>
-
-
 	<!--Contenet -->
 	<div class="container">
-
 		<!-- Content here -->
 		<table class="table">
 			<thead class="thead-dark">
@@ -92,7 +87,6 @@
 			</ul>
 		</nav>
 	</div>
-
 	<hr>
 	<!-- Footer -->
 	<footer class="container">

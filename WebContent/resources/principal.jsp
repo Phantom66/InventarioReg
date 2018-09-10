@@ -66,7 +66,7 @@
 						<th scope="row">1</th>
 						<td>${temporal.nombre}</td>
 						<td>${temporal.apellido}</td>
-						<td>${temporal.producto.nombre}</td>
+						<td>${temporal.telefono}</td>
 						<td><a class="btn btn-primary" href="#" role="button">Mostrar</a></td>
 						<td><a class="btn btn-primary" href="#" role="button">Editar</a></td>
 						<td><a class="btn btn-primary" href="#" role="button">Eliminar</a></td>

@@ -5,6 +5,7 @@ public class Persona {
 	private int cedula;
 	private String nombre, apellido, telefono;
 	
+
 	public Persona(int cedula, String nombre, String apellido, String telefono) {
 		super();
 		this.cedula = cedula;
@@ -45,6 +46,10 @@ public class Persona {
 		this.telefono = telefono;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Persona [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
+				+ "]";
+	}
 
 }

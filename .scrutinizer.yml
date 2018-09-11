@@ -1,3 +1,2 @@
-filter:
-    excluded_paths:
-        - src/com/inventario/test
+checks:
+    java: true

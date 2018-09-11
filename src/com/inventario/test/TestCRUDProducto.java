@@ -15,7 +15,7 @@ public class TestCRUDProducto {
 	public static void main(String[] args) {
 		
 		
-		Producto producto = new Producto("Estante","En Buen Estado"," Oficina Principal");
+		Producto producto = new Producto(0,"Estante","En Buen Estado"," Oficina Principal");
 		ProductoDAOImpl proDao = new ProductoDAOImpl();
 		
 		
@@ -42,7 +42,7 @@ public class TestCRUDProducto {
 		//Buscando Producto por Id
 		Producto p = proDao.buscarPorClave("6");
 		
-		System.out.println(" Producot del id: "+p.getIdentificador()  + " Modelo: "+ p.getNombre());
+		System.out.println(" Producot del id: "+p.getId()  + " Modelo: "+ p.getNombre());
 		
 	}
 

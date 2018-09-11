@@ -6,7 +6,7 @@ import com.inventario.bo.Producto;
 
 public interface ProducotDAO {
 	
-	public abstract void insertar(Producto producto);
+	public abstract void insertar(Producto producto, int id);
 	public abstract void salvar(Producto producto);
 	public abstract void borrar(Producto producto);
 	public List<Producto>buscarTodos();

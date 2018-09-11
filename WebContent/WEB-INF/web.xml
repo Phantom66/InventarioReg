@@ -8,7 +8,17 @@
 		<servlet-name>ControladorInventario</servlet-name>
 		<url-pattern>/principal.do</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-   		 <welcome-file>login.jsp</welcome-file>
-	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>ControladorRegistro</servlet-name>
+		<servlet-class>com.inventario.con.ControladorRegistro</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorRegistro</servlet-name>
+		<url-pattern>/registro.do</url-pattern>
+	</servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>*.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>

@@ -1,7 +1,5 @@
 package com.inventario.dao.imp;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,17 +22,18 @@ public class ProductoDAOImpl implements ProducotDAO {
 	}
 
 	@Override
-	public void insertar(Producto producto) {
+	public void insertar(Producto producto,int id) {
 
 		PreparedStatement mistatement = null;
 		
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("INSERT INTO producto(nombre, estatus, descripcion)VALUES (?,?,?)");
+			mistatement = this.conn.getConnection().prepareStatement("INSERT INTO producto(nombre, estatus, descripcion,id_persona)VALUES (?,?,?,?)");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
 			mistatement.setString(3, producto.getDescripcion());
+			mistatement.setInt(4, id);
 			mistatement.executeUpdate();
 			
 			
@@ -70,7 +69,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
 			mistatement.setString(3, producto.getDescripcion());
-			mistatement.setInt(4, producto.getIdentificador());
+			mistatement.setInt(4, producto.getId());
 			
 			mistatement.executeUpdate();
 			
@@ -106,7 +105,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 
 			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM producto WHERE id = ?");
 			
-			mistatement.setInt(1, producto.getIdentificador());
+			mistatement.setInt(1, producto.getId());
 			
 			mistatement.execute();
 			
@@ -151,7 +150,8 @@ public class ProductoDAOImpl implements ProducotDAO {
 				String estatus = filas.getString("estatus");
 				String descripcion = filas.getString("descripcion");
 				
-				Producto p = new Producto(nombre,estatus,descripcion);
+				//Coloco cero el id, porque esto se generea automático.s
+				Producto p = new Producto(0, nombre,estatus,descripcion);
 				
 				producto.add(p);
 				

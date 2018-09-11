@@ -1,30 +1,17 @@
 package com.inventario.bo;
 
-import java.util.Arrays;
-
 public class Persona {
 	
 	private int cedula;
 	private String nombre, apellido, telefono;
-	private Producto [] producto;
-	
-	public Persona() {}
-	
-	public Persona(int cedula, String telefono, String nombre, String apellido, Producto [] producto) {
-		this.cedula = cedula;
-		this.telefono = telefono;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.producto = producto;
-	}
-	
 	
 
-	public Persona(int cedula, String telefono, String nombre, String apellido) {
+	public Persona(int cedula, String nombre, String apellido, String telefono) {
+		super();
 		this.cedula = cedula;
-		this.telefono = telefono;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.telefono = telefono;
 	}
 
 	public int getCedula() {
@@ -33,14 +20,6 @@ public class Persona {
 
 	public void setCedula(int cedula) {
 		this.cedula = cedula;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
 	}
 
 	public String getNombre() {
@@ -59,22 +38,18 @@ public class Persona {
 		this.apellido = apellido;
 	}
 
-	public Producto[] getProducto() {
-		return producto;
+	public String getTelefono() {
+		return telefono;
 	}
 
-	public void setProducto(Producto[] producto) {
-		this.producto = producto;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
-
 	
 	@Override
 	public String toString() {
-		return "Persona [cedula=" + cedula + ", telefono=" + telefono + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", producto=" + Arrays.toString(producto) + "]";
+		return "Persona [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
+				+ "]";
 	}
-	
-
-	
 
 }

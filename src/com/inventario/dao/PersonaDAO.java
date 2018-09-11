@@ -6,7 +6,8 @@ import com.inventario.bo.Persona;
 
 public interface PersonaDAO {
 
-	public abstract void insertar(Persona persona);
+	//Coloco esto para que devuelva el id de la inserción
+	public abstract int insertar(Persona persona);
 	public abstract void salvar(Persona persona);
 	public abstract void borrar(Persona persona);
 	

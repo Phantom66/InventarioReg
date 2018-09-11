@@ -34,10 +34,10 @@ public class ControladorRegistro extends HttpServlet {
 		
 		PersonaDAOImpl insertar = new PersonaDAOImpl();
 		
-		insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
+		int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
 		
-		//ProductoDAOImpl product = new ProductoDAOImpl();
-		//product.insertar(new Producto(0, producto,estatus,descripcion));
+		ProductoDAOImpl product = new ProductoDAOImpl();
+		product.insertar(new Producto(0, producto,estatus,descripcion), id);
 		
 	}
 

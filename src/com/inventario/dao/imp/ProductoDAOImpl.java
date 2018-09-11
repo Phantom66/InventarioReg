@@ -22,7 +22,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 	}
 
 	@Override
-	public void insertar(Producto producto) {
+	public void insertar(Producto producto,int id) {
 
 		PreparedStatement mistatement = null;
 		
@@ -33,7 +33,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
 			mistatement.setString(3, producto.getDescripcion());
-			mistatement.setInt(4, 3);
+			mistatement.setInt(4, id);
 			mistatement.executeUpdate();
 			
 			

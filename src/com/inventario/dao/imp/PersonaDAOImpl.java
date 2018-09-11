@@ -19,8 +19,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 	}
 
+
 	@Override
-	public void insertar(Persona persona) {
+	public int insertar(Persona persona) {
 
 		PreparedStatement mistatement = null;
 
@@ -34,7 +35,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			mistatement.setString(3, persona.getApellido());
 			mistatement.setString(4, persona.getTelefono());
 
-		
 			mistatement.executeUpdate();
 			
 			//Una manera para obtener el id del Insert
@@ -45,7 +45,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				id = resul.getInt(1);
 			}
 			
-			System.out.println(id);
+			return id;
 
 		} catch (SQLException e) {
 
@@ -62,6 +62,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				e.printStackTrace();
 			}
 		}
+		
+		return 0;
 	}
 
 	@Override

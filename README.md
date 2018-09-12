@@ -1,2 +1,2 @@
 # InventarioReg
-Realizando un CRUD como protoripo en JavaEE
+Realizando un CRUD como prototipo en JavaEE

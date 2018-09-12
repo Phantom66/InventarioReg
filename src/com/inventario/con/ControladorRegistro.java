@@ -1,6 +1,8 @@
 package com.inventario.con;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,7 @@ public class ControladorRegistro extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		RequestDispatcher despachador = null;
 		int cedula = Integer.parseInt(request.getParameter("cedula"));
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellido");
@@ -38,6 +41,11 @@ public class ControladorRegistro extends HttpServlet {
 		
 		ProductoDAOImpl product = new ProductoDAOImpl();
 		product.insertar(new Producto(0, producto,estatus,descripcion), id);
+		
+		
+		
+		despachador = request.getRequestDispatcher("./principal.do");
+		despachador.forward(request, response);
 		
 	}
 

@@ -10,7 +10,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../../../favicon.ico">
 
-<title>Top navbar example for Bootstrap</title>
+<title>Editar</title>
 
 <!-- Bootstrap core CSS -->
 <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -47,26 +47,26 @@
 	<!--Contenet -->
 	<div class="container">
 	
-		<form action="../registro.do" method="post">
+		<form action="#" method="post">
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="cedula ">cedula:</label> 
-						<input type="text" class="form-control" id="cedula" name="cedula" placeholder="Cedula">
+						<input type="text" class="form-control" id="cedula" name="cedula">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="nombre ">Nombre:</label> 
-						<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+						<input type="text" class="form-control" id="nombre" name="nombre">
 				</div>
 			</div>
 
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="apellido">Apellido:</label> 
-						<input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
+						<input type="text" class="form-control" id="apellido" name="apellido" >
 				</div>
 				<div class="form-group col-md-6">
 					<label for="telefono">Telefono:</label>
-						<input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Telefono">
+						<input type="tel" class="form-control" id="telefono" name="telefono">
 				</div>				
 			</div>
 			
@@ -74,11 +74,11 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="producto">Producto:</label> <input type="text"
-						class="form-control" id="producto" name="producto" placeholder="Producto">
+						class="form-control" id="producto" name="producto" >
 				</div>
 				<div class="form-group col-md-6">
 					<label for="status">Estatus:</label> <input type="text"
-						class="form-control" id="status" name="status" placeholder="Estatus">
+						class="form-control" id="status" name="status">
 				</div>
 			</div>
 			<div class="form-group">

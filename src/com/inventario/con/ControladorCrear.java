@@ -15,7 +15,7 @@ public class ControladorCrear extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/resources/frm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/frm.jsp");
 		dispatcher.forward(request, response);
 	}
 

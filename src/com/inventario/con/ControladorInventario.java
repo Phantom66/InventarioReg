@@ -27,7 +27,7 @@ public class ControladorInventario extends HttpServlet {
 		PersonaDAO persona = new PersonaDAOImpl();
 		List<Persona> personas = persona.buscarTodos();
 		request.setAttribute("Lista_Productos",personas);
-		RequestDispatcher miDispatcher = request.getRequestDispatcher("/resources/principal.jsp"); 
+		RequestDispatcher miDispatcher = request.getRequestDispatcher("/principal.jsp"); 
 		miDispatcher.forward(request, response);
 		
 	}

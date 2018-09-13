@@ -8,10 +8,10 @@
 <title>Formulario de Crear</title>
 
 <!-- Bootstrap core CSS -->
-<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="../resources/css/navbar-top.css" rel="stylesheet">
+<link href="css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="../principal.do">Home
+				<li class="nav-item active"><a class="nav-link" href="principal.do">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>

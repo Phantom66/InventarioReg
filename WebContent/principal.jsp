@@ -6,17 +6,14 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="../../../../favicon.ico">
 
 <title>Principal</title>
 
 <!-- Bootstrap core CSS -->
-<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="../resources/css/navbar-top.css" rel="stylesheet">
+<link href="css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,7 +30,7 @@
 				<li class="nav-item active"><a class="nav-link" href="#">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="principal/crear.do">Crear</a></li>
+				<li class="nav-item"><a class="nav-link" href="crear.do">Crear</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
 				</li>
 			</ul>
@@ -67,7 +64,7 @@
 						<td>${temporal.nombre } ${temporal.apellido}</td>
 						<td>${temporal.telefono}</td>
 						<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
-						<td><a class="btn btn-primary" href="/editar.do?cedula=${temporal.cedula}" role="button">Editar</a></td>
+						<td><a class="btn btn-primary" href="editar.do?cedula=${temporal.cedula}" role="button">Editar</a></td>
 						<td><a class="btn btn-primary" href="#formularioEditarLibro.do?cedula=${temporal.cedula}" role="button">Eliminar</a></td>
 					</tr>
 				</c:forEach>

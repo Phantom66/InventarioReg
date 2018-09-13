@@ -19,7 +19,7 @@ public class ControladorEditar extends HttpServlet {
 
 		String cedula = request.getParameter("cedula");
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/resources/editar.jsp"); ;
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/editar.jsp"); ;
 
 		request.setAttribute("cedula", cedula);
 		dispatcher.forward(request, response);

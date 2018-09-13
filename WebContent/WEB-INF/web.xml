@@ -14,7 +14,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorRegistro</servlet-name>
-    <url-pattern>/principal/registro.do</url-pattern>
+    <url-pattern>/registro.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ControladorEditar</servlet-name>
@@ -22,7 +22,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorEditar</servlet-name>
-    <url-pattern>/principal/editar.do</url-pattern>
+    <url-pattern>/editar.do</url-pattern>
   </servlet-mapping>
   <servlet>
   	<servlet-name>ControladorCrear</servlet-name>
@@ -30,7 +30,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>ControladorCrear</servlet-name>
-  	<url-pattern>/principal/crear.do</url-pattern>
+  	<url-pattern>/crear.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ControladorLogin</servlet-name>

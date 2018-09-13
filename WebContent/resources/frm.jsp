@@ -10,7 +10,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../../../favicon.ico">
 
-<title>Top navbar example for Bootstrap</title>
+<title>Formulario de Crear</title>
 
 <!-- Bootstrap core CSS -->
 <link href="./css/bootstrap.min.css" rel="stylesheet">

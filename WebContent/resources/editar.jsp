@@ -51,7 +51,7 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="cedula ">cedula:</label> 
-						<input type="text" class="form-control" id="cedula" name="cedula">
+						<input type="text" class="form-control" id="cedula" name="cedula">${cedula}
 				</div>
 				<div class="form-group col-md-6">
 					<label for="nombre ">Nombre:</label> 

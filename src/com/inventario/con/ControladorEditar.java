@@ -4,11 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+@WebServlet("/ControladorEditar")
 public class ControladorEditar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -18,7 +19,9 @@ public class ControladorEditar extends HttpServlet {
 		String cedula = request.getParameter("cedula");
 		
 		RequestDispatcher dispatcher = null;
-		dispatcher = request.getRequestDispatcher("/editar.do");
+		
+		request.setAttribute("cedula", cedula);
+		dispatcher = request.getRequestDispatcher("/resources/editar.jsp");
 		dispatcher.forward(request, response);
 
 		System.out.println(cedula);

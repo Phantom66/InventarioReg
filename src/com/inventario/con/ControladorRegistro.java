@@ -18,13 +18,14 @@ public class ControladorRegistro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher despachador = null;
 		int cedula = Integer.parseInt(request.getParameter("cedula"));
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellido");
@@ -37,12 +38,15 @@ public class ControladorRegistro extends HttpServlet {
 		PersonaDAOImpl insertar = new PersonaDAOImpl();
 
 		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
+		insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
 
 		ProductoDAOImpl product = new ProductoDAOImpl();
-		// product.insertar(new Producto(0, producto, estatus, descripcion), id);
-
-		despachador = request.getRequestDispatcher("./principal.do");
+		product.insertar(new Producto(0, producto, estatus, descripcion), cedula);
+		
+		System.out.print("Estoy registrando");
+		RequestDispatcher  despachador = request.getRequestDispatcher("/principal.do");
 		despachador.forward(request, response);
+		
 
 	}
 

@@ -47,7 +47,7 @@
 	<!--Contenet -->
 	<div class="container">
 	
-		<form action="../registro.do" method="post">
+		<form action="../principal/registro.do" method="post">
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="cedula ">cedula:</label> 

@@ -13,10 +13,10 @@
 <title>Principal</title>
 
 <!-- Bootstrap core CSS -->
-<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="resources/css/navbar-top.css" rel="stylesheet">
+<link href="../resources/css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,7 +33,7 @@
 				<li class="nav-item active"><a class="nav-link" href="#">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+				<li class="nav-item"><a class="nav-link" href="principal/crear.do">Crear</a></li>
 				<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
 				</li>
 			</ul>
@@ -51,8 +51,8 @@
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Nombre</th>
-					<th scope="col">Apellido</th>
+					<th scope="col">Cedula</th>
+					<th scope="col">Nombres y Apellidos</th>
 					<th scope="col">Telefono</th>
 					<th scope="col"></th>
 					<th scope="col"></th>
@@ -63,10 +63,10 @@
 				<c:forEach var="temporal" items="${Lista_Productos}">
 					<tr>
 						<th scope="row">1</th>
-						<td>${temporal.nombre}</td>
-						<td>${temporal.apellido}</td>
+						<td>${temporal.cedula}</td>
+						<td>${temporal.nombre } ${temporal.apellido}</td>
 						<td>${temporal.telefono}</td>
-						<td><a class="btn btn-primary" href="principal/crear.do" role="button">Crear</a></td>
+						<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
 						<td><a class="btn btn-primary" href="principal/editar.do?cedula=${temporal.cedula}" role="button">Editar</a></td>
 						<td><a class="btn btn-primary" href="#formularioEditarLibro.do?cedula=${temporal.cedula}" role="button">Eliminar</a></td>
 					</tr>

@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ControladorEditar extends HttpServlet {
+public class ControladorLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+  
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String cedula = request.getParameter("cedula");
+		String email = request.getParameter("email");
+		String pass = request.getParameter("password");
 		
 		RequestDispatcher dispatcher = null;
-		dispatcher = request.getRequestDispatcher("/editar.do");
+		
+		dispatcher = request.getRequestDispatcher("/principal.do");
 		dispatcher.forward(request, response);
 
-		System.out.println(cedula);
+		System.out.println("Usuario " + email + " Password " + pass);
 	}
-
-
 
 }

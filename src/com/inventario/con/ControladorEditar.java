@@ -21,7 +21,7 @@ public class ControladorEditar extends HttpServlet {
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/resources/editar.jsp"); ;
 
-		// request.setAttribute("cedula", cedula);
+		request.setAttribute("cedula", cedula);
 		dispatcher.forward(request, response);
 
 		System.out.println(cedula);

@@ -13,10 +13,10 @@
 <title>Formulario de Crear</title>
 
 <!-- Bootstrap core CSS -->
-<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="resources/css/navbar-top.css" rel="stylesheet">
+<link href="../resources/css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>
@@ -111,6 +111,6 @@
 						.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
 	</script>
 	<script src="../../assets/js/vendor/popper.min.js"></script>
-	<script src=".js/bootstrap.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
 </body>
 </html>

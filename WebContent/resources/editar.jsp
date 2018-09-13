@@ -13,10 +13,10 @@
 <title>Editar</title>
 
 <!-- Bootstrap core CSS -->
-<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="resources/css/navbar-top.css" rel="stylesheet">
+<link href="../resources/css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>
@@ -51,7 +51,7 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="cedula ">cedula:</label>
-					<input type="text" class="form-control" id="cedula" name="cedula"><%--${cedula} --%>
+					<input type="text" class="form-control" id="cedula" name="cedula" value="${cedula}">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="nombre ">Nombre:</label> 
@@ -111,6 +111,6 @@
 						.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
 	</script>
 	<script src="../../assets/js/vendor/popper.min.js"></script>
-	<script src=".js/bootstrap.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
 </body>
 </html>

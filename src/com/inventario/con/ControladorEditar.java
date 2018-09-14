@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.inventario.bo.Persona;
+import com.inventario.bo.Producto;
+import com.inventario.dao.PersonaDAO;
+import com.inventario.dao.ProductoDAO;
+import com.inventario.dao.imp.PersonaDAOImpl;
+import com.inventario.dao.imp.ProductoDAOImpl;
+
 
 @WebServlet("/ControladorEditar")
 public class ControladorEditar extends HttpServlet {
@@ -18,13 +25,21 @@ public class ControladorEditar extends HttpServlet {
 			throws ServletException, IOException {
 
 		String cedula = request.getParameter("cedula");
+		
+		PersonaDAO persona = new PersonaDAOImpl();
+		ProductoDAO producto = new ProductoDAOImpl();
+		
+		Persona encontrada  = persona.buscarPorClave(cedula);
+		Producto encontrado = producto.buscarPorClave(cedula);
 
+		System.out.println(cedula + encontrada + "\n" +encontrado);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/editar.jsp"); ;
 
-		request.setAttribute("cedula", cedula);
+		request.setAttribute("encontrada", encontrada);
+		request.setAttribute("encontrado", encontrado);
 		dispatcher.forward(request, response);
 
-		System.out.println(cedula);
+		
 	}
 
 }

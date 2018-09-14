@@ -19,33 +19,35 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 	}
 
-
 	@Override
-	public int insertar(Persona persona) {
+	public void insertar(Persona persona) {
 
 		PreparedStatement mistatement = null;
 
 		String sql = "INSERT INTO persona(cedula, nombre, apellido, telefono) VALUES  (?,?,?,?)";
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			
+			// mistatement =
+			// this.conn.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+
+			mistatement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
 			mistatement.setInt(1, persona.getCedula());
 			mistatement.setString(2, persona.getNombre());
 			mistatement.setString(3, persona.getApellido());
 			mistatement.setString(4, persona.getTelefono());
 
 			mistatement.executeUpdate();
-			
-			//Una manera para obtener el id del Insert
-			ResultSet resul = mistatement.getGeneratedKeys();
-			int id = 0;
-			if(resul.next()) {
-				
-				id = resul.getInt(1);
-			}
-			
-			return id;
+
+			// Una manera para obtener el id del Insert
+			// ResultSet resul = mistatement.getGeneratedKeys();
+			// int id = 0;
+			// if (resul.next()) {
+			//
+			// id = resul.getInt(1);
+			// }
+
+			// return persona.getCedula();
 
 		} catch (SQLException e) {
 
@@ -62,8 +64,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				e.printStackTrace();
 			}
 		}
-		
-		return 0;
+
+		// return 0;
 	}
 
 	@Override
@@ -150,7 +152,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				String apellido = filas.getString("apellido");
 				String telefono = filas.getString("telefono");
 
-				Persona p = new Persona(cedula, telefono, nombre, apellido);
+				Persona p = new Persona(cedula, nombre, apellido, telefono);
 
 				persona.add(p);
 
@@ -198,7 +200,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				String nombre = filas.getString("nombre");
 				String apellido = filas.getString("apellido");
 
-				persona = new Persona(cedula, telefono, nombre, apellido);
+				persona = new Persona(cedula, nombre, apellido, telefono);
 
 			} else {
 

@@ -54,7 +54,7 @@ public class TestCRUD {
 		};
 		Persona persona = new Persona(17639604, "nombre", "apellido", "telefono", productos);
 		
-		System.out.println(" Insertar " + persona );
+		System.out.println(" Insertar " + persona.getNombre() + " " +  persona.getApellido() );
 
 	}
 

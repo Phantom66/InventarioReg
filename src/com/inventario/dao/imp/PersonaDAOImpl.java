@@ -152,7 +152,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				String apellido = filas.getString("apellido");
 				String telefono = filas.getString("telefono");
 
-				Persona p = new Persona(cedula, telefono, nombre, apellido);
+				Persona p = new Persona(cedula, nombre, apellido, telefono);
 
 				persona.add(p);
 
@@ -200,7 +200,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				String nombre = filas.getString("nombre");
 				String apellido = filas.getString("apellido");
 
-				persona = new Persona(cedula, telefono, nombre, apellido);
+				persona = new Persona(cedula, nombre, apellido, telefono);
 
 			} else {
 

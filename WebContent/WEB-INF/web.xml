@@ -49,6 +49,14 @@
   	<url-pattern>/actualizar.do</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>ControladorRegUser</servlet-name>
+  	<servlet-class>com.inventario.con.ControladorRegUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ControladorRegUser</servlet-name>
+  	<url-pattern>/reg_user.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>ControladorLogin</servlet-name>
     <servlet-class>com.inventario.con.ControladorLogin</servlet-class>
   </servlet>

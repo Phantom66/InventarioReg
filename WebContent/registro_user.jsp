@@ -17,13 +17,12 @@
 	<div class="container">
 		<div class="row justify-content-md-center">
 			<div class="col-md-4 col-md-offset-4">
-
 				<div class="login-panel panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title text-center">Registrarse</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form">
+						<form action="reg_user.do" method="post" role="form">
 							<fieldset>
 								<div class="form-group">
 									<label for="user">Nombre</label> 

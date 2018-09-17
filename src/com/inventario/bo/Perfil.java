@@ -8,7 +8,7 @@ public class Perfil {
 	private String password;
 	
 	
-	public Perfil(int id, String email, String name, String password) {
+	public Perfil(int id, String name, String email, String password) {
 		super();
 		this.id = id;
 		this.email = email;

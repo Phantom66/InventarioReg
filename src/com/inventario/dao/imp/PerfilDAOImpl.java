@@ -30,7 +30,7 @@ public class PerfilDAOImpl implements PerfilDAO {
 			statement.setString(1, perfil.getName());
 			statement.setString(2, perfil.getEmail());
 			statement.setString(3, perfil.getPassword());
-			statement.executeQuery();
+			statement.executeUpdate();
 			
 			
 		} catch (SQLException e) {
@@ -78,17 +78,20 @@ public class PerfilDAOImpl implements PerfilDAO {
 		ResultSet filas = null;
 		Perfil perfil = null;
 		try {
-			statement = this.conn.getConnection().prepareStatement("SELECT email FROM perfiles WHERE email = ?");
+			statement = this.conn.getConnection().prepareStatement("SELECT * FROM perfiles WHERE email = ?");
 			
 			statement.setString(1, id);
 			filas = statement.executeQuery();
 			
 			if(filas.next()) {
 				
+				int identificador =filas.getInt("id");
+				String name = filas.getString("name");
 				String email = filas.getString("email");
+				String pass = filas.getString("password");
 				
 				
-				perfil = new Perfil(email);
+				perfil = new Perfil(identificador,name,email,pass);
 				
 			}else {
 				

@@ -104,7 +104,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public void borrar(Persona persona) {
+	public void borrar(String cedula) {
 
 		PreparedStatement mistatement = null;
 
@@ -112,7 +112,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
 
-			mistatement.setInt(1, persona.getCedula());
+			mistatement.setString(1, cedula);
 
 			mistatement.executeUpdate();
 
@@ -208,6 +208,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			}
 
 			return persona;
+			
+			
 
 		} catch (SQLException e) {
 

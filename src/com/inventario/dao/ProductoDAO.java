@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.inventario.bo.Producto;
 
-public interface ProducotDAO {
+public interface ProductoDAO {
 	
 	public abstract void insertar(Producto producto, int id);
 	public abstract void salvar(Producto producto);

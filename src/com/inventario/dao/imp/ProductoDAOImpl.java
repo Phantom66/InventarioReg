@@ -8,9 +8,9 @@ import java.util.List;
 
 import com.inventario.bo.Producto;
 import com.inventario.con.DataBase;
-import com.inventario.dao.ProducotDAO;
+import com.inventario.dao.ProductoDAO;
 
-public class ProductoDAOImpl implements ProducotDAO {
+public class ProductoDAOImpl implements ProductoDAO {
 	
 	
 	
@@ -64,12 +64,12 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 			
-			mistatement = this.conn.getConnection().prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id = ?");
+			mistatement = this.conn.getConnection().prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id_persona = ?");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());
 			mistatement.setString(3, producto.getDescripcion());
-			mistatement.setInt(4, producto.getId());
+			mistatement.setInt(4, producto.getPersona().getCedula());
 			
 			mistatement.executeUpdate();
 			
@@ -191,7 +191,7 @@ public class ProductoDAOImpl implements ProducotDAO {
 		
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id = ?");
+			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id_persona = ?");
 			
 			mistatement.setString(1, id);
 			filas = mistatement.executeQuery();

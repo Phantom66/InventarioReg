@@ -25,12 +25,28 @@
     <url-pattern>/editar.do</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>ControladorCrear</servlet-name>
-  	<servlet-class>com.inventario.con.ControladorCrear</servlet-class>
+    <servlet-name>ControladorCrear</servlet-name>
+    <servlet-class>com.inventario.con.ControladorCrear</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ControladorCrear</servlet-name>
-  	<url-pattern>/crear.do</url-pattern>
+    <servlet-name>ControladorCrear</servlet-name>
+    <url-pattern>/crear.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ControladorBorrar</servlet-name>
+    <servlet-class>com.inventario.con.ControladorBorrar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorBorrar</servlet-name>
+    <url-pattern>/borrar.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ControladorActualizar</servlet-name>
+  	<servlet-class>com.inventario.con.ControladorActualizar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ControladorActualizar</servlet-name>
+  	<url-pattern>/actualizar.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ControladorLogin</servlet-name>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.inventario.bo.Perfil;
 import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.imp.PerfilDAOImpl;
+import com.inventario.utils.SecurityPasswords;
 
 public class ControladorRegUser extends HttpServlet {
 
@@ -23,10 +24,11 @@ public class ControladorRegUser extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
+		
 		String name = request.getParameter("user");
 		String email = request.getParameter("email");
-		String password = request.getParameter("pass");
-		String pass = request.getParameter("passConfirm");
+		String password = SecurityPasswords.Encriptar(request.getParameter("pass"));;
+		String pass = SecurityPasswords.Encriptar(request.getParameter("passConfirm"));
 
 		PerfilDAO buscarPerfil = new PerfilDAOImpl();
 		Perfil perfil = buscarPerfil.buscarPorClave(email);

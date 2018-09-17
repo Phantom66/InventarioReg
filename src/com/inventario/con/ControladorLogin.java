@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.inventario.bo.Perfil;
 import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.imp.PerfilDAOImpl;
+import com.inventario.utils.SecurityPasswords;
 
 
 public class ControladorLogin extends HttpServlet {
@@ -21,7 +22,7 @@ public class ControladorLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String email = request.getParameter("email");
-		String pass = request.getParameter("password");
+		String pass = SecurityPasswords.Encriptar(request.getParameter("password"));
 
 		HttpSession session = request.getSession();
 		RequestDispatcher dispatcher = null;

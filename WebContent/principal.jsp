@@ -31,9 +31,15 @@
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="crear.do">Crear</a></li>
-				<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+				<li class="nav-item"><a class="nav-link disabled" href="#">${sessionUsuario}</a>
 				</li>
 			</ul>
+			
+			<form action="login.do" method="post">
+				<div>
+					<button type="submit" class="btn btn-primary">cerrar</button>	
+				</div>
+			</form>
 			<form class="form-inline mt-2 mt-md-0">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search"
 					aria-label="Search">

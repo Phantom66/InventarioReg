@@ -1,6 +1,7 @@
 package com.inventario.dao.imp;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class PerfilDAOImpl implements PerfilDAO {
 	
 	private DataBase conn;
 	
-	PerfilDAOImpl(){
+	public PerfilDAOImpl(){
 		
 		this.conn = new DataBase();
 	}
@@ -22,7 +23,7 @@ public class PerfilDAOImpl implements PerfilDAO {
 		
 		PreparedStatement statement = null;
 		
-		String sql = "Insert Into perfiles(name, email, password) Values(?,?,?)";
+		String sql = "INSERT INTO perfiles(name, email, password) VALUES(?,?,?)";
 		
 		try {
 			statement = this.conn.getConnection().prepareStatement(sql);
@@ -72,6 +73,49 @@ public class PerfilDAOImpl implements PerfilDAO {
 
 	@Override
 	public Perfil buscarPorClave(String id) {
+		
+		PreparedStatement statement = null;
+		ResultSet filas = null;
+		Perfil perfil = null;
+		try {
+			statement = this.conn.getConnection().prepareStatement("SELECT email FROM perfiles WHERE email = ?");
+			
+			statement.setString(1, id);
+			filas = statement.executeQuery();
+			
+			if(filas.next()) {
+				
+				String email = filas.getString("email");
+				
+				
+				perfil = new Perfil(email);
+				
+			}else {
+				
+				return null;
+			}
+			
+			
+			return perfil;
+			
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		}finally {
+
+			try {
+				this.conn.getConnection().close();
+				statement.close();
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+				
+				
 		
 		return null;
 	}

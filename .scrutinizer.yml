@@ -1,2 +1,10 @@
 checks:
     java: true
+
+build:
+  nodes:
+    analysis:
+      tests:
+        override:
+            java-scrutinizer-run
+

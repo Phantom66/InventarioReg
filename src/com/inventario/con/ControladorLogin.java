@@ -53,17 +53,17 @@ public class ControladorLogin extends HttpServlet {
 						dispatcher.forward(request, response);
 
 					} else {
-						System.out.println("Usuario o Contraseña Incorrecta");
-
+						
+						request.setAttribute("mensageError", "Usuario o Contraseña Incorrecta");
 						dispatcher = request.getRequestDispatcher("/login.jsp");
 						dispatcher.forward(request, response);
 
 					}
 					
 				} else {
-
-					request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
-					System.out.println("Usuario no existe, debe registrarse");
+					
+					request.setAttribute("mensageError", "Usuario no existe, debe registrarse");
+					request.getRequestDispatcher("/login.jsp").forward(request, response);
 				}
 
 			} else {
@@ -77,7 +77,6 @@ public class ControladorLogin extends HttpServlet {
 
 			System.out.println("Eliminando sessiion");
 			session.removeAttribute("sessionUsuario");
-
 			dispatcher = request.getRequestDispatcher("/login.jsp");
 			dispatcher.forward(request, response);
 

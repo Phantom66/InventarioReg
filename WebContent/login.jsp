@@ -27,6 +27,9 @@
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
+        <label>
+        	<a href="registro_user.jsp">Registrarse</a>
+        </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>

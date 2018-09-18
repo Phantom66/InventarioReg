@@ -37,6 +37,7 @@
 			
 			<form action="login.do" method="post">
 				<div>
+					<input type="hidden" name="cerrarSession">
 					<button type="submit" class="btn btn-primary">cerrar</button>	
 				</div>
 			</form>

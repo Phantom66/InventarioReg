@@ -54,7 +54,7 @@ public class ControladorRegUser extends HttpServlet {
 
 				if (password.equalsIgnoreCase(pass)) {
 
-					System.out.println("Clase coinciden");
+					System.out.println("Clave coinciden");
 					perfil = new Perfil(0, name, email, password);
 					buscarPerfil.insertar(perfil);
 					request.getRequestDispatcher("/login.jsp").forward(request, response);

@@ -22,26 +22,30 @@ public class ControladorLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String email = request.getParameter("email");
-		String pass = SecurityPasswords.Encriptar(request.getParameter("password"));
+		String pass = request.getParameter("password");
 
 		HttpSession session = request.getSession();
 		RequestDispatcher dispatcher = null;
 		Perfil perfil = null;
 		PerfilDAO buscarPerfil;
 
-		if (session.getAttribute("sessionUsuario") == null) {
-
-			System.out.println("  " + session.getAttribute("sessionUsuario"));
+		System.out.println("  " + session.getAttribute("sessionUsuario") + " "+ request.getParameter("cerrarSession"));
+		
+		if ((session.getAttribute("sessionUsuario") == null) && (request.getParameter("cerrarSession")==null)) {
 
 			if (email != null && pass != null) {
 
 				buscarPerfil = new PerfilDAOImpl();
-
 				perfil = buscarPerfil.buscarPorClave(email);
-
+				
+				
+				System.out.println(perfil);
+				
 				if (perfil != null) {
+	
+					System.out.println(pass + " "+ perfil.getPassword());
 
-					if (email.equalsIgnoreCase(perfil.getEmail()) && pass.equalsIgnoreCase(perfil.getPassword())) {
+					if (email.equalsIgnoreCase(perfil.getEmail()) && SecurityPasswords.Encriptar(pass).equalsIgnoreCase(perfil.getPassword())) {
 
 						session.setAttribute("sessionUsuario", perfil.getName());
 

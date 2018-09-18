@@ -26,22 +26,22 @@
 							<fieldset>
 								<div class="form-group">
 									<label for="user">Nombre</label> 
-									<input type="text" class="form-control" id="user" name="user" placeholder="Name(Andres, José, Juan ..)" autofocus>
+									<input type="text" class="form-control" id="user" name="user" placeholder="Name(Andres, José, Juan ..)" autofocus required>
 								</div>
 								
 								<div class="form-group">
 									<label for="email">Email</label> 
-									<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+									<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 								</div>
 
 								<div class="form-group">
 									<label for="pass">Password</label> 
-									<input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
+									<input type="password" class="form-control" id="pass" name="pass" placeholder="Password" required>
 								</div>
 
 								<div class="form-group">
 									<label for="passConfirm"> Confirm Password</label> 
-									<input type="password" class="form-control" id="passConfirm" name="passConfirm" placeholder="Confirme Password">
+									<input type="password" class="form-control" id="passConfirm" name="passConfirm" placeholder="Confirme Password" required>
 								</div>
 								<button type="submit" class="btn btn-primary">Registrar</button>
 							</fieldset>

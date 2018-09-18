@@ -62,6 +62,7 @@ public class ControladorLogin extends HttpServlet {
 					
 				} else {
 
+					request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
 					System.out.println("Usuario no existe, debe registrarse");
 				}
 

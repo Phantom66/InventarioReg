@@ -64,7 +64,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 		
 		try {
 			
-			mistatement = this.conn.getConnection().prepareStatement("UPDATE producto set nombre = ?, estatus = ?, descripcion = ? WHERE id_persona = ?");
+			mistatement = this.conn.getConnection().prepareStatement("UPDATE producto SET nombre = ?, estatus = ?, descripcion = ? WHERE id_persona = ?");
 			
 			mistatement.setString(1, producto.getNombre());
 			mistatement.setString(2, producto.getEstatus());

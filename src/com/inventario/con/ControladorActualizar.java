@@ -35,8 +35,7 @@ public class ControladorActualizar extends HttpServlet {
 		
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
-		
-		int cedula = Integer.parseInt(request.getParameter("cedula"));
+		int cedula = Integer.parseInt(request.getParameter("cedula"));	
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellido");
 		String telefono = request.getParameter("telefono");
@@ -45,10 +44,15 @@ public class ControladorActualizar extends HttpServlet {
 		String estatus = request.getParameter("status");
 		String descripcion = request.getParameter("descripcion");
 		
-		Persona per = new Persona(cedula,nombre,apellidos,telefono);
-		Producto pro = new Producto(0,producto,estatus,descripcion, per);
-		persona.salvar(per);
-		product.salvar(pro);
+		System.out.println(cedula + " "+" " + nombre + "\n");
+		
+//		Persona per = new Persona(Integer.parseInt(cedula),nombre,apellidos,telefono);
+//		Producto pro = new Producto(0,producto,estatus,descripcion, per);
+		
+		
+		
+		// persona.salvar(per);
+		// product.salvar(pro);
 		
 		
 		doGet(request, response);

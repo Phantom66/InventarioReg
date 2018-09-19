@@ -5,14 +5,15 @@
 	<form action="actualizar.do" method="post">
 		<div class="form-row">
 			<div class="form-group col-md-6">
-				<label for="cedula ">cedula:</label> <input type="text"
-					class="form-control" id="cedula" name="cedula"
-					value="${encontrada.cedula}" disabled>
+				<label for="cedula ">cedula:</label>
+				<!-- Lo hago de esta manera, debido que al tener el campo disabled no envía el valor.  -->
+				<!-- Mejorar  -->
+				<input type="hidden" name="cedula" value="${encontrada.cedula}">
+				<input type="text" class="form-control" id="cedula" value="${encontrada.cedula}" disabled>
 			</div>
 			<div class="form-group col-md-6">
-				<label for="nombre ">Nombre:</label> <input type="text"
-					class="form-control" id="nombre" name="nombre"
-					value="${encontrada.nombre}">
+				<label for="nombre ">Nombre:</label> 
+				<input type="text" class="form-control" id="nombre" name="nombre" value="${encontrada.nombre}">
 			</div>
 		</div>
 

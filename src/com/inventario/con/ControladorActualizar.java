@@ -46,13 +46,13 @@ public class ControladorActualizar extends HttpServlet {
 		
 		System.out.println(cedula + " "+" " + nombre + "\n");
 		
-//		Persona per = new Persona(Integer.parseInt(cedula),nombre,apellidos,telefono);
-//		Producto pro = new Producto(0,producto,estatus,descripcion, per);
+		Persona per = new Persona(cedula,nombre,apellidos,telefono);
+		Producto pro = new Producto(0,producto,estatus,descripcion, per);
 		
 		
 		
-		// persona.salvar(per);
-		// product.salvar(pro);
+		 persona.salvar(per);
+		 product.salvar(pro);
 		
 		
 		doGet(request, response);

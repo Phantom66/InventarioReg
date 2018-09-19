@@ -34,9 +34,10 @@ public class ControladorRegUser extends HttpServlet {
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 
 		if (perfil != null) {
-
-			System.out.println("Perfil existe " + perfil.getEmail());
+			
 			try {
+				System.out.println("Contraseña No Coinciden.");
+				request.setAttribute("mensageError", "Perfil Existe.");
 				request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
 
 			} catch (ServletException e) {
@@ -54,13 +55,14 @@ public class ControladorRegUser extends HttpServlet {
 
 				if (password.equalsIgnoreCase(pass)) {
 
-					System.out.println("Clave coinciden");
 					perfil = new Perfil(0, name, email, password);
 					buscarPerfil.insertar(perfil);
+					request.setAttribute("messageSuccess", "Registro Exitoso!!");
 					request.getRequestDispatcher("/login.jsp").forward(request, response);
 
 				} else {
-
+					
+					request.setAttribute("mensageError", "Contraseña No Coinciden.");
 					request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
 				}
 

@@ -43,6 +43,9 @@
 									<label for="passConfirm"> Confirm Password</label> 
 									<input type="password" class="form-control" id="passConfirm" name="passConfirm" placeholder="Confirme Password" required>
 								</div>
+								<c:if test="${not empty mensageError}">
+									<%@ include file="errorPage/errorUser_Password.jsp"%>
+								</c:if>
 								<button type="submit" class="btn btn-primary">Registrar</button>
 							</fieldset>
 						</form>

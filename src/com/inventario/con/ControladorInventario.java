@@ -30,9 +30,41 @@ public class ControladorInventario extends HttpServlet {
 		
 		if(session.getAttribute("sessionUsuario")!=null) {
 			
-			 PersonaDAO persona = new PersonaDAOImpl();
-			 List<Persona> personas = persona.buscarTodos();
-			 request.setAttribute("Lista_Productos",personas);
+			 PersonaDAOImpl persona = new PersonaDAOImpl();
+			 
+			 int pagActual;
+			 int perReg = 5;
+			 
+			 if(request.getParameter("pagActual")==null) {
+				 
+					pagActual = 1;
+					//perReg = 3;
+			 }else {
+				 
+				 
+				 pagActual = Integer.valueOf(request.getParameter("pagActual"));
+				 //perReg = 3;
+			 }
+			 
+
+			
+			List<Persona>perPagination = persona.getPerPagination(pagActual, perReg);
+			 
+			 //N° de filas de nuetra tabla.
+			 int rows = persona.getRows();
+			 
+			 int nPages = rows / perReg; 
+
+				if(nPages%perReg >0) {
+					
+					nPages ++;
+				}
+			
+			request.setAttribute("nPages", nPages);
+			request.setAttribute("pagActual", pagActual);
+			request.setAttribute("perPage", perReg);
+			request.setAttribute("Lista_Productos",perPagination);
+			 
 			 dispatcher = request.getRequestDispatcher("/principal.jsp"); 
 			 dispatcher.forward(request, response);
 			
@@ -57,4 +89,5 @@ public class ControladorInventario extends HttpServlet {
 	
 
 
+	
 }

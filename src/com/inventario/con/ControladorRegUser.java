@@ -27,8 +27,8 @@ public class ControladorRegUser extends HttpServlet {
 		
 		String name = request.getParameter("user");
 		String email = request.getParameter("email");
-		String password = SecurityPasswords.Encriptar(request.getParameter("pass"));;
-		String pass = SecurityPasswords.Encriptar(request.getParameter("passConfirm"));
+		String password = SecurityPasswords.encriptar(request.getParameter("pass"));;
+		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
 		PerfilDAO buscarPerfil = new PerfilDAOImpl();
 		Perfil perfil = buscarPerfil.buscarPorClave(email);

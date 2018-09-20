@@ -1,5 +1,7 @@
 build:
     nodes:
+      environment: 
+          java: "java-8-oracle"
         analysis:
             tests:
                 override:

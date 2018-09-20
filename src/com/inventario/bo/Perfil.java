@@ -15,17 +15,11 @@ public class Perfil {
 		this.name = name;
 		this.password = password;
 	}
-	
-	
-
 
 	public Perfil(String email) {
 
 		this.email = email;
 	}
-
-
-
 
 	public int getId() {
 		return id;

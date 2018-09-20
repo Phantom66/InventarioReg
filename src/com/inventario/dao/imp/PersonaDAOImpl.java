@@ -147,13 +147,15 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			while (filas.next()) {
 
+				int id = filas.getInt("id");
 				int cedula = filas.getInt("cedula");
 				String nombre = filas.getString("nombre");
 				String apellido = filas.getString("apellido");
 				String telefono = filas.getString("telefono");
 
 				Persona p = new Persona(cedula, nombre, apellido, telefono);
-
+				//Lo hago de esta manera para realizar prueba, debo optimizar.
+				p.setId(id);
 				persona.add(p);
 
 			}
@@ -234,5 +236,94 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		return null;
 
 	}
+	
+	
+	public int getRows() {
 
+		int numRows = 0;
+
+		Statement statement = null;
+		ResultSet filas = null;
+
+		try {
+			statement = this.conn.getConnection().createStatement();
+			filas = statement.executeQuery("SELECT * FROM persona");
+
+			while (filas.next()) {
+
+				numRows++;
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+			try {
+				this.conn.getConnection().close();
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return numRows;
+	}
+
+	
+	public List<Persona>getPerPagination(int pagActual, int perReg){
+		
+		PreparedStatement statement = null;
+		ResultSet filas = null;
+		List<Persona>p = new ArrayList<Persona>();
+		Persona persona;
+		
+		//Verificar esta lógica.
+		 int start = (pagActual * perReg) - perReg;
+//
+//		System.out.println(start);
+		
+		try {
+			statement = this.conn.getConnection().prepareStatement("SELECT * FROM persona LIMIT ?,?");
+			
+			statement.setInt(1, start);
+			statement.setInt(2, perReg);
+			
+			filas = statement.executeQuery();
+			
+			
+			while(filas.next()) {
+				
+				int id = filas.getInt("id");
+				int cedula = filas.getInt("cedula");
+				String nombre = filas.getString("nombre");
+				String apellido = filas.getString("apellido");
+				String telefono = filas.getString("telefono");
+				
+				persona = new Persona(cedula,nombre,apellido,telefono);
+				persona.setId(id);
+				
+				p.add(persona);
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		
+		}finally {
+			
+			try {
+				this.conn.getConnection().close();
+				statement.close();
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		return p;
+	}
 }

@@ -3,7 +3,7 @@ package com.inventario.bo;
 import java.util.Arrays;
 
 public class Persona {
-	
+	private int id;
 	private int cedula;
 	private String nombre, apellido, telefono;
 	
@@ -29,6 +29,16 @@ public class Persona {
 	}
 
 
+	public int getId() {
+		
+		return id;
+	}
+	
+	public void setId(int id) {
+		
+		this.id = id;
+	}
+	
 	public int getCedula() {
 		return cedula;
 	}

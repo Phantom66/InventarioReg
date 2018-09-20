@@ -41,19 +41,20 @@
 	<!--Pagination -->
 	<nav aria-label="...">
 		<ul class="pagination justify-content-center">
-			<li class="page-item disabled">
-			
-			<c:if test="${pagActual != 1}">	
-			
-				<a class="page-link" href="principal.do?pagActual=${pagActual-1}" >Previous</a>
-			</c:if>
-				</li>
-
+			<li class="page-item" >
+				<c:if test="${pagActual != 1}">	
+					<a class="page-link" href="principal.do?pagActual=${pagActual-1}" >Previous</a>
+				</c:if>
+				<c:if test="${pagActual == 1}">	
+					<a class="page-link disabled" href="#" >Previous</a>
+				</c:if>
+			</li>
 			<c:forEach begin="1" end="${nPages}" var="i">
 				<c:choose>
 					<c:when test="${pagActual eq i}">
-						<li class="page-item active"><a class="page-link"> ${i} <span
-								class="sr-only">(current)</span></a></li>
+						<li class="page-item active">
+							<a class="page-link"> ${i} <span class="sr-only">(current)</span></a>
+						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item"><a class="page-link"
@@ -62,18 +63,10 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-<!-- 			<li class="page-item"> -->
-<!-- 				<a class="page-link" href="#">1</a> -->
-<!-- 			</li> -->
-<!-- 			<li class="page-item active"> -->
-<!-- 				<a class="page-link" href="#">2	<span class="sr-only">(current)</span></a> -->
-<!-- 			</li> -->
-<!-- 			<li class="page-item"> -->
-<!-- 				<a class="page-link" href="#">3</a> -->
-<!-- 			</li> -->
-<!-- 			<li class="page-item"> -->
-<!-- 				<a class="page-link" href="#">Next</a> -->
-<!-- 			</li> -->
+			<li class="page-item">
+				<a class="page-link" href="principal.do?pagActual=${pagActual+1}">Next</a>	
+			</li>
+			
 		</ul>
 	</nav>
 </div>

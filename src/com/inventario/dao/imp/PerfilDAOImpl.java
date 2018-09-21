@@ -84,20 +84,15 @@ public class PerfilDAOImpl implements PerfilDAO {
 			filas = statement.executeQuery();
 			
 			if(filas.next()) {
-				
-				int identificador =filas.getInt("id");
-				String name = filas.getString("name");
-				String email = filas.getString("email");
-				String pass = filas.getString("password");
-				
-				
-				perfil = new Perfil(identificador,name,email,pass);
+		
+				perfil = new Perfil(
+						filas.getInt("id"),filas.getString("name"),filas.getString("email"),filas.getString("password")
+						);
 				
 			}else {
 				
 				return null;
 			}
-			
 			
 			return perfil;
 			
@@ -117,8 +112,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 				e.printStackTrace();
 			}
 		}
-				
-				
 		
 		return null;
 	}

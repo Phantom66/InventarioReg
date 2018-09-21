@@ -11,18 +11,13 @@ import com.inventario.con.DataBase;
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
-	private DataBase conn;
+	private DataBase conn = new DataBase();
 
-	public PersonaDAOImpl() {
-
-		this.conn = new DataBase();
-
-	}
 
 	@Override
 	public void insertar(Persona persona) {
 
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 
 		String sql = "INSERT INTO persona(cedula, nombre, apellido, telefono) VALUES  (?,?,?,?)";
 		try {
@@ -39,13 +34,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			// return persona.getCedula();
 			
-			mistatement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			mistatement.setInt(1, persona.getCedula());
-			mistatement.setString(2, persona.getNombre());
-			mistatement.setString(3, persona.getApellido());
-			mistatement.setString(4, persona.getTelefono());
-			mistatement.executeUpdate();
-
+			statement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, persona.getCedula());
+			statement.setString(2, persona.getNombre());
+			statement.setString(3, persona.getApellido());
+			statement.setString(4, persona.getTelefono());
+			statement.executeUpdate();
 
 
 		} catch (SQLException e) {
@@ -55,8 +49,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -69,19 +64,19 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	@Override
 	public void salvar(Persona persona) {
 
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 
 		try {
 
-			mistatement = this.conn.getConnection()
+			statement = this.conn.getConnection()
 					.prepareStatement("UPDATE persona SET nombre = ?, apellido = ?, telefono = ? WHERE cedula = ?");
 
-			mistatement.setString(1, persona.getNombre());
-			mistatement.setString(2, persona.getApellido());
-			mistatement.setString(3, persona.getTelefono());
-			mistatement.setInt(4, persona.getCedula());
+			statement.setString(1, persona.getNombre());
+			statement.setString(2, persona.getApellido());
+			statement.setString(3, persona.getTelefono());
+			statement.setInt(4, persona.getCedula());
 
-			mistatement.executeUpdate();
+			statement.executeUpdate();
 
 		} catch (SQLException e) {
 
@@ -90,8 +85,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -104,13 +100,13 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	@Override
 	public void borrar(String cedula) {
 
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
-			mistatement.setString(1, cedula);
-			mistatement.executeUpdate();
+			statement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
+			statement.setString(1, cedula);
+			statement.executeUpdate();
 
 		} catch (SQLException e) {
 
@@ -119,8 +115,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -134,12 +131,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	public List<Persona> buscarTodos() {
 
 		List<Persona> persona = new ArrayList<Persona>();
-		Statement mistatement = null;
+		Statement statement = null;
 		ResultSet filas = null;
 
 		try {
-			mistatement = this.conn.getConnection().createStatement();
-			filas = mistatement.executeQuery("SELECT * FROM persona");
+			statement = this.conn.getConnection().createStatement();
+			filas = statement.executeQuery("SELECT * FROM persona");
 
 			while (filas.next()) {
 
@@ -163,8 +160,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -215,7 +213,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
+				this.conn.closeConnection();
 				mistatement.close();
 
 			} catch (SQLException e) {
@@ -250,11 +248,15 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			e.printStackTrace();
 
 		} finally {
+			
 			try {
-				this.conn.getConnection().close();
+				
 				statement.close();
+				this.conn.closeConnection();
+				
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+	
 				e.printStackTrace();
 			}
 		}
@@ -340,14 +342,16 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		
 		}finally {
 			
-			try {
-				this.conn.getConnection().close();
-				statement.close();
+				try {
+					statement.close();
+					this.conn.closeConnection();
+					
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
 				
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
+	
 		}
 		
 		return p;

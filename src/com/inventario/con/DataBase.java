@@ -25,13 +25,9 @@ public class DataBase {
 	/*
 	 * Aplicar el Patrón Singleton para conexión. Verificar esto.
 	 */
-	public DataBase(){	
-		
-		
-	};
+	public DataBase(){	};
 	
 	/**
-	 * 
 	 * @return Connection
 	 */
 	
@@ -39,21 +35,37 @@ public class DataBase {
 		
 		try {
 			Class.forName(DRIVER);
-			
-			return conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+
 		} catch (ClassNotFoundException e) {
-		
+
 			e.printStackTrace();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		
-		
-		return null;
-		
+		System.out.println("Abriendo conexion");
+		return this.conn;
+	}
+	
+	public void closeConnection() {
+
+		try {
+
+			if (this.conn != null) {
+				this.conn.close();
+				System.out.println("cerrando conexión");
+
+			} else {
+
+				System.out.println("No hay conexión");
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 }

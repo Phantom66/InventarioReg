@@ -11,12 +11,8 @@ import com.inventario.dao.PerfilDAO;
 
 public class PerfilDAOImpl implements PerfilDAO {
 	
-	private DataBase conn;
+	private DataBase conn = new DataBase();
 	
-	public PerfilDAOImpl(){
-		
-		this.conn = new DataBase();
-	}
 
 	@Override
 	public void insertar(Perfil perfil) {
@@ -39,10 +35,9 @@ public class PerfilDAOImpl implements PerfilDAO {
 			
 		}finally{
 			
-			
 			try {
-				this.conn.getConnection().close();
 				statement.close();
+				this.conn.closeConnection();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -50,7 +45,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 			
 		}
 		
-
 	}
 
 	@Override
@@ -104,8 +98,8 @@ public class PerfilDAOImpl implements PerfilDAO {
 		}finally {
 
 			try {
-				this.conn.getConnection().close();
 				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 

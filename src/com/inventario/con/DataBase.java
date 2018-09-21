@@ -3,11 +3,9 @@ package com.inventario.con;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
  * 
- * Creando esta Clase para crear la coneción y cumplir con el 
+ * Creando esta Clase para crear la conexión y cumplir con el 
  * principio de DRY
  * 
  * @author phantom

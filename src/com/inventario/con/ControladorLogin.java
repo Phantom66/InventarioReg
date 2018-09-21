@@ -76,6 +76,10 @@ public class ControladorLogin extends HttpServlet {
 		} else {
 
 			System.out.println("Eliminando sessiion");
+			
+			//Ver la differencia.
+			//session.invalidate();
+			
 			session.removeAttribute("sessionUsuario");
 			dispatcher = request.getRequestDispatcher("/login.jsp");
 			dispatcher.forward(request, response);

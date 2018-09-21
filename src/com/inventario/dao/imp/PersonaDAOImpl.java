@@ -29,16 +29,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			// mistatement =
 			// this.conn.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-
-			mistatement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-			mistatement.setInt(1, persona.getCedula());
-			mistatement.setString(2, persona.getNombre());
-			mistatement.setString(3, persona.getApellido());
-			mistatement.setString(4, persona.getTelefono());
-
-			mistatement.executeUpdate();
-
 			// Una manera para obtener el id del Insert
 			// ResultSet resul = mistatement.getGeneratedKeys();
 			// int id = 0;
@@ -48,6 +38,15 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			// }
 
 			// return persona.getCedula();
+			
+			mistatement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			mistatement.setInt(1, persona.getCedula());
+			mistatement.setString(2, persona.getNombre());
+			mistatement.setString(3, persona.getApellido());
+			mistatement.setString(4, persona.getTelefono());
+			mistatement.executeUpdate();
+
+
 
 		} catch (SQLException e) {
 
@@ -65,7 +64,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			}
 		}
 
-		// return 0;
 	}
 
 	@Override
@@ -76,7 +74,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		try {
 
 			mistatement = this.conn.getConnection()
-					.prepareStatement("UPDATE persona set nombre = ?, apellido = ?, telefono = ? where cedula = ?");
+					.prepareStatement("UPDATE persona SET nombre = ?, apellido = ?, telefono = ? WHERE cedula = ?");
 
 			mistatement.setString(1, persona.getNombre());
 			mistatement.setString(2, persona.getApellido());
@@ -111,9 +109,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		try {
 
 			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
-
 			mistatement.setString(1, cedula);
-
 			mistatement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -147,15 +143,13 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			while (filas.next()) {
 
-				int id = filas.getInt("id");
-				int cedula = filas.getInt("cedula");
-				String nombre = filas.getString("nombre");
-				String apellido = filas.getString("apellido");
-				String telefono = filas.getString("telefono");
-
-				Persona p = new Persona(cedula, nombre, apellido, telefono);
+				Persona p = new Persona(
+						
+						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"), filas.getString("telefono")
+						
+						);
 				//Lo hago de esta manera para realizar prueba, debo optimizar.
-				p.setId(id);
+				p.setId(filas.getInt("id"));
 				persona.add(p);
 
 			}
@@ -197,12 +191,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			if (filas.next()) {
 
-				int cedula = filas.getInt("cedula");
-				String telefono = filas.getString("telefono");
-				String nombre = filas.getString("nombre");
-				String apellido = filas.getString("apellido");
-
-				persona = new Persona(cedula, nombre, apellido, telefono);
+				persona = new Persona(
+						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"), filas.getString("telefono")
+						);
 
 			} else {
 
@@ -333,15 +324,11 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			
 			
 			while(filas.next()) {
-				
-				int id = filas.getInt("id");
-				int cedula = filas.getInt("cedula");
-				String nombre = filas.getString("nombre");
-				String apellido = filas.getString("apellido");
-				String telefono = filas.getString("telefono");
-				
-				persona = new Persona(cedula,nombre,apellido,telefono);
-				persona.setId(id);
+
+				persona = new Persona(
+						filas.getInt("cedula"),filas.getString("nombre"),filas.getString("apellido"),filas.getString("telefono")
+						);
+				persona.setId(filas.getInt("id"));
 				
 				p.add(persona);
 				

@@ -11,16 +11,6 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>ControladorRegistro</servlet-name>
-		<servlet-class>com.inventario.con.ControladorRegistro</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ControladorRegistro</servlet-name>
-		<url-pattern>/registro.do</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
 		<servlet-name>ControladorEditar</servlet-name>
 		<servlet-class>com.inventario.con.ControladorMain</servlet-class>
 	</servlet>
@@ -41,13 +31,25 @@
   
   <servlet>
     <servlet-name>ControladorCrear</servlet-name>
-    <servlet-class>com.inventario.con.ControladorCrear</servlet-class>
+    <servlet-class>com.inventario.con.ControladorMain</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorCrear</servlet-name>
     <url-pattern>/crear.do</url-pattern>
   </servlet-mapping>
+  
+  	<servlet>
+		<servlet-name>ControladorRegistro</servlet-name>
+		<servlet-class>com.inventario.con.ControladorMain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorRegistro</servlet-name>
+		<url-pattern>/registro.do</url-pattern>
+	</servlet-mapping>
+	
+	
   <servlet>
+  
     <servlet-name>ControladorBorrar</servlet-name>
     <servlet-class>com.inventario.con.ControladorBorrar</servlet-class>
   </servlet>

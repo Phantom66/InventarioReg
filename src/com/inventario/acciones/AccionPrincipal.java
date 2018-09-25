@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
-import com.inventario.con.ControladorActualizar;
 import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.PersonaDAO;
 import com.inventario.dao.ProductoDAO;
@@ -33,59 +32,6 @@ public class AccionPrincipal {
 	
 	public AccionPrincipal() {}
 
-	public void getPrincipalGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = null;
-
-		if (session.getAttribute("sessionUsuario") != null) {
-			PersonaDAOImpl persona = new PersonaDAOImpl();
-
-			int pagActual;
-			int perReg = 5;
-
-			if (request.getParameter("pagActual") == null) {
-
-				pagActual = 1;
-				// perReg = 3;
-			} else {
-
-				pagActual = Integer.valueOf(request.getParameter("pagActual"));
-				// perReg = 3;
-			}
-
-			List<Persona> perPagination = persona.getPerPagination(pagActual, perReg);
-
-			// N° de filas de nuetra tabla.
-			int rows = persona.getRows();
-			int nPages = rows / perReg;
-			if (nPages % perReg > 0) {
-
-				nPages++;
-			}
-
-			request.setAttribute("nPages", nPages);
-			request.setAttribute("pagActual", pagActual);
-			request.setAttribute("perPage", perReg);
-			request.setAttribute("Lista_Productos", perPagination);
-
-			dispatcher = request.getRequestDispatcher("/principal.jsp");
-			dispatcher.forward(request, response);
-
-			String user = (String) session.getAttribute("sessionUsuario");
-			System.out.println("Sessión " + user);
-
-		} else {
-
-			dispatcher = request.getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
-			System.out.println("Sessión " + (String) session.getAttribute("sessionUsuario"));
-
-		}
-
-	}
-	
 	
 	/**
 	 * @param request
@@ -163,6 +109,61 @@ public class AccionPrincipal {
 				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 	
+	public void getPrincipalGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		RequestDispatcher dispatcher = null;
+
+		if (session.getAttribute("sessionUsuario") != null) {
+			PersonaDAOImpl persona = new PersonaDAOImpl();
+
+			int pagActual;
+			int perReg = 5;
+
+			if (request.getParameter("pagActual") == null) {
+
+				pagActual = 1;
+				// perReg = 3;
+			} else {
+
+				pagActual = Integer.valueOf(request.getParameter("pagActual"));
+				// perReg = 3;
+			}
+
+			List<Persona> perPagination = persona.getPerPagination(pagActual, perReg);
+
+			// N° de filas de nuetra tabla.
+			int rows = persona.getRows();
+			int nPages = rows / perReg;
+			if (nPages % perReg > 0) {
+
+				nPages++;
+			}
+
+			request.setAttribute("nPages", nPages);
+			request.setAttribute("pagActual", pagActual);
+			request.setAttribute("perPage", perReg);
+			request.setAttribute("Lista_Productos", perPagination);
+
+			dispatcher = request.getRequestDispatcher("/principal.jsp");
+			dispatcher.forward(request, response);
+
+			String user = (String) session.getAttribute("sessionUsuario");
+			System.out.println("Sessión " + user);
+
+		} else {
+
+			dispatcher = request.getRequestDispatcher("/login.jsp");
+			dispatcher.forward(request, response);
+			System.out.println("Sessión " + (String) session.getAttribute("sessionUsuario"));
+
+		}
+
+	}
+	
+	
+	
 	
 	/**
 	 * @param request
@@ -190,9 +191,10 @@ public class AccionPrincipal {
 
 		persona.salvar(per);
 		product.salvar(pro);
-
-		ControladorActualizar controller = new ControladorActualizar();
-		controller.doGet(request, response);
+		System.out.print("Estoy actualizando");
+		RequestDispatcher despachador = request.getRequestDispatcher("/principal.do");
+		despachador.forward(request, response);		
+		//controller.doGet(request, response);
 	}
 
 	

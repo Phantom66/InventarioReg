@@ -11,17 +11,29 @@ import javax.servlet.http.HttpSession;
 
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
+import com.inventario.bo.Producto;
+import com.inventario.con.ControladorActualizar;
 import com.inventario.dao.PerfilDAO;
+import com.inventario.dao.PersonaDAO;
+import com.inventario.dao.ProductoDAO;
 import com.inventario.dao.imp.PerfilDAOImpl;
 import com.inventario.dao.imp.PersonaDAOImpl;
+import com.inventario.dao.imp.ProductoDAOImpl;
 import com.inventario.utils.SecurityPasswords;
 
+
+/**
+ * Clase creada para obtener las acciones de los Controladores.
+ * 
+ * @author ALeotur
+ *
+ */
 public class AccionPrincipal {
 	
 	
 	public AccionPrincipal() {}
 
-	public void getPrincipal(HttpServletRequest request, HttpServletResponse response)
+	public void getPrincipalGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -81,7 +93,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
+	public void getLogginPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
@@ -150,5 +162,211 @@ public class AccionPrincipal {
 		System.out.println(
 				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
 	}
+	
+	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void getActualizarPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PersonaDAO persona = new PersonaDAOImpl();
+		ProductoDAO product = new ProductoDAOImpl();
+		int cedula = Integer.parseInt(request.getParameter("cedula"));
+		String nombre = request.getParameter("nombre");
+		String apellidos = request.getParameter("apellido");
+		String telefono = request.getParameter("telefono");
+
+		String producto = request.getParameter("producto");
+		String estatus = request.getParameter("status");
+		String descripcion = request.getParameter("descripcion");
+
+		System.out.println(cedula + " " + " " + nombre + "\n");
+
+		Persona per = new Persona(cedula, nombre, apellidos, telefono);
+		Producto pro = new Producto(0, producto, estatus, descripcion, per);
+
+		persona.salvar(per);
+		product.salvar(pro);
+
+		ControladorActualizar controller = new ControladorActualizar();
+		controller.doGet(request, response);
+	}
+
+	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void getBorrarGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PersonaDAO persona = new PersonaDAOImpl();
+
+		String cedula = request.getParameter("cedula");
+
+		System.out.println("Persona que será eliminada " + cedula);
+		persona.borrar(cedula);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("principal.do");
+
+		dispatcher.forward(request, response);
+	}
+
+
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void getCrearGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		RequestDispatcher dispatcher = null;
+		
+		if(session.getAttribute("sessionUsuario")!=null) {
+			
+			dispatcher = request.getRequestDispatcher("/frm.jsp");
+			dispatcher.forward(request, response);
+			
+			
+		}else {
+			
+			dispatcher = request.getRequestDispatcher("/login.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
+
+	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void getEditarGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		RequestDispatcher dispatcher = null;
+		
+		if(session.getAttribute("sessionUsuario")!=null) {
+			
+			String cedula = request.getParameter("cedula");
+
+			PersonaDAO persona = new PersonaDAOImpl();
+			ProductoDAO producto = new ProductoDAOImpl();
+
+			Persona encontrada = persona.buscarPorClave(cedula);
+			Producto encontrado = producto.buscarPorClave(cedula);
+
+			System.out.println(cedula + encontrada + "\n" + encontrado);
+			dispatcher = request.getRequestDispatcher("/editar.jsp");
+
+			request.setAttribute("encontrada", encontrada);
+			request.setAttribute("encontrado", encontrado);
+			dispatcher.forward(request, response);
+			
+		}else {
+			
+			dispatcher = request.getRequestDispatcher("/login.jsp");
+			dispatcher.forward(request, response);
+		}
+	
+
+		String user = (String) session.getAttribute("sessionUsuario");
+		System.out.println("Sessión " + user);
+	}
+
+
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void getRegistrPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int cedula = Integer.parseInt(request.getParameter("cedula"));
+		String nombre = request.getParameter("nombre");
+		String apellidos = request.getParameter("apellido");
+		String telefono = request.getParameter("telefono");
+
+		String producto = request.getParameter("producto");
+		String estatus = request.getParameter("status");
+		String descripcion = request.getParameter("descripcion");
+
+		PersonaDAOImpl insertar = new PersonaDAOImpl();
+		ProductoDAOImpl product = new ProductoDAOImpl();
+		
+		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
+		insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
+		product.insertar(new Producto(0, producto, estatus, descripcion), cedula);
+		
+		System.out.print("Estoy registrando");
+		RequestDispatcher  despachador = request.getRequestDispatcher("/principal.do");
+		despachador.forward(request, response);
+	}
+
+
+	/**
+	 * @param request
+	 * @param response
+	 */
+	public void getRegUserPost(HttpServletRequest request, HttpServletResponse response) {
+		String name = request.getParameter("user");
+		String email = request.getParameter("email");
+		String password = SecurityPasswords.encriptar(request.getParameter("pass"));;
+		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
+
+		PerfilDAO buscarPerfil = new PerfilDAOImpl();
+		Perfil perfil = buscarPerfil.buscarPorClave(email);
+
+		if (perfil != null) {
+			
+			try {
+				System.out.println("Contraseña No Coinciden.");
+				request.setAttribute("mensageError", "Perfil Existe.");
+				request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
+
+			} catch (ServletException e) {
+
+				e.printStackTrace();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+
+		} else {
+
+			try {
+				System.out.println("perfil no existe");
+
+				if (password.equalsIgnoreCase(pass)) {
+
+					perfil = new Perfil(0, name, email, password);
+					buscarPerfil.insertar(perfil);
+					request.setAttribute("messageSuccess", "Registro Exitoso!!");
+					request.getRequestDispatcher("/login.jsp").forward(request, response);
+
+				} else {
+					
+					request.setAttribute("messageError", "Contraseña No Coinciden.");
+					request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
+				}
+
+			} catch (ServletException e) {
+
+				e.printStackTrace();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
 
 }

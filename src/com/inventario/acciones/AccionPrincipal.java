@@ -199,6 +199,7 @@ public class AccionPrincipal {
 
 	
 	/**
+	 * Debería ser enviado por método Post o Delete verificar
 	 * @param request
 	 * @param response
 	 * @throws ServletException

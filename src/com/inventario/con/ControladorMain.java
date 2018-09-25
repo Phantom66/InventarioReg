@@ -35,6 +35,10 @@ public class ControladorMain extends HttpServlet {
 			
 			main.getCrearGet(request, response);
 			
+		}else if(getUrl(request).equals("/borrar.do")){
+			
+			main.getBorrarGet(request, response);
+			
 		}else {
 			
 			System.out.println("Estoy en la ---" + url);
@@ -56,6 +60,10 @@ public class ControladorMain extends HttpServlet {
 		}else if(getUrl(request).equals("/registro.do")){
 			
 			main.getRegistrPost(request, response);
+			
+		}else if(getUrl(request).equals("/reg_user.do")){
+			
+			main.getRegUserPost(request, response);
 			
 		}else {
 			System.out.println("Estoy en la ---" + url);

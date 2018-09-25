@@ -49,9 +49,8 @@
 	
 	
   <servlet>
-  
-    <servlet-name>ControladorBorrar</servlet-name>
-    <servlet-class>com.inventario.con.ControladorBorrar</servlet-class>
+	<servlet-name>ControladorBorrar</servlet-name>
+	<servlet-class>com.inventario.con.ControladorMain</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorBorrar</servlet-name>
@@ -60,7 +59,7 @@
 
   <servlet>
   	<servlet-name>ControladorRegUser</servlet-name>
-  	<servlet-class>com.inventario.con.ControladorRegUser</servlet-class>
+  	<servlet-class>com.inventario.con.ControladorMain</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>ControladorRegUser</servlet-name>

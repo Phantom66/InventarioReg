@@ -69,7 +69,7 @@ public class AccionPrincipal {
 
 						session.setAttribute("sessionUsuario", perfil.getName());
 
-						dispatcher = request.getRequestDispatcher("/principal.do");
+						dispatcher = request.getRequestDispatcher("/principal.do?action=principal");
 						dispatcher.forward(request, response);
 
 					} else {
@@ -232,7 +232,7 @@ public class AccionPrincipal {
 		
 		if(session.getAttribute("sessionUsuario")!=null) {
 			
-			dispatcher = request.getRequestDispatcher("/frm.jsp");
+			dispatcher = request.getRequestDispatcher("/frm.jsp?action=form");
 			dispatcher.forward(request, response);
 			
 			

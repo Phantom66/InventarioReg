@@ -2,7 +2,7 @@
 <!--Contenet -->
 <div class="container">
 
-	<form action="actualizar.do" method="post">
+	<form action="actualizar.do?action=actualizar" method="post">
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label for="cedula ">cedula:</label>

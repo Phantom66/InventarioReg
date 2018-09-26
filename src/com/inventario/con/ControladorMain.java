@@ -23,6 +23,8 @@ public class ControladorMain extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		System.out.println("Estoy en la "+request.getParameter("action"));
+		
 		if (getUrl(request).equals("/principal.do")) {
 
 			main.getPrincipalGet(request, response);
@@ -49,6 +51,8 @@ public class ControladorMain extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		System.out.println("Estoy en la "+request.getParameter("action"));
+		
 		if (getUrl(request).equals("/principal.do")) {
 
 			main.getPrincipalGet(request, response);

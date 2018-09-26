@@ -30,9 +30,9 @@
 					<td>${temporal.telefono}</td>
 					<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
 					<td><a class="btn btn-primary"
-						href="editar.do?cedula=${temporal.cedula}" role="button">Editar</a></td>
+						href="editar.do?action=editar&cedula=${temporal.cedula}" role="button">Editar</a></td>
 					<td><a class="btn btn-primary"
-						href="borrar.do?cedula=${temporal.cedula}" role="button">Eliminar</a></td>
+						href="borrar.do?action=borrar&cedula=${temporal.cedula}" role="button">Eliminar</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

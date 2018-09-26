@@ -35,11 +35,11 @@
 			<label> 
 				<a href="registro_user.jsp">Registrarse</a>
 			</label>
-			<c:if test="${not empty mensageError}">
+			<c:if test="${not empty menssageError}">
 				<%@ include file="errorPage/errorUser_Password.jsp" %>
 			</c:if>
 			<c:if test="${not empty messageSuccess}">
-				<%@ include file="errorPage/errorUser_Password.jsp"%>
+				<%@ include file="errorPage/regSuccess.jsp"%>
 			</c:if>
 		</div>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

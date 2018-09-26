@@ -3,11 +3,9 @@ package com.inventario.con;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
  * 
- * Creando esta Clase para crear la coneción y cumplir con el 
+ * Creando esta Clase para crear la conexión y cumplir con el 
  * principio de DRY
  * 
  * @author phantom
@@ -25,13 +23,9 @@ public class DataBase {
 	/*
 	 * Aplicar el Patrón Singleton para conexión. Verificar esto.
 	 */
-	public DataBase(){	
-		
-		
-	};
+	public DataBase(){	};
 	
 	/**
-	 * 
 	 * @return Connection
 	 */
 	
@@ -39,21 +33,37 @@ public class DataBase {
 		
 		try {
 			Class.forName(DRIVER);
-			
-			return conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+
 		} catch (ClassNotFoundException e) {
-		
+
 			e.printStackTrace();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		
-		
-		return null;
-		
+		System.out.println("Abriendo conexion");
+		return this.conn;
+	}
+	
+	public void closeConnection() {
+
+		try {
+
+			if (this.conn != null) {
+				this.conn.close();
+				System.out.println("cerrando conexión");
+
+			} else {
+
+				System.out.println("No hay conexión");
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 }

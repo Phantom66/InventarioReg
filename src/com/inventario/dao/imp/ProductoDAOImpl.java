@@ -12,236 +12,209 @@ import com.inventario.dao.ProductoDAO;
 
 public class ProductoDAOImpl implements ProductoDAO {
 	
-	
-	
-	private DataBase conn;
+	private DataBase conn = new DataBase();
 
-	public ProductoDAOImpl() {
-		
-		this.conn = new DataBase();
-	}
 
 	@Override
-	public void insertar(Producto producto,int id) {
+	public void insertar(Producto producto, int id) {
 
-		PreparedStatement mistatement = null;
-		
+		PreparedStatement statement = null;
+
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("INSERT INTO producto(nombre, estatus, descripcion,id_persona)VALUES (?,?,?,?)");
-			
-			mistatement.setString(1, producto.getNombre());
-			mistatement.setString(2, producto.getEstatus());
-			mistatement.setString(3, producto.getDescripcion());
-			mistatement.setInt(4, id);
-			mistatement.executeUpdate();
-			
-			
+			statement = this.conn.getConnection()
+					.prepareStatement("INSERT INTO producto(nombre, estatus, descripcion,id_persona)VALUES (?,?,?,?)");
+
+			statement.setString(1, producto.getNombre());
+			statement.setString(2, producto.getEstatus());
+			statement.setString(3, producto.getDescripcion());
+			statement.setInt(4, id);
+			statement.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-		}finally {
-			
+
+		} finally {
+
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
-				
+
+				statement.close();
+				this.conn.closeConnection();
+				;
+
 			} catch (SQLException e) {
-			
+
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		
-		
+
 	}
 
 	@Override
 	public void salvar(Producto producto) {
 
-		PreparedStatement mistatement = null;
-		
+		PreparedStatement statement = null;
+
 		try {
-			
-			mistatement = this.conn.getConnection().prepareStatement("UPDATE producto SET nombre = ?, estatus = ?, descripcion = ? WHERE id_persona = ?");
-			
-			mistatement.setString(1, producto.getNombre());
-			mistatement.setString(2, producto.getEstatus());
-			mistatement.setString(3, producto.getDescripcion());
-			mistatement.setInt(4, producto.getPersona().getCedula());
-			
-			mistatement.executeUpdate();
-			
-			
-		}  catch (SQLException e) {
+
+			statement = this.conn.getConnection().prepareStatement(
+					"UPDATE producto SET nombre = ?, estatus = ?, descripcion = ? WHERE id_persona = ?");
+
+			statement.setString(1, producto.getNombre());
+			statement.setString(2, producto.getEstatus());
+			statement.setString(3, producto.getDescripcion());
+			statement.setInt(4, producto.getPersona().getCedula());
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
 
 			e.printStackTrace();
-			
-		}finally {
-			
+
+		} finally {
+
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
-				
+				statement.close();
+				this.conn.closeConnection();
+
 			} catch (SQLException e) {
-			
+
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		
-		
-		
+
 	}
 
 	@Override
 	public void borrar(Producto producto) {
-		
-		PreparedStatement mistatement = null;
-		
+
+		PreparedStatement statement = null;
+
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM producto WHERE id = ?");
-			
-			mistatement.setInt(1, producto.getId());
-			
-			mistatement.execute();
-			
-			
+			statement = this.conn.getConnection().prepareStatement("DELETE FROM producto WHERE id = ?");
+			statement.setInt(1, producto.getId());
+
+			statement.execute();
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			
-		}finally {
-			
+
+		} finally {
+
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
-				
+				statement.close();
+				this.conn.closeConnection();
+
 			} catch (SQLException e) {
-			
+
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		
-		
+
 	}
 
 	@Override
 	public List<Producto> buscarTodos() {
-		
-		List<Producto>producto = new ArrayList<Producto>();
-		PreparedStatement mistatement = null;
+
+		List<Producto> producto = new ArrayList<Producto>();
+		PreparedStatement statement = null;
 		ResultSet filas = null;
-		
+
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM producto");
-			
-			filas = mistatement.executeQuery();
-			
-			while(filas.next()) {
-				
-				String nombre = filas.getString("nombre");
-				String estatus = filas.getString("estatus");
-				String descripcion = filas.getString("descripcion");
-				
-				//Coloco cero el id, porque esto se generea automático.s
-				Producto p = new Producto(0, nombre,estatus,descripcion);
-				
+			statement = this.conn.getConnection().prepareStatement("SELECT * FROM producto");
+			filas = statement.executeQuery();
+
+			while (filas.next()) {
+
+				// Coloco cero el id, porque esto se generea automático.s
+				Producto p = new Producto(0, filas.getString("nombre"), filas.getString("estatus"),
+						filas.getString("descripcion"));
+
 				producto.add(p);
-				
+
 			}
-			
+
 			return producto;
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-			
-		}finally {
-			
+
+		} finally {
+
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
-				
+
+				statement.close();
+				this.conn.closeConnection();
+
 			} catch (SQLException e) {
-			
+
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		
-		
-		
+
 		return null;
 	}
 
 	@Override
 	public Producto buscarPorClave(String id) {
-		
+
 		Producto p = null;
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 		ResultSet filas = null;
-		
+
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id_persona = ?");
-			
-			mistatement.setString(1, id);
-			filas = mistatement.executeQuery();
-			
-			if(filas.next()) {
-				
-				int identificador = filas.getInt("id");
-				String nombre = filas.getString("nombre");
-				String estatus = filas.getString("estatus");
-				String descripcion = filas.getString("descripcion");
-				
-				p = new Producto(identificador,nombre,estatus,descripcion);
-				
-			}else {
-				
+			statement = this.conn.getConnection().prepareStatement("SELECT * FROM producto WHERE id_persona = ?");
+
+			statement.setString(1, id);
+			filas = statement.executeQuery();
+
+			if (filas.next()) {
+
+				p = new Producto(filas.getInt("id"), filas.getString("nombre"), filas.getString("estatus"),
+						filas.getString("descripcion"));
+
+			} else {
+
 				throw new Exception(" Producto no se consigue " + id);
 			}
-			
+
 			return p;
-			
-			
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			
+
 		} catch (Exception e) {
-		
+
 			e.printStackTrace();
-			
-		}finally {
-			
+
+		} finally {
+
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
-				
+
+				statement.close();
+				this.conn.closeConnection();
+
 			} catch (SQLException e) {
-			
+
 				e.printStackTrace();
 			}
-			
-			
+
 		}
-		
-		
+
 		return null;
 	}
 
-	
 }

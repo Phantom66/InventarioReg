@@ -11,34 +11,19 @@ import com.inventario.con.DataBase;
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
-	private DataBase conn;
+	private DataBase conn = new DataBase();
 
-	public PersonaDAOImpl() {
-
-		this.conn = new DataBase();
-
-	}
 
 	@Override
 	public void insertar(Persona persona) {
 
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 
 		String sql = "INSERT INTO persona(cedula, nombre, apellido, telefono) VALUES  (?,?,?,?)";
 		try {
 
 			// mistatement =
 			// this.conn.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-
-			mistatement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-			mistatement.setInt(1, persona.getCedula());
-			mistatement.setString(2, persona.getNombre());
-			mistatement.setString(3, persona.getApellido());
-			mistatement.setString(4, persona.getTelefono());
-
-			mistatement.executeUpdate();
-
 			// Una manera para obtener el id del Insert
 			// ResultSet resul = mistatement.getGeneratedKeys();
 			// int id = 0;
@@ -48,6 +33,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			// }
 
 			// return persona.getCedula();
+			
+			statement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, persona.getCedula());
+			statement.setString(2, persona.getNombre());
+			statement.setString(3, persona.getApellido());
+			statement.setString(4, persona.getTelefono());
+			statement.executeUpdate();
+
 
 		} catch (SQLException e) {
 
@@ -56,8 +49,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -65,25 +59,24 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			}
 		}
 
-		// return 0;
 	}
 
 	@Override
 	public void salvar(Persona persona) {
 
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 
 		try {
 
-			mistatement = this.conn.getConnection()
-					.prepareStatement("UPDATE persona set nombre = ?, apellido = ?, telefono = ? where cedula = ?");
+			statement = this.conn.getConnection()
+					.prepareStatement("UPDATE persona SET nombre = ?, apellido = ?, telefono = ? WHERE cedula = ?");
 
-			mistatement.setString(1, persona.getNombre());
-			mistatement.setString(2, persona.getApellido());
-			mistatement.setString(3, persona.getTelefono());
-			mistatement.setInt(4, persona.getCedula());
+			statement.setString(1, persona.getNombre());
+			statement.setString(2, persona.getApellido());
+			statement.setString(3, persona.getTelefono());
+			statement.setInt(4, persona.getCedula());
 
-			mistatement.executeUpdate();
+			statement.executeUpdate();
 
 		} catch (SQLException e) {
 
@@ -92,8 +85,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -106,15 +100,13 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	@Override
 	public void borrar(String cedula) {
 
-		PreparedStatement mistatement = null;
+		PreparedStatement statement = null;
 
 		try {
 
-			mistatement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
-
-			mistatement.setString(1, cedula);
-
-			mistatement.executeUpdate();
+			statement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
+			statement.setString(1, cedula);
+			statement.executeUpdate();
 
 		} catch (SQLException e) {
 
@@ -123,8 +115,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -138,24 +131,22 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	public List<Persona> buscarTodos() {
 
 		List<Persona> persona = new ArrayList<Persona>();
-		Statement mistatement = null;
+		Statement statement = null;
 		ResultSet filas = null;
 
 		try {
-			mistatement = this.conn.getConnection().createStatement();
-			filas = mistatement.executeQuery("SELECT * FROM persona");
+			statement = this.conn.getConnection().createStatement();
+			filas = statement.executeQuery("SELECT * FROM persona");
 
 			while (filas.next()) {
 
-				int id = filas.getInt("id");
-				int cedula = filas.getInt("cedula");
-				String nombre = filas.getString("nombre");
-				String apellido = filas.getString("apellido");
-				String telefono = filas.getString("telefono");
-
-				Persona p = new Persona(cedula, nombre, apellido, telefono);
+				Persona p = new Persona(
+						
+						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"), filas.getString("telefono")
+						
+						);
 				//Lo hago de esta manera para realizar prueba, debo optimizar.
-				p.setId(id);
+				p.setId(filas.getInt("id"));
 				persona.add(p);
 
 			}
@@ -169,8 +160,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
-				mistatement.close();
+				
+				statement.close();
+				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
@@ -197,12 +189,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			if (filas.next()) {
 
-				int cedula = filas.getInt("cedula");
-				String telefono = filas.getString("telefono");
-				String nombre = filas.getString("nombre");
-				String apellido = filas.getString("apellido");
-
-				persona = new Persona(cedula, nombre, apellido, telefono);
+				persona = new Persona(
+						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"), filas.getString("telefono")
+						);
 
 			} else {
 
@@ -224,7 +213,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} finally {
 
 			try {
-				this.conn.getConnection().close();
+				this.conn.closeConnection();
 				mistatement.close();
 
 			} catch (SQLException e) {
@@ -259,11 +248,15 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			e.printStackTrace();
 
 		} finally {
+			
 			try {
-				this.conn.getConnection().close();
+				
 				statement.close();
+				this.conn.closeConnection();
+				
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+	
 				e.printStackTrace();
 			}
 		}
@@ -279,10 +272,49 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		List<Persona>p = new ArrayList<Persona>();
 		Persona persona;
 		
-		//Verificar esta lógica.
+		/*
+		 * Con este cálculo puedo ir  corriendo las posiciones del registro
+		 * de mi tabla.
+		 * 
+		 * Ejemplo: Si quiero que me muestre de 5 en 5 los registro de mi tabla
+		 * , y quiero que me muestre un primer reglón, realizamos el cálculo:
+		 * 
+		 * pagActual = 1;
+		 * pagPerReg = 5;
+		 * start = ?;
+		 * 
+		 * start = (1*5)-5 = 0;
+		 * start = 0;
+		 * 
+		 * Con esto le indico a mi sentencia Sql(SELECT * FROM `persona` LIMIT 0 ,5)
+		 * que me muestre los cinco primeros registros de la tabla, al realiza el cálculo
+		 * nuevamente, cambiamos la página a 2:
+		 * 
+		 * pagActual = 2;
+		 * pagPerReg = 5;
+		 * start = ?;
+		 * 
+		 * start = (2*5)-5 = 5;
+		 * start = 5;
+		 * 
+		 * Con esto le indicamos a la sentencia Sql Sql(SELECT * FROM `persona` LIMIT 5 ,5)
+		 * que me muestre los tres segundo registro.
+		 * 
+		 * Esto sucesivamente a hasta mostra el final de los registro.
+		 * 
+		 * Cabe mencionar que la clave está como la palabra LIMIT en la sentencia SQL
+		 * muestra este tipo de información, el muestra la cantidad de valores
+		 * de acuerdo le indiquemos en el segundo parámetro.
+		 * 
+		 * si es de 3 en 3 o de 10 en 10, y va desde la posición de incio 0 hasta la posición
+		 * del registro que le indiquemos, ejemplo: 
+		 * posición 0(primeros registros a mostrar) y de acuerdo al segundo parámetro se empieza,
+		 * a contar, en caso de que sea 5 el segundo parámetro; 0,1,2,3,4, como si fuera una array luego se debe mover
+		 * a la posición 5; 5,6,7,8,9, y de esta manera mostraría los primeros 10 registro de 
+		 * 5 en 5 de forma consecutiva.
+		 * 
+		 */
 		 int start = (pagActual * perReg) - perReg;
-//
-//		System.out.println(start);
 		
 		try {
 			statement = this.conn.getConnection().prepareStatement("SELECT * FROM persona LIMIT ?,?");
@@ -294,15 +326,11 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			
 			
 			while(filas.next()) {
-				
-				int id = filas.getInt("id");
-				int cedula = filas.getInt("cedula");
-				String nombre = filas.getString("nombre");
-				String apellido = filas.getString("apellido");
-				String telefono = filas.getString("telefono");
-				
-				persona = new Persona(cedula,nombre,apellido,telefono);
-				persona.setId(id);
+
+				persona = new Persona(
+						filas.getInt("cedula"),filas.getString("nombre"),filas.getString("apellido"),filas.getString("telefono")
+						);
+				persona.setId(filas.getInt("id"));
 				
 				p.add(persona);
 				
@@ -314,14 +342,16 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		
 		}finally {
 			
-			try {
-				this.conn.getConnection().close();
-				statement.close();
+				try {
+					statement.close();
+					this.conn.closeConnection();
+					
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
 				
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
+	
 		}
 		
 		return p;

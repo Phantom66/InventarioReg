@@ -1,61 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <servlet>
-    <servlet-name>ControladorInventario</servlet-name>
-    <servlet-class>com.inventario.con.ControladorInventario</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ControladorInventario</servlet-name>
-    <url-pattern>/principal.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ControladorRegistro</servlet-name>
-    <servlet-class>com.inventario.con.ControladorRegistro</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ControladorRegistro</servlet-name>
-    <url-pattern>/registro.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ControladorEditar</servlet-name>
-    <servlet-class>com.inventario.con.ControladorEditar</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ControladorEditar</servlet-name>
-    <url-pattern>/editar.do</url-pattern>
-  </servlet-mapping>
+
+	<servlet>
+		<servlet-name>ControladorMain</servlet-name>
+		<servlet-class>com.inventario.con.ControladorMain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorMain</servlet-name>
+		<url-pattern>/principal.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ControladorEditar</servlet-name>
+		<servlet-class>com.inventario.con.ControladorMain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorEditar</servlet-name>
+		<url-pattern>/editar.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ControladorActualizar</servlet-name>
+		<servlet-class>com.inventario.con.ControladorMain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorActualizar</servlet-name>
+		<url-pattern>/actualizar.do</url-pattern>
+	</servlet-mapping>
+  
   <servlet>
     <servlet-name>ControladorCrear</servlet-name>
-    <servlet-class>com.inventario.con.ControladorCrear</servlet-class>
+    <servlet-class>com.inventario.con.ControladorMain</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorCrear</servlet-name>
     <url-pattern>/crear.do</url-pattern>
   </servlet-mapping>
+  
+  	<servlet>
+		<servlet-name>ControladorRegistro</servlet-name>
+		<servlet-class>com.inventario.con.ControladorMain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorRegistro</servlet-name>
+		<url-pattern>/registro.do</url-pattern>
+	</servlet-mapping>
+	
+	
   <servlet>
-    <servlet-name>ControladorBorrar</servlet-name>
-    <servlet-class>com.inventario.con.ControladorBorrar</servlet-class>
+	<servlet-name>ControladorBorrar</servlet-name>
+	<servlet-class>com.inventario.con.ControladorMain</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControladorBorrar</servlet-name>
     <url-pattern>/borrar.do</url-pattern>
   </servlet-mapping>
-  <servlet>
-  	<servlet-name>ControladorActualizar</servlet-name>
-  	<servlet-class>com.inventario.con.ControladorActualizar</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>ControladorActualizar</servlet-name>
-  	<url-pattern>/actualizar.do</url-pattern>
-  </servlet-mapping>
+
   <servlet>
   	<servlet-name>ControladorRegUser</servlet-name>
-  	<servlet-class>com.inventario.con.ControladorRegUser</servlet-class>
+  	<servlet-class>com.inventario.con.ControladorMain</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>ControladorRegUser</servlet-name>
   	<url-pattern>/reg_user.do</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <servlet-name>ControladorLogin</servlet-name>
     <servlet-class>com.inventario.con.ControladorLogin</servlet-class>
@@ -64,6 +74,7 @@
     <servlet-name>ControladorLogin</servlet-name>
     <url-pattern>/login.do</url-pattern>
   </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>

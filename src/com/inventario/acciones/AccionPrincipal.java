@@ -35,38 +35,44 @@ public class AccionPrincipal {
 	public AccionPrincipal() {}
 
 	
+	/**
+	 * Método que utiliza el reflection de Java
+	 * para ejecutar los métodos de la clase y así evitar
+	 * utilizar los if anidados.
+	 * 
+	 * @param accion
+	 * @param request
+	 * @param response
+	 */
 	public <T> void getAccion(String accion, HttpServletRequest request, HttpServletResponse response) {
-		
-		
+
 		try {
 			T obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
-			
-			Method [] metodos = obj.getClass().getDeclaredMethods();
-			
-			for(int i=0; i<metodos.length; i++) {
-				
-				if(metodos[i].getName().substring(3).equals(accion)) {
-					
+
+			Method[] metodos = obj.getClass().getDeclaredMethods();
+
+			for (int i = 0; i < metodos.length; i++) {
+
+				if (metodos[i].getName().substring(3).equals(accion)) {
+
 					metodos[i].invoke(obj, request, response);
-					//System.out.println(metodos[i].getName());
+
 				}
-				
-		
-				
+
 			}
-			
+
 		} catch (InstantiationException e) {
 
 			e.printStackTrace();
-			
-			
+
 		} catch (IllegalAccessException e) {
-			
+
+			e.printStackTrace();
+
+		} catch (ClassNotFoundException | IllegalArgumentException e) {
+
 			e.printStackTrace();
 			
-		} catch (ClassNotFoundException | IllegalArgumentException  e) {
-			
-			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +122,7 @@ public class AccionPrincipal {
 
 					} else {
 
-						request.setAttribute("mensageError", "Usuario o Contraseña Incorrecta");
+						request.setAttribute("messageError", "Usuario o Contraseña Incorrecta");
 						dispatcher = request.getRequestDispatcher("/login.jsp");
 						dispatcher.forward(request, response);
 
@@ -124,7 +130,7 @@ public class AccionPrincipal {
 
 				} else {
 
-					request.setAttribute("mensageError", "Usuario no existe, debe registrarse");
+					request.setAttribute("messageError", "Usuario no existe, debe registrarse");
 					request.getRequestDispatcher("/login.jsp").forward(request, response);
 				}
 
@@ -373,7 +379,7 @@ public class AccionPrincipal {
 			
 			try {
 				System.out.println("Contraseña No Coinciden.");
-				request.setAttribute("mensageError", "Perfil Existe.");
+				request.setAttribute("messageError", "Perfil Existe.");
 				request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
 
 			} catch (ServletException e) {

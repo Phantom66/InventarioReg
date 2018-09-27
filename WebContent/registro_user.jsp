@@ -22,7 +22,7 @@
 						<h3 class="panel-title text-center">Registrarse</h3>
 					</div>
 					<div class="panel-body">
-						<form action="Reg_User.do" method="post" role="form">
+						<form action="RegUser.do" method="post" role="form">
 							<fieldset>
 								<div class="form-group">
 									<label for="user">Nombre</label> 
@@ -43,7 +43,7 @@
 									<label for="passConfirm"> Confirm Password</label> 
 									<input type="password" class="form-control" id="passConfirm" name="passConfirm" placeholder="Confirme Password" required>
 								</div>
-								<c:if test="${not empty mensageError}">
+								<c:if test="${not empty messageError}">
 									<%@ include file="errorPage/errorUser_Password.jsp"%>
 								</c:if>
 								<button type="submit" class="btn btn-primary">Registrar</button>

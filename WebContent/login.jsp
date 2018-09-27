@@ -35,7 +35,7 @@
 			<label> 
 				<a href="registro_user.jsp">Registrarse</a>
 			</label>
-			<c:if test="${not empty menssageError}">
+			<c:if test="${not empty messageError}">
 				<%@ include file="errorPage/errorUser_Password.jsp" %>
 			</c:if>
 			<c:if test="${not empty messageSuccess}">

@@ -1,6 +1,8 @@
 package com.inventario.acciones;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,13 +35,53 @@ public class AccionPrincipal {
 	public AccionPrincipal() {}
 
 	
+	public <T> void getAccion(String accion, HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		try {
+			T obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
+			
+			Method [] metodos = obj.getClass().getDeclaredMethods();
+			
+			for(int i=0; i<metodos.length; i++) {
+				
+				if(metodos[i].getName().substring(3).equals(accion)) {
+					
+					metodos[i].invoke(obj, request, response);
+					//System.out.println(metodos[i].getName());
+				}
+				
+		
+				
+			}
+			
+		} catch (InstantiationException e) {
+
+			e.printStackTrace();
+			
+			
+		} catch (IllegalAccessException e) {
+			
+			e.printStackTrace();
+			
+		} catch (ClassNotFoundException | IllegalArgumentException  e) {
+			
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	/**
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getLogginPost(HttpServletRequest request, HttpServletResponse response)
+	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
@@ -69,7 +111,7 @@ public class AccionPrincipal {
 
 						session.setAttribute("sessionUsuario", perfil.getName());
 
-						dispatcher = request.getRequestDispatcher("/principal.do?action=principal");
+						dispatcher = request.getRequestDispatcher("/Principal.do");
 						dispatcher.forward(request, response);
 
 					} else {
@@ -109,7 +151,7 @@ public class AccionPrincipal {
 				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 	
-	public void getPrincipalGet(HttpServletRequest request, HttpServletResponse response)
+	public void getPrincipal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -171,7 +213,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getActualizarPost(HttpServletRequest request, HttpServletResponse response)
+	public void getActualizar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
@@ -192,7 +234,7 @@ public class AccionPrincipal {
 		persona.salvar(per);
 		product.salvar(pro);
 		System.out.print("Estoy actualizando");
-		RequestDispatcher despachador = request.getRequestDispatcher("/principal.do");
+		RequestDispatcher despachador = request.getRequestDispatcher("/Principal.do");
 		despachador.forward(request, response);		
 		//controller.doGet(request, response);
 	}
@@ -205,7 +247,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getBorrarGet(HttpServletRequest request, HttpServletResponse response)
+	public void getBorrar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PersonaDAO persona = new PersonaDAOImpl();
 
@@ -213,7 +255,7 @@ public class AccionPrincipal {
 
 		System.out.println("Persona que será eliminada " + cedula);
 		persona.borrar(cedula);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("principal.do");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Principal.do");
 
 		dispatcher.forward(request, response);
 	}
@@ -225,14 +267,14 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getCrearGet(HttpServletRequest request, HttpServletResponse response)
+	public void getCrear(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		RequestDispatcher dispatcher = null;
 		
 		if(session.getAttribute("sessionUsuario")!=null) {
 			
-			dispatcher = request.getRequestDispatcher("/frm.jsp?action=form");
+			dispatcher = request.getRequestDispatcher("/frm.jsp");
 			dispatcher.forward(request, response);
 			
 			
@@ -250,7 +292,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getEditarGet(HttpServletRequest request, HttpServletResponse response)
+	public void getEditar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		RequestDispatcher dispatcher = null;
@@ -290,7 +332,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getRegistrPost(HttpServletRequest request, HttpServletResponse response)
+	public void getRegistrar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int cedula = Integer.parseInt(request.getParameter("cedula"));
 		String nombre = request.getParameter("nombre");
@@ -309,7 +351,7 @@ public class AccionPrincipal {
 		product.insertar(new Producto(0, producto, estatus, descripcion), cedula);
 		
 		System.out.print("Estoy registrando");
-		RequestDispatcher  despachador = request.getRequestDispatcher("/principal.do");
+		RequestDispatcher  despachador = request.getRequestDispatcher("/Principal.do");
 		despachador.forward(request, response);
 	}
 
@@ -318,7 +360,7 @@ public class AccionPrincipal {
 	 * @param request
 	 * @param response
 	 */
-	public void getRegUserPost(HttpServletRequest request, HttpServletResponse response) {
+	public void getRegUser(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("user");
 		String email = request.getParameter("email");
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));;

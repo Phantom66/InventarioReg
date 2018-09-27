@@ -30,9 +30,9 @@
 					<td>${temporal.telefono}</td>
 					<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
 					<td><a class="btn btn-primary"
-						href="editar.do?action=editar&cedula=${temporal.cedula}" role="button">Editar</a></td>
+						href="Editar.do?cedula=${temporal.cedula}" role="button">Editar</a></td>
 					<td><a class="btn btn-primary"
-						href="borrar.do?action=borrar&cedula=${temporal.cedula}" role="button">Eliminar</a></td>
+						href="Borrar.do?cedula=${temporal.cedula}" role="button">Eliminar</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -43,7 +43,7 @@
 		<ul class="pagination justify-content-center">
 			<li class="page-item" >
 				<c:if test="${pagActual != 1}">	
-					<a class="page-link" href="principal.do?pagActual=${pagActual-1}" >Previous</a>
+					<a class="page-link" href="Principal.do?pagActual=${pagActual-1}" >Previous</a>
 				</c:if>
 				<c:if test="${pagActual == 1}">	
 					<a class="page-link disabled" href="#" >Previous</a>
@@ -58,13 +58,13 @@
 					</c:when>
 					<c:otherwise>
 						<li class="page-item"><a class="page-link"
-							href="principal.do?pagActual=${i}">${i}</a>
+							href="Principal.do?pagActual=${i}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<li class="page-item">
-				<a class="page-link" href="principal.do?pagActual=${pagActual+1}">Next</a>	
+				<a class="page-link" href="Principal.do?pagActual=${pagActual+1}">Next</a>	
 			</li>
 			
 		</ul>

@@ -31,7 +31,7 @@ import com.inventario.utils.SecurityPasswords;
  */
 public class AccionPrincipal {
 	
-	
+	HttpSession session;
 	public AccionPrincipal() {}
 
 	
@@ -95,7 +95,7 @@ public class AccionPrincipal {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		RequestDispatcher dispatcher = null;
 		Perfil perfil = null;
 		PerfilDAO buscarPerfil;
@@ -161,10 +161,14 @@ public class AccionPrincipal {
 				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 	
+	
+	
+	
+	
 	public String getPrincipal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
+		session = request.getSession();
 
 		if (session.getAttribute("sessionUsuario") != null) {
 			PersonaDAOImpl persona = new PersonaDAOImpl();
@@ -225,20 +229,18 @@ public class AccionPrincipal {
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
 
-		String producto = request.getParameter("producto");
-		String estatus = request.getParameter("status");
-		String descripcion = request.getParameter("descripcion");
-
-//		System.out.println(cedula + " " + " " + nombre + "\n");
-
 		Persona per = new Persona(
 				Integer.parseInt(request.getParameter("cedula")), 
 				request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("telefono"));
-		Producto pro = new Producto(0, producto, estatus, descripcion, per);
+		//Mejorar
+		Producto pro = new Producto(0, 
+				request.getParameter("producto"), request.getParameter("status"), 
+				request.getParameter("descripcion"), per);
 
 		persona.salvar(per);
 		product.salvar(pro);
-		System.out.print("Estoy actualizando");
+		
+		System.out.print("Estoy actualizando " + per.getCedula() + per.getNombre());
 		
 		return "/Principal.do";	
 		
@@ -256,11 +258,9 @@ public class AccionPrincipal {
 			throws ServletException, IOException {
 		PersonaDAO persona = new PersonaDAOImpl();
 
-		String cedula = request.getParameter("cedula");
+		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
+		persona.borrar(request.getParameter("cedula"));
 
-		System.out.println("Persona que será eliminada " + cedula);
-		persona.borrar(cedula);
-		
 		return "Principal.do";
 
 	}
@@ -275,15 +275,13 @@ public class AccionPrincipal {
 	public String getCrear(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("sessionUsuario")!=null) {
-			
+
+		if (session.getAttribute("sessionUsuario") != null) {
+
 			return "/frm.jsp";
 
-			
-			
-		}else {
-			
+		} else {
+
 			return "/login.jsp";
 
 		}
@@ -298,11 +296,11 @@ public class AccionPrincipal {
 	 */
 	public String getEditar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("sessionUsuario")!=null) {
-			
+
+		session = request.getSession();
+
+		if (session.getAttribute("sessionUsuario") != null) {
+
 			String cedula = request.getParameter("cedula");
 
 			PersonaDAO persona = new PersonaDAOImpl();
@@ -312,14 +310,13 @@ public class AccionPrincipal {
 			Producto encontrado = producto.buscarPorClave(cedula);
 
 			System.out.println(cedula + encontrada + "\n" + encontrado);
-			
 
 			request.setAttribute("encontrada", encontrada);
 			request.setAttribute("encontrado", encontrado);
-			
+
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);
-			
+
 			return "/editar.jsp";
 			
 		}else {
@@ -339,21 +336,19 @@ public class AccionPrincipal {
 	 */
 	public String getRegistrar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int cedula = Integer.parseInt(request.getParameter("cedula"));
-		String nombre = request.getParameter("nombre");
-		String apellidos = request.getParameter("apellido");
-		String telefono = request.getParameter("telefono");
 
-		String producto = request.getParameter("producto");
-		String estatus = request.getParameter("status");
-		String descripcion = request.getParameter("descripcion");
+		//Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
+		int cedula = Integer.parseInt(request.getParameter("cedula"));
 
 		PersonaDAOImpl insertar = new PersonaDAOImpl();
 		ProductoDAOImpl product = new ProductoDAOImpl();
 		
 		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
-		insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
-		product.insertar(new Producto(0, producto, estatus, descripcion), cedula);
+		insertar.insertar(new Persona(cedula,request.getParameter("nombre"),
+				request.getParameter("apellido"), request.getParameter("telefono")));
+		
+		product.insertar(new Producto(0, request.getParameter("producto"), request.getParameter("status"), 
+				request.getParameter("descripcion")), cedula);
 		
 		System.out.print("Estoy registrando");
 		

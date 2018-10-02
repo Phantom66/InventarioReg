@@ -44,7 +44,8 @@ public class AccionPrincipal {
 	 * @param request
 	 * @param response
 	 */
-	public <T> void getAccion(String accion, HttpServletRequest request, HttpServletResponse response) {
+	@SuppressWarnings("unchecked")
+	public <T> String getAccion(String accion, HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			T obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
@@ -55,11 +56,12 @@ public class AccionPrincipal {
 
 				if (metodos[i].getName().substring(3).equals(accion)) {
 
-					metodos[i].invoke(obj, request, response);
+					return (String)metodos[i].invoke(obj, request, response);
 
 				}
 
 			}
+			
 
 		} catch (InstantiationException e) {
 
@@ -77,6 +79,7 @@ public class AccionPrincipal {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 		
 		
 	}
@@ -110,7 +113,7 @@ public class AccionPrincipal {
 
 				if (perfil != null) {
 
-					System.out.println(pass + " " + perfil.getPassword());
+					System.out.println(pass + " " + perfil.getPassword()+ " Estoy en el Loggin");
 
 					if (email.equalsIgnoreCase(perfil.getEmail())
 							&& SecurityPasswords.encriptar(pass).equalsIgnoreCase(perfil.getPassword())) {
@@ -131,7 +134,8 @@ public class AccionPrincipal {
 				} else {
 
 					request.setAttribute("messageError", "Usuario no existe, debe registrarse");
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					dispatcher = request.getRequestDispatcher("/login.jsp");
+					dispatcher.forward(request, response);
 				}
 
 			} else {
@@ -157,11 +161,10 @@ public class AccionPrincipal {
 				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 	
-	public void getPrincipal(HttpServletRequest request, HttpServletResponse response)
+	public String getPrincipal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = null;
 
 		if (session.getAttribute("sessionUsuario") != null) {
 			PersonaDAOImpl persona = new PersonaDAOImpl();
@@ -194,17 +197,15 @@ public class AccionPrincipal {
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
 
-			dispatcher = request.getRequestDispatcher("/principal.jsp");
-			dispatcher.forward(request, response);
-
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);
 
+			return "/principal.jsp";
+
 		} else {
 
-			dispatcher = request.getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
 			System.out.println("Sessión " + (String) session.getAttribute("sessionUsuario"));
+			return "/login.jsp";
 
 		}
 
@@ -219,30 +220,28 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getActualizar(HttpServletRequest request, HttpServletResponse response)
+	public String getActualizar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
-		int cedula = Integer.parseInt(request.getParameter("cedula"));
-		String nombre = request.getParameter("nombre");
-		String apellidos = request.getParameter("apellido");
-		String telefono = request.getParameter("telefono");
 
 		String producto = request.getParameter("producto");
 		String estatus = request.getParameter("status");
 		String descripcion = request.getParameter("descripcion");
 
-		System.out.println(cedula + " " + " " + nombre + "\n");
+//		System.out.println(cedula + " " + " " + nombre + "\n");
 
-		Persona per = new Persona(cedula, nombre, apellidos, telefono);
+		Persona per = new Persona(
+				Integer.parseInt(request.getParameter("cedula")), 
+				request.getParameter("nombre"), request.getParameter("apellido"), request.getParameter("telefono"));
 		Producto pro = new Producto(0, producto, estatus, descripcion, per);
 
 		persona.salvar(per);
 		product.salvar(pro);
 		System.out.print("Estoy actualizando");
-		RequestDispatcher despachador = request.getRequestDispatcher("/Principal.do");
-		despachador.forward(request, response);		
-		//controller.doGet(request, response);
+		
+		return "/Principal.do";	
+		
 	}
 
 	
@@ -253,7 +252,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getBorrar(HttpServletRequest request, HttpServletResponse response)
+	public String getBorrar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PersonaDAO persona = new PersonaDAOImpl();
 
@@ -261,9 +260,9 @@ public class AccionPrincipal {
 
 		System.out.println("Persona que será eliminada " + cedula);
 		persona.borrar(cedula);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Principal.do");
+		
+		return "Principal.do";
 
-		dispatcher.forward(request, response);
 	}
 
 
@@ -273,21 +272,20 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getCrear(HttpServletRequest request, HttpServletResponse response)
+	public String getCrear(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = null;
 		
 		if(session.getAttribute("sessionUsuario")!=null) {
 			
-			dispatcher = request.getRequestDispatcher("/frm.jsp");
-			dispatcher.forward(request, response);
+			return "/frm.jsp";
+
 			
 			
 		}else {
 			
-			dispatcher = request.getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
+			return "/login.jsp";
+
 		}
 	}
 
@@ -298,10 +296,10 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getEditar(HttpServletRequest request, HttpServletResponse response)
+	public String getEditar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = null;
 		
 		if(session.getAttribute("sessionUsuario")!=null) {
 			
@@ -314,21 +312,22 @@ public class AccionPrincipal {
 			Producto encontrado = producto.buscarPorClave(cedula);
 
 			System.out.println(cedula + encontrada + "\n" + encontrado);
-			dispatcher = request.getRequestDispatcher("/editar.jsp");
+			
 
 			request.setAttribute("encontrada", encontrada);
 			request.setAttribute("encontrado", encontrado);
-			dispatcher.forward(request, response);
+			
+			String user = (String) session.getAttribute("sessionUsuario");
+			System.out.println("Sessión " + user);
+			
+			return "/editar.jsp";
 			
 		}else {
-			
-			dispatcher = request.getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
+			String user = (String) session.getAttribute("sessionUsuario");
+			System.out.println("Sessión " + user);
+			return "/login.jsp";
 		}
 	
-
-		String user = (String) session.getAttribute("sessionUsuario");
-		System.out.println("Sessión " + user);
 	}
 
 
@@ -338,7 +337,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getRegistrar(HttpServletRequest request, HttpServletResponse response)
+	public String getRegistrar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int cedula = Integer.parseInt(request.getParameter("cedula"));
 		String nombre = request.getParameter("nombre");
@@ -357,8 +356,8 @@ public class AccionPrincipal {
 		product.insertar(new Producto(0, producto, estatus, descripcion), cedula);
 		
 		System.out.print("Estoy registrando");
-		RequestDispatcher  despachador = request.getRequestDispatcher("/Principal.do");
-		despachador.forward(request, response);
+		
+		return "/Principal.do";
 	}
 
 
@@ -366,58 +365,41 @@ public class AccionPrincipal {
 	 * @param request
 	 * @param response
 	 */
-	public void getRegUser(HttpServletRequest request, HttpServletResponse response) {
+	public String getRegUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String name = request.getParameter("user");
 		String email = request.getParameter("email");
-		String password = SecurityPasswords.encriptar(request.getParameter("pass"));;
+		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
 		PerfilDAO buscarPerfil = new PerfilDAOImpl();
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 
 		if (perfil != null) {
-			
-			try {
-				System.out.println("Contraseña No Coinciden.");
-				request.setAttribute("messageError", "Perfil Existe.");
-				request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
 
-			} catch (ServletException e) {
-
-				e.printStackTrace();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
+			System.out.println("Contraseña No Coinciden.");
+			request.setAttribute("messageError", "Perfil Existe.");
+			return "/registro_user.jsp";
 
 		} else {
 
-			try {
-				System.out.println("perfil no existe");
+			System.out.println("perfil no existe");
 
-				if (password.equalsIgnoreCase(pass)) {
+			if (password.equalsIgnoreCase(pass)) {
 
-					perfil = new Perfil(0, name, email, password);
-					buscarPerfil.insertar(perfil);
-					request.setAttribute("messageSuccess", "Registro Exitoso!!");
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+				perfil = new Perfil(0, name, email, password);
+				buscarPerfil.insertar(perfil);
+				request.setAttribute("messageSuccess", "Registro Exitoso!!");
+				return "/login.jsp";
 
-				} else {
-					
-					request.setAttribute("messageError", "Contraseña No Coinciden.");
-					request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
-				}
+			} else {
 
-			} catch (ServletException e) {
-
-				e.printStackTrace();
-
-			} catch (IOException e) {
-				e.printStackTrace();
+				request.setAttribute("messageError", "Contraseña No Coinciden.");
+				request.getRequestDispatcher("/registro_user.jsp").forward(request, response);
 			}
+
 		}
+		return null;
 	}
-
-
 
 }

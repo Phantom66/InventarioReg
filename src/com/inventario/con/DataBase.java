@@ -43,16 +43,14 @@ public class DataBase {
 			
 		} catch (ClassNotFoundException e) {
 
-			System.out.println("Clase no encontrada !!");
-
+			System.out.println("Clase no encontrada" + e.getMessage());
 			throw e;
-			// e.printStackTrace();
 
 		} catch (SQLException e) {
 			
-			System.out.println("Error en los datos de la conexión. ");
+			System.out.println("Error de SQL" + e.getMessage());
 			throw e;
-			// e.printStackTrace();
+
 		}
 
 	}

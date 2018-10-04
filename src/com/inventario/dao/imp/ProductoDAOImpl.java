@@ -16,7 +16,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 
 	@Override
-	public void insertar(Producto producto, int id) {
+	public void insertar(Producto producto, int id) throws SQLException, ClassNotFoundException {
 
 		PreparedStatement statement = null;
 
@@ -32,15 +32,20 @@ public class ProductoDAOImpl implements ProductoDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw e;
 
+		} catch (ClassNotFoundException e) {
+			
+			System.out.println("Error de SQL" + e.getMessage());
+			throw e;
+			
 		} finally {
 
 			try {
 
 				statement.close();
 				this.conn.closeConnection();
-				;
 
 			} catch (SQLException e) {
 
@@ -52,7 +57,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public void salvar(Producto producto) {
+	public void salvar(Producto producto) throws SQLException, ClassNotFoundException {
 
 		PreparedStatement statement = null;
 
@@ -69,9 +74,15 @@ public class ProductoDAOImpl implements ProductoDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw e;
+			
 
-			e.printStackTrace();
-
+		} catch (ClassNotFoundException e) {
+			
+			System.out.println("Error de SQL" + e.getMessage());
+			throw e;
+			
 		} finally {
 
 			try {
@@ -88,7 +99,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public void borrar(Producto producto) {
+	public void borrar(Producto producto) throws SQLException, ClassNotFoundException {
 
 		PreparedStatement statement = null;
 
@@ -101,8 +112,13 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw e;
 
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error de SQL" + e.getMessage());
+			throw e;
+			
 		} finally {
 
 			try {
@@ -119,7 +135,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public List<Producto> buscarTodos() {
+	public List<Producto> buscarTodos() throws SQLException, ClassNotFoundException {
 
 		List<Producto> producto = new ArrayList<Producto>();
 		PreparedStatement statement = null;
@@ -144,8 +160,13 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw e;
 
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error de SQL" + e.getMessage());
+			throw e;
+			
 		} finally {
 
 			try {
@@ -159,12 +180,10 @@ public class ProductoDAOImpl implements ProductoDAO {
 			}
 
 		}
-
-		return null;
 	}
 
 	@Override
-	public Producto buscarPorClave(String id) {
+	public Producto buscarPorClave(String id) throws SQLException, ClassNotFoundException {
 
 		Producto p = null;
 		PreparedStatement statement = null;
@@ -189,12 +208,14 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			return p;
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw e;
+
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error de SQL" + e.getMessage());
+			throw e;
 
 		} catch (Exception e) {
 

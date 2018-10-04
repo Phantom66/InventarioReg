@@ -3,6 +3,7 @@ package com.inventario.acciones;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -43,45 +44,33 @@ public class AccionPrincipal {
 	 * @param accion
 	 * @param request
 	 * @param response
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> String getAccion(String accion, HttpServletRequest request, HttpServletResponse response) {
+	public <T> String getAccion(String accion, HttpServletRequest request, HttpServletResponse response)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException,
+			InvocationTargetException {
 
-		try {
-			T obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
+		T obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
 
-			Method[] metodos = obj.getClass().getDeclaredMethods();
+		Method[] metodos = obj.getClass().getDeclaredMethods();
 
-			for (int i = 0; i < metodos.length; i++) {
+		for (int i = 0; i < metodos.length; i++) {
 
-				if (metodos[i].getName().substring(3).equals(accion)) {
+			if (metodos[i].getName().substring(3).equals(accion)) {
 
-					return (String)metodos[i].invoke(obj, request, response);
-
-				}
+				return (String) metodos[i].invoke(obj, request, response);
 
 			}
-			
 
-		} catch (InstantiationException e) {
-
-			e.printStackTrace();
-
-		} catch (IllegalAccessException e) {
-
-			e.printStackTrace();
-
-		} catch (ClassNotFoundException | IllegalArgumentException e) {
-
-			e.printStackTrace();
-			
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+
 		return null;
-		
-		
+
 	}
 	
 	/**
@@ -89,9 +78,11 @@ public class AccionPrincipal {
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 
@@ -166,7 +157,7 @@ public class AccionPrincipal {
 	
 	
 	public String getPrincipal(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 
 		session = request.getSession();
 
@@ -223,9 +214,11 @@ public class AccionPrincipal {
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
 
@@ -253,9 +246,11 @@ public class AccionPrincipal {
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		PersonaDAO persona = new PersonaDAOImpl();
 
 		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
@@ -293,9 +288,11 @@ public class AccionPrincipal {
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public String getEditar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 
 		session = request.getSession();
 
@@ -333,9 +330,11 @@ public class AccionPrincipal {
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public String getRegistrar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 
 		//Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
 		int cedula = Integer.parseInt(request.getParameter("cedula"));
@@ -359,9 +358,11 @@ public class AccionPrincipal {
 	/**
 	 * @param request
 	 * @param response
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public String getRegUser(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String name = request.getParameter("user");
 		String email = request.getParameter("email");
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));

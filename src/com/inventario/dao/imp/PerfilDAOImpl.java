@@ -33,6 +33,10 @@ public class PerfilDAOImpl implements PerfilDAO {
 			
 			e.printStackTrace();
 			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
 		}finally{
 			
 			try {
@@ -92,6 +96,10 @@ public class PerfilDAOImpl implements PerfilDAO {
 			
 		
 		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
 			

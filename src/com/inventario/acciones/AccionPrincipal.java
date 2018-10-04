@@ -3,7 +3,6 @@ package com.inventario.acciones;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
+import com.inventario.con.DataBaseException;
 import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.PersonaDAO;
 import com.inventario.dao.ProductoDAO;
@@ -90,7 +90,8 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getLoggin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, DataBaseException {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 
@@ -104,10 +105,17 @@ public class AccionPrincipal {
 		if ((session.getAttribute("sessionUsuario") == null) && (request.getParameter("cerrarSession") == null)) {
 
 			if (email != null && pass != null) {
-
+				
+				//Solo para probar para capturar las excepciones.
+				try {
 				buscarPerfil = new PerfilDAOImpl();
 				perfil = buscarPerfil.buscarPorClave(email);
 
+				}catch(NullPointerException e) {
+					
+				throw new DataBaseException("Correo no encontrado", e);
+					
+				}
 				System.out.println(perfil);
 
 				if (perfil != null) {
@@ -169,8 +177,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getPrincipal(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+	public String getPrincipal(HttpServletRequest request, HttpServletResponse response) {
 
 		session = request.getSession();
 
@@ -229,8 +236,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getActualizar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+	public String getActualizar(HttpServletRequest request, HttpServletResponse response){
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
 
@@ -259,8 +265,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getBorrar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+	public String getBorrar(HttpServletRequest request, HttpServletResponse response){
 		PersonaDAO persona = new PersonaDAOImpl();
 
 		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
@@ -278,8 +283,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getCrear(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+	public String getCrear(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("sessionUsuario") != null) {
@@ -301,8 +305,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getEditar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+	public String getEditar(HttpServletRequest request, HttpServletResponse response){
 
 		session = request.getSession();
 
@@ -342,8 +345,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getRegistrar(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException {
+	public String getRegistrar(HttpServletRequest request, HttpServletResponse response){
 
 		//Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
 		int cedula = Integer.parseInt(request.getParameter("cedula"));
@@ -373,7 +375,7 @@ public class AccionPrincipal {
 	 * @throws IOException
 	 */
 	public String getRegUser(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException{
 		String name = request.getParameter("user");
 		String email = request.getParameter("email");
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));

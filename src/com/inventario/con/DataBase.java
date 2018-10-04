@@ -3,57 +3,71 @@ package com.inventario.con;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 /**
  * 
- * Creando esta Clase para crear la conexión y cumplir con el 
- * principio de DRY
+ * Creando esta Clase para crear la conexión y cumplir con el principio de DRY
  * 
  * @author phantom
  *
  */
 public class DataBase {
-	
+
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-	
+
 	private Connection conn = null;
-	
+
 	/*
 	 * Aplicar el Patrón Singleton para conexión. Verificar esto.
 	 */
-	public DataBase(){	};
-	
+	public DataBase() {
+	};
+
 	/**
 	 * @return Connection
+	 * @throws ClassNotFoundException
+	 * @throws SQLException 
 	 */
-	
-	public Connection getConnection() {
-		
+
+	public Connection getConnection() throws ClassNotFoundException, SQLException {
+
 		try {
 			Class.forName(DRIVER);
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
+			System.out.println("Abriendo Conexion");
+			return this.conn;
+			
 		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
+			System.out.println("Clase no encontrada !!");
+
+			throw e;
+			// e.printStackTrace();
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			
+			System.out.println("Error en los datos de la conexión. ");
+			throw e;
+			// e.printStackTrace();
 		}
-		System.out.println("Abriendo conexion");
-		return this.conn;
+
 	}
-	
-	public void closeConnection() {
+
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public void closeConnection() throws SQLException {
 
 		try {
 
 			if (this.conn != null) {
 				this.conn.close();
-				System.out.println("cerrando conexión");
+				System.out.println("Cerrando Conexión");
 
 			} else {
 
@@ -61,8 +75,8 @@ public class DataBase {
 			}
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			
+			throw e;
 		}
 	}
 

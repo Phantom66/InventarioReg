@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.inventario.bo.Persona;
 import com.inventario.con.DataBase;
+import com.inventario.con.DataBaseException;
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
@@ -15,7 +16,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 
 	@Override
-	public void insertar(Persona persona) throws SQLException, ClassNotFoundException {
+	public void insertar(Persona persona) throws DataBaseException{
 
 		PreparedStatement statement = null;
 
@@ -44,13 +45,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error SQL PreparedStatement ", e);
 
-		} catch (ClassNotFoundException e) {
-			
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -60,14 +56,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error Close PreparedStatement ", e);
 			}
 		}
 
 	}
 
 	@Override
-	public void salvar(Persona persona) throws SQLException, ClassNotFoundException {
+	public void salvar(Persona persona)throws DataBaseException{
 
 		PreparedStatement statement = null;
 
@@ -85,13 +81,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error SQL PreparedStatement ", e);
 
-		} catch (ClassNotFoundException e) {
-			
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -101,14 +92,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error Close PreparedStatement ", e);
 			}
 		}
 
 	}
 
 	@Override
-	public void borrar(String cedula) throws SQLException, ClassNotFoundException {
+	public void borrar(String cedula)throws DataBaseException{
 
 		PreparedStatement statement = null;
 
@@ -120,13 +111,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error SQL PreparedStatement ", e);
 
-		} catch (ClassNotFoundException e) {
-			
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -136,14 +122,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 		}
 
 	}
 
 	@Override
-	public List<Persona> buscarTodos() throws SQLException, ClassNotFoundException {
+	public List<Persona> buscarTodos()throws DataBaseException{
 
 		List<Persona> persona = new ArrayList<Persona>();
 		Statement statement = null;
@@ -170,13 +156,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			return persona;
 
 		} catch (SQLException e) {
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
-
-		} catch (ClassNotFoundException e) {
-
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
+			System.out.println("Clase no encontrada " + e.getMessage());
+			throw new DataBaseException("Error PreparedStatement ", e);
 
 		} finally {
 
@@ -187,7 +168,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
@@ -195,7 +176,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public Persona buscarPorClave(String id) throws SQLException, ClassNotFoundException {
+	public Persona buscarPorClave(String id) throws DataBaseException {
 
 		Persona persona = null;
 		PreparedStatement mistatement = null;
@@ -214,7 +195,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} else {
 
-				throw new Exception("Cedula no encontrada" + id);
+				throw new DataBaseException("Cedula no encontrada " + id);
 			}
 
 			return persona;
@@ -222,15 +203,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} catch (SQLException e) {
 
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
+			throw new DataBaseException("Error PreparedStatement ", e);
 
 		} finally {
 
@@ -240,16 +213,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 		}
-
-		return null;
 
 	}
 	
 	
-	public int getRows() throws SQLException, ClassNotFoundException {
+	public int getRows() throws DataBaseException{
 
 		int numRows = 0;
 
@@ -268,12 +239,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} catch (SQLException e) {
 
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error Statement ", e);
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 			
 			try {
@@ -284,7 +251,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				
 			} catch (SQLException e) {
 	
-				e.printStackTrace();
+				throw new DataBaseException("Error close Statement ", e);
 			}
 		}
 
@@ -292,7 +259,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	
-	public List<Persona> getPerPagination(int pagActual, int perReg) throws SQLException, ClassNotFoundException {
+	public List<Persona> getPerPagination(int pagActual, int perReg) throws DataBaseException{
 
 		PreparedStatement statement = null;
 		ResultSet filas = null;
@@ -359,11 +326,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		} catch (SQLException e) {
 
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error Statement ", e);
 
 		} finally {
 
@@ -373,7 +336,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close Statement ", e);
 			}
 
 		}

@@ -16,7 +16,7 @@ public class DataBase {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
 	private static final String USER = "root";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "123";
 
 	private Connection conn = null;
 
@@ -27,12 +27,11 @@ public class DataBase {
 	};
 
 	/**
-	 * @return Connection
-	 * @throws ClassNotFoundException
-	 * @throws SQLException 
+	 * 
+	 * @return
+	 * @throws DataBaseException
 	 */
-
-	public Connection getConnection() throws ClassNotFoundException, SQLException {
+	public Connection getConnection() throws DataBaseException{
 
 		try {
 			Class.forName(DRIVER);
@@ -43,13 +42,13 @@ public class DataBase {
 			
 		} catch (ClassNotFoundException e) {
 
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			System.out.println("Clase no encontrada " + e.getMessage());
+			throw new DataBaseException("Clase No Encontrada " + e);
 
 		} catch (SQLException e) {
 			
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
+			System.out.println("Error de SQL " + e.getMessage());
+			throw new DataBaseException("Error SQL " + e);
 
 		}
 
@@ -57,9 +56,9 @@ public class DataBase {
 
 	/**
 	 * 
-	 * @throws SQLException
+	 * @throws DataBaseException
 	 */
-	public void closeConnection() throws SQLException {
+	public void closeConnection() throws DataBaseException {
 
 		try {
 
@@ -74,7 +73,7 @@ public class DataBase {
 
 		} catch (SQLException e) {
 			
-			throw e;
+			throw new DataBaseException("Error de conexión " + e);
 		}
 	}
 

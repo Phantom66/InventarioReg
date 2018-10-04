@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.inventario.bo.Producto;
 import com.inventario.con.DataBase;
+import com.inventario.con.DataBaseException;
 import com.inventario.dao.ProductoDAO;
 
 public class ProductoDAOImpl implements ProductoDAO {
@@ -16,7 +17,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 
 	@Override
-	public void insertar(Producto producto, int id) throws SQLException, ClassNotFoundException {
+	public void insertar(Producto producto, int id) throws DataBaseException {
 
 		PreparedStatement statement = null;
 
@@ -33,13 +34,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error PreparedStatement ", e);
 
-		} catch (ClassNotFoundException e) {
-			
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -49,7 +45,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
@@ -57,7 +53,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public void salvar(Producto producto) throws SQLException, ClassNotFoundException {
+	public void salvar(Producto producto) throws DataBaseException {
 
 		PreparedStatement statement = null;
 
@@ -75,14 +71,9 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		} catch (SQLException e) {
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error PreparedStatement ", e);
 			
 
-		} catch (ClassNotFoundException e) {
-			
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -91,7 +82,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
@@ -99,7 +90,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public void borrar(Producto producto) throws SQLException, ClassNotFoundException {
+	public void borrar(Producto producto) throws DataBaseException {
 
 		PreparedStatement statement = null;
 
@@ -113,12 +104,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		} catch (SQLException e) {
 
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error PreparedStatement ", e);
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -127,7 +114,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
@@ -135,7 +122,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public List<Producto> buscarTodos() throws SQLException, ClassNotFoundException {
+	public List<Producto> buscarTodos() throws DataBaseException {
 
 		List<Producto> producto = new ArrayList<Producto>();
 		PreparedStatement statement = null;
@@ -161,12 +148,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 		} catch (SQLException e) {
 
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error PreparedStatement ", e);
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-			
 		} finally {
 
 			try {
@@ -176,14 +159,14 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
 	}
 
 	@Override
-	public Producto buscarPorClave(String id) throws SQLException, ClassNotFoundException {
+	public Producto buscarPorClave(String id) throws DataBaseException {
 
 		Producto p = null;
 		PreparedStatement statement = null;
@@ -203,7 +186,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			} else {
 
-				throw new Exception(" Producto no se consigue " + id);
+				throw new DataBaseException(" Producto no se consigue " + id);
 			}
 
 			return p;
@@ -211,15 +194,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 		} catch (SQLException e) {
 
 			System.out.println("Clase no encontrada" + e.getMessage());
-			throw e;
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
+			throw new DataBaseException("Error PreparedStatement ", e);
 
 		} finally {
 
@@ -230,12 +205,10 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
-
-		return null;
 	}
 
 }

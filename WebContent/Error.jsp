@@ -10,7 +10,7 @@
 <body>
 		Ha ocurrido un error en la aplicacion :<%=exception.getMessage()%>
 	<br>
-<%-- 		Error Interno:<%=exception.getCause().getMessage()%> --%>
+		Error Interno:<%=exception.getCause()%>
 	<br>
 </body>
 </html>

@@ -67,11 +67,11 @@ public class PerfilDAOImpl implements PerfilDAO {
 	}
 
 	@Override
-	public Perfil buscarPorClave(String id)throws DataBaseException{
+	public Perfil buscarPorClave(String id){
 
 		PreparedStatement statement = null;
 		ResultSet filas = null;
-		Perfil perfil = null;
+		Perfil perfil;
 		try {
 			statement = this.conn.getConnection().prepareStatement("SELECT * FROM perfiles WHERE email = ?");
 
@@ -82,13 +82,15 @@ public class PerfilDAOImpl implements PerfilDAO {
 
 				perfil = new Perfil(filas.getInt("id"), filas.getString("name"), filas.getString("email"),
 						filas.getString("password"));
+				
+				return perfil;
 
 			} else {
 
 				return null;
 			}
 
-			return perfil;
+			
 
 		} catch (SQLException e) {
 

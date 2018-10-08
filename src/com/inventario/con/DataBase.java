@@ -16,7 +16,7 @@ public class DataBase {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
 	private static final String USER = "root";
-	private static final String PASSWORD = "123";
+	private static final String PASSWORD = "";
 
 	private Connection conn = null;
 
@@ -26,12 +26,8 @@ public class DataBase {
 	public DataBase() {
 	};
 
-	/**
-	 * 
-	 * @return
-	 * @throws DataBaseException
-	 */
-	public Connection getConnection() throws DataBaseException{
+
+	public Connection getConnection(){
 
 		try {
 			Class.forName(DRIVER);
@@ -47,18 +43,15 @@ public class DataBase {
 
 		} catch (SQLException e) {
 			
-			System.out.println("Error de SQL " + e.getMessage());
+			System.out.println("Error de SQL data " + e.getMessage());
 			throw new DataBaseException("Error SQL ", e);
 
 		}
 
 	}
 
-	/**
-	 * 
-	 * @throws DataBaseException
-	 */
-	public void closeConnection() throws DataBaseException {
+
+	public void closeConnection(){
 
 		try {
 

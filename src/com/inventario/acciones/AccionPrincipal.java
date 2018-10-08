@@ -91,13 +91,13 @@ public class AccionPrincipal {
 	 * @throws IOException
 	 */
 	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, DataBaseException {
+			throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 
 		session = request.getSession();
 		RequestDispatcher dispatcher = null;
-		Perfil perfil = null;
+		Perfil perfil = new Perfil();
 		PerfilDAO buscarPerfil;
 
 		System.out.println("  " + session.getAttribute("sessionUsuario") + " " + request.getParameter("cerrarSession"));
@@ -106,15 +106,15 @@ public class AccionPrincipal {
 
 			if (email != null && pass != null) {
 				
-				//Solo para probar para capturar las excepciones.
+				// Solo para probar para capturar las excepciones.
 				try {
-				buscarPerfil = new PerfilDAOImpl();
-				perfil = buscarPerfil.buscarPorClave(email);
+					buscarPerfil = new PerfilDAOImpl();
+					perfil = buscarPerfil.buscarPorClave(email);
 
-				}catch(NullPointerException e) {
-					
-				throw new DataBaseException("Correo no encontrado", e);
-					
+				} catch (NullPointerException e) {
+
+					throw new DataBaseException("Correo no encontrado ", e);
+
 				}
 				System.out.println(perfil);
 

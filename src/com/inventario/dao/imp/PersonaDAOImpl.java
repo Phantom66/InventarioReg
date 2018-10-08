@@ -10,13 +10,14 @@ import com.inventario.bo.Persona;
 import com.inventario.con.DataBase;
 import com.inventario.con.DataBaseException;
 
+
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 	private DataBase conn = new DataBase();
 
 
 	@Override
-	public void insertar(Persona persona) throws DataBaseException{
+	public void insertar(Persona persona){
 
 		PreparedStatement statement = null;
 
@@ -63,7 +64,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public void salvar(Persona persona)throws DataBaseException{
+	public void salvar(Persona persona){
 
 		PreparedStatement statement = null;
 
@@ -99,7 +100,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public void borrar(String cedula)throws DataBaseException{
+	public void borrar(String cedula){
 
 		PreparedStatement statement = null;
 
@@ -129,7 +130,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public List<Persona> buscarTodos()throws DataBaseException{
+	public List<Persona> buscarTodos(){
 
 		List<Persona> persona = new ArrayList<Persona>();
 		Statement statement = null;
@@ -176,7 +177,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public Persona buscarPorClave(String id) throws DataBaseException {
+	public Persona buscarPorClave(String id){
 
 		Persona persona = null;
 		PreparedStatement mistatement = null;
@@ -220,7 +221,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 	
 	
-	public int getRows() throws DataBaseException{
+	public int getRows(){
 
 		int numRows = 0;
 
@@ -259,7 +260,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	
-	public List<Persona> getPerPagination(int pagActual, int perReg) throws DataBaseException{
+	public List<Persona> getPerPagination(int pagActual, int perReg){
 
 		PreparedStatement statement = null;
 		ResultSet filas = null;
@@ -304,8 +305,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		int start = (pagActual * perReg) - perReg;
 
 		try {
-			statement = this.conn.getConnection().prepareStatement("SELECT * FROM persona LIMIT ?,?");
 
+			statement = this.conn.getConnection().prepareStatement("SELECT * FROM persona LIMIT ?,?");
 			statement.setInt(1, start);
 			statement.setInt(2, perReg);
 

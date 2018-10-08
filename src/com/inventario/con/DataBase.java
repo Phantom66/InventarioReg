@@ -16,7 +16,7 @@ public class DataBase {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/Inventario";
 	private static final String USER = "root";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "123";
 
 	private Connection conn = null;
 
@@ -51,7 +51,7 @@ public class DataBase {
 	}
 
 
-	public void closeConnection(){
+	public void closeConnection() throws DataBaseException{
 
 		try {
 

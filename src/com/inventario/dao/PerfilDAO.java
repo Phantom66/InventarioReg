@@ -2,7 +2,6 @@ package com.inventario.dao;
 
 import java.util.List;
 import com.inventario.bo.Perfil;
-import com.inventario.con.DataBaseException;
 
 
 

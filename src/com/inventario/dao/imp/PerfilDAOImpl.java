@@ -15,7 +15,7 @@ public class PerfilDAOImpl implements PerfilDAO {
 	private DataBase conn = new DataBase();
 
 	@Override
-	public void insertar(Perfil perfil)throws DataBaseException{
+	public void insertar(Perfil perfil){
 
 		PreparedStatement statement = null;
 
@@ -90,7 +90,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 				return null;
 			}
 
-			
 
 		} catch (SQLException e) {
 

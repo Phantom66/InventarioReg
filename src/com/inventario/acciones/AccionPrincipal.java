@@ -236,7 +236,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getActualizar(HttpServletRequest request, HttpServletResponse response){
+	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
 
@@ -265,7 +265,7 @@ public class AccionPrincipal {
 	 * @return
 	 * @throws ServletException
 	 */
-	public String getBorrar(HttpServletRequest request, HttpServletResponse response){
+	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
 		PersonaDAO persona = new PersonaDAOImpl();
 
 		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
@@ -343,6 +343,7 @@ public class AccionPrincipal {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws DataBaseException 
 	 * @throws ServletException
 	 */
 	public String getRegistrar(HttpServletRequest request, HttpServletResponse response){

@@ -5,6 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+
 import com.inventario.bo.Perfil;
 import com.inventario.con.DataBase;
 import com.inventario.con.DataBaseException;
@@ -13,6 +17,11 @@ import com.inventario.dao.PerfilDAO;
 public class PerfilDAOImpl implements PerfilDAO {
 
 	private DataBase conn = new DataBase();
+	PatternLayout layout = new PatternLayout("%m %n");
+	ConsoleAppender consola = new ConsoleAppender(layout);
+	
+	private Logger log = Logger.getLogger("milog");
+	
 
 	@Override
 	public void insertar(Perfil perfil){
@@ -30,7 +39,8 @@ public class PerfilDAOImpl implements PerfilDAO {
 
 
 		} catch (SQLException e) {// SQLException es del método preparedStatement
-
+			
+			log.error("Error en SQL en DAO " + e);
 			throw new DataBaseException("Error en SQL en DAO " + e);
 
 		} finally {

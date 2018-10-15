@@ -1,4 +1,4 @@
-<%@ include file="layout/header.jsp"%>
+<%@ include file="/layout/header.jsp"%>
 
 <!-- 	Tomar en cuenta para mejora -->
 <!-- 			<form class="form-inline mt-2 mt-md-0"> -->
@@ -71,4 +71,4 @@
 	</nav>
 </div>
 <hr>
-<%@ include file="layout/footer.jsp"%>
+<%@ include file="/layout/footer.jsp"%>

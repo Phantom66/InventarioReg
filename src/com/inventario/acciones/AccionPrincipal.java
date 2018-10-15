@@ -215,7 +215,7 @@ public class AccionPrincipal {
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);
 
-			return "/principal.jsp";
+			return "principal/principal.jsp";
 
 		} else {
 
@@ -288,7 +288,7 @@ public class AccionPrincipal {
 
 		if (session.getAttribute("sessionUsuario") != null) {
 
-			return "/frm.jsp";
+			return "principal/frm.jsp";
 
 		} else {
 
@@ -327,7 +327,7 @@ public class AccionPrincipal {
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);
 
-			return "/editar.jsp";
+			return "principal/editar.jsp";
 			
 		}else {
 			String user = (String) session.getAttribute("sessionUsuario");

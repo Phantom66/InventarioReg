@@ -349,17 +349,20 @@ public class AccionPrincipal {
 	public String getRegistrar(HttpServletRequest request, HttpServletResponse response){
 
 		//Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
-		int cedula = Integer.parseInt(request.getParameter("cedula"));
+		//int cedula = Integer.parseInt(request.getParameter("cedula"));
 
 		PersonaDAOImpl insertar = new PersonaDAOImpl();
 		ProductoDAOImpl product = new ProductoDAOImpl();
 		
+		Persona persona = new Persona(
+						 Integer.parseInt(request.getParameter("cedula")),request.getParameter("nombre"), 
+						 request.getParameter("apellido"), request.getParameter("telefono")
+						);
 		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
-		insertar.insertar(new Persona(cedula,request.getParameter("nombre"),
-				request.getParameter("apellido"), request.getParameter("telefono")));
+		insertar.insertar(persona);
 		
 		product.insertar(new Producto(0, request.getParameter("producto"), request.getParameter("status"), 
-				request.getParameter("descripcion")), cedula);
+				request.getParameter("descripcion"), persona));
 		
 		System.out.print("Estoy registrando");
 		
@@ -383,6 +386,7 @@ public class AccionPrincipal {
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
 		PerfilDAO buscarPerfil = new PerfilDAOImpl();
+		PersonaDAO insertarPersona = new PersonaDAOImpl();
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 
 		if (perfil != null) {
@@ -396,7 +400,12 @@ public class AccionPrincipal {
 			System.out.println("perfil no existe");
 
 			if (password.equalsIgnoreCase(pass)) {
-
+				
+				Persona p = new Persona(
+							Integer.parseInt(request.getParameter("cedula")), request.getParameter("nombre"),
+							request.getParameter("apellido"),request.getParameter("telefono")
+						);
+				insertarPersona.insertar(p);
 				perfil = new Perfil(0, name, email, password);
 				buscarPerfil.insertar(perfil);
 				request.setAttribute("messageSuccess", "Registro Exitoso!!");

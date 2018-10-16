@@ -17,7 +17,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 
 	@Override
-	public void insertar(Producto producto, int id) throws DataBaseException {
+	public void insertar(Producto producto) throws DataBaseException {
 
 		PreparedStatement statement = null;
 
@@ -29,7 +29,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			statement.setString(1, producto.getNombre());
 			statement.setString(2, producto.getEstatus());
 			statement.setString(3, producto.getDescripcion());
-			statement.setInt(4, id);
+			statement.setInt(4, producto.getPersona().getCedula());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {

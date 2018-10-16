@@ -14,7 +14,9 @@ public class ControladorLogin extends HttpServlet {
 			throws ServletException, IOException {
 
 		AccionPrincipal accion = new AccionPrincipal();
-		accion.getLoggin(request, response);
+
+			accion.getLoggin(request, response);
+
 	}
 
 }

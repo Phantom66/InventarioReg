@@ -4,6 +4,7 @@ import java.util.List;
 import com.inventario.bo.Perfil;
 
 
+
 public interface PerfilDAO {
 	
 	//Coloco esto para que devuelva el id de la inserción

@@ -1,8 +1,8 @@
 package com.inventario.dao;
 
 import java.util.List;
-
 import com.inventario.bo.Producto;
+
 
 public interface ProductoDAO {
 	

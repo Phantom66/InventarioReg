@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.inventario.bo.Persona;
 import com.inventario.con.DataBase;
+import com.inventario.con.DataBaseException;
+
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
@@ -15,7 +17,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 
 	@Override
-	public void insertar(Persona persona) {
+	public void insertar(Persona persona){
 
 		PreparedStatement statement = null;
 
@@ -43,8 +45,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw new DataBaseException("Error SQL PreparedStatement ", e);
 
 		} finally {
 
@@ -55,14 +57,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error Close PreparedStatement ", e);
 			}
 		}
 
 	}
 
 	@Override
-	public void salvar(Persona persona) {
+	public void salvar(Persona persona){
 
 		PreparedStatement statement = null;
 
@@ -79,8 +81,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw new DataBaseException("Error SQL PreparedStatement ", e);
 
 		} finally {
 
@@ -91,14 +93,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error Close PreparedStatement ", e);
 			}
 		}
 
 	}
 
 	@Override
-	public void borrar(String cedula) {
+	public void borrar(String cedula){
 
 		PreparedStatement statement = null;
 
@@ -109,8 +111,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw new DataBaseException("Error SQL PreparedStatement ", e);
 
 		} finally {
 
@@ -121,14 +123,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 		}
 
 	}
 
 	@Override
-	public List<Persona> buscarTodos() {
+	public List<Persona> buscarTodos(){
 
 		List<Persona> persona = new ArrayList<Persona>();
 		Statement statement = null;
@@ -141,11 +143,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			while (filas.next()) {
 
 				Persona p = new Persona(
-						
-						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"), filas.getString("telefono")
-						
-						);
-				//Lo hago de esta manera para realizar prueba, debo optimizar.
+
+						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"),
+						filas.getString("telefono")
+
+				);
+				// Lo hago de esta manera para realizar prueba, debo optimizar.
 				p.setId(filas.getInt("id"));
 				persona.add(p);
 
@@ -154,28 +157,27 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			return persona;
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			System.out.println("Clase no encontrada " + e.getMessage());
+			throw new DataBaseException("Error PreparedStatement ", e);
 
 		} finally {
 
 			try {
-				
+
 				statement.close();
 				this.conn.closeConnection();
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 
 		}
 
-		return null;
 	}
 
 	@Override
-	public Persona buscarPorClave(String id) {
+	public Persona buscarPorClave(String id){
 
 		Persona persona = null;
 		PreparedStatement mistatement = null;
@@ -189,26 +191,20 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			if (filas.next()) {
 
-				persona = new Persona(
-						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"), filas.getString("telefono")
-						);
+				persona = new Persona(filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"),
+						filas.getString("telefono"));
 
 			} else {
 
-				throw new Exception("Cedula no encontrada" + id);
+				throw new DataBaseException("Cedula no encontrada " + id);
 			}
 
 			return persona;
-			
-			
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw new DataBaseException("Error PreparedStatement ", e);
 
 		} finally {
 
@@ -218,16 +214,14 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			} catch (SQLException e) {
 
-				e.printStackTrace();
+				throw new DataBaseException("Error close PreparedStatement ", e);
 			}
 		}
-
-		return null;
 
 	}
 	
 	
-	public int getRows() {
+	public int getRows(){
 
 		int numRows = 0;
 
@@ -245,7 +239,8 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw new DataBaseException("Error Statement ", e);
 
 		} finally {
 			
@@ -257,7 +252,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 				
 			} catch (SQLException e) {
 	
-				e.printStackTrace();
+				throw new DataBaseException("Error close Statement ", e);
 			}
 		}
 
@@ -265,95 +260,87 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	
-	public List<Persona>getPerPagination(int pagActual, int perReg){
-		
+	public List<Persona> getPerPagination(int pagActual, int perReg){
+
 		PreparedStatement statement = null;
 		ResultSet filas = null;
-		List<Persona>p = new ArrayList<Persona>();
+		List<Persona> p = new ArrayList<Persona>();
 		Persona persona;
-		
+
 		/*
-		 * Con este cálculo puedo ir  corriendo las posiciones del registro
-		 * de mi tabla.
+		 * Con este cálculo puedo ir corriendo las posiciones del registro de mi tabla.
 		 * 
-		 * Ejemplo: Si quiero que me muestre de 5 en 5 los registro de mi tabla
-		 * , y quiero que me muestre un primer reglón, realizamos el cálculo:
+		 * Ejemplo: Si quiero que me muestre de 5 en 5 los registro de mi tabla , y
+		 * quiero que me muestre un primer reglón, realizamos el cálculo:
 		 * 
-		 * pagActual = 1;
-		 * pagPerReg = 5;
-		 * start = ?;
+		 * pagActual = 1; pagPerReg = 5; start = ?;
 		 * 
-		 * start = (1*5)-5 = 0;
-		 * start = 0;
+		 * start = (1*5)-5 = 0; start = 0;
 		 * 
-		 * Con esto le indico a mi sentencia Sql(SELECT * FROM `persona` LIMIT 0 ,5)
-		 * que me muestre los cinco primeros registros de la tabla, al realiza el cálculo
+		 * Con esto le indico a mi sentencia Sql(SELECT * FROM `persona` LIMIT 0 ,5) que
+		 * me muestre los cinco primeros registros de la tabla, al realiza el cálculo
 		 * nuevamente, cambiamos la página a 2:
 		 * 
-		 * pagActual = 2;
-		 * pagPerReg = 5;
-		 * start = ?;
+		 * pagActual = 2; pagPerReg = 5; start = ?;
 		 * 
-		 * start = (2*5)-5 = 5;
-		 * start = 5;
+		 * start = (2*5)-5 = 5; start = 5;
 		 * 
-		 * Con esto le indicamos a la sentencia Sql Sql(SELECT * FROM `persona` LIMIT 5 ,5)
-		 * que me muestre los tres segundo registro.
+		 * Con esto le indicamos a la sentencia Sql Sql(SELECT * FROM `persona` LIMIT 5
+		 * ,5) que me muestre los tres segundo registro.
 		 * 
 		 * Esto sucesivamente a hasta mostra el final de los registro.
 		 * 
 		 * Cabe mencionar que la clave está como la palabra LIMIT en la sentencia SQL
-		 * muestra este tipo de información, el muestra la cantidad de valores
-		 * de acuerdo le indiquemos en el segundo parámetro.
+		 * muestra este tipo de información, el muestra la cantidad de valores de
+		 * acuerdo le indiquemos en el segundo parámetro.
 		 * 
-		 * si es de 3 en 3 o de 10 en 10, y va desde la posición de incio 0 hasta la posición
-		 * del registro que le indiquemos, ejemplo: 
-		 * posición 0(primeros registros a mostrar) y de acuerdo al segundo parámetro se empieza,
-		 * a contar, en caso de que sea 5 el segundo parámetro; 0,1,2,3,4, como si fuera una array luego se debe mover
-		 * a la posición 5; 5,6,7,8,9, y de esta manera mostraría los primeros 10 registro de 
-		 * 5 en 5 de forma consecutiva.
+		 * si es de 3 en 3 o de 10 en 10, y va desde la posición de incio 0 hasta la
+		 * posición del registro que le indiquemos, ejemplo: posición 0(primeros
+		 * registros a mostrar) y de acuerdo al segundo parámetro se empieza, a contar,
+		 * en caso de que sea 5 el segundo parámetro; 0,1,2,3,4, como si fuera una array
+		 * luego se debe mover a la posición 5; 5,6,7,8,9, y de esta manera mostraría
+		 * los primeros 10 registro de 5 en 5 de forma consecutiva.
 		 * 
 		 */
-		 int start = (pagActual * perReg) - perReg;
-		
+		int start = (pagActual * perReg) - perReg;
+
 		try {
+
 			statement = this.conn.getConnection().prepareStatement("SELECT * FROM persona LIMIT ?,?");
-			
 			statement.setInt(1, start);
 			statement.setInt(2, perReg);
-			
-			filas = statement.executeQuery();
-			
-			
-			while(filas.next()) {
 
-				persona = new Persona(
-						filas.getInt("cedula"),filas.getString("nombre"),filas.getString("apellido"),filas.getString("telefono")
-						);
+			filas = statement.executeQuery();
+
+			while (filas.next()) {
+
+				persona = new Persona(filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"),
+						filas.getString("telefono"));
 				persona.setId(filas.getInt("id"));
-				
+
 				p.add(persona);
-				
+
 			}
-			
+
+			return p;
+
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		
-		}finally {
-			
-				try {
-					statement.close();
-					this.conn.closeConnection();
-					
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
-				
-	
+
+			System.out.println("Clase no encontrada" + e.getMessage());
+			throw new DataBaseException("Error Statement ", e);
+
+		} finally {
+
+			try {
+				statement.close();
+				this.conn.closeConnection();
+
+			} catch (SQLException e) {
+
+				throw new DataBaseException("Error close Statement ", e);
+			}
+
 		}
-		
-		return p;
+
 	}
 }

@@ -10,10 +10,10 @@
 <title>Principal</title>
 
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="css/navbar-top.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/navbar-top.css" rel="stylesheet">
 </head>
 
 <body>

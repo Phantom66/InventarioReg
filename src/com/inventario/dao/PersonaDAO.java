@@ -1,8 +1,9 @@
 package com.inventario.dao;
 
-import java.util.List;
 
+import java.util.List;
 import com.inventario.bo.Persona;
+
 
 public interface PersonaDAO {
 

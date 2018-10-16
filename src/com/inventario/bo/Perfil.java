@@ -7,6 +7,9 @@ public class Perfil {
 	private String name;
 	private String password;
 	
+	public Perfil () {
+		
+	}
 	
 	public Perfil(int id, String name, String email, String password) {
 		super();

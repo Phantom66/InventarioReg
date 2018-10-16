@@ -104,6 +104,7 @@ public class AccionPrincipal {
 
 		if ((session.getAttribute("sessionUsuario") == null) && (request.getParameter("cerrarSession") == null)) {
 
+			// System.out.println("Llego hasta aquí --->" + email + " --- "+pass);
 			if (email != null && pass != null) {
 				
 				// Solo para probar para capturar las excepciones.
@@ -116,7 +117,7 @@ public class AccionPrincipal {
 					throw new DataBaseException("Correo no encontrado ", e);
 
 				}
-				System.out.println(perfil);
+				System.out.println("Estoy aquí ----" + perfil);
 
 				if (perfil != null) {
 
@@ -197,7 +198,7 @@ public class AccionPrincipal {
 				// perReg = 3;
 			}
 
-			List<Persona> perPagination = persona.getPerPagination(pagActual, perReg);
+			List<Producto> perPagination = persona.getPerPagination(pagActual, perReg);
 
 			// N° de filas de nuetra tabla.
 			int rows = persona.getRows();

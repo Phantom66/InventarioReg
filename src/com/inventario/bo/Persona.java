@@ -10,6 +10,7 @@ public class Persona {
 	private Producto [] productos;
 	private Perfil [] perfil;
 
+	public Persona() {};
 	
 	public Persona(int cedula, String nombre, String apellido, String telefono, Producto[] productos) {
 		this.cedula = cedula;

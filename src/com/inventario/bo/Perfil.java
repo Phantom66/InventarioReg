@@ -22,7 +22,7 @@ public class Perfil {
 		this.password = password;
 	}
 
-	public Perfil(int id, String email, String name, String password, Persona persona) {
+	public Perfil(int id, String name, String email, String password, Persona persona) {
 		super();
 		this.id = id;
 		this.email = email;

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.inventario.bo.Persona;
+import com.inventario.bo.Producto;
 import com.inventario.con.DataBase;
 import com.inventario.con.DataBaseException;
 
@@ -260,12 +261,13 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	
-	public List<Persona> getPerPagination(int pagActual, int perReg){
+	public List<Producto> getPerPagination(int pagActual, int perReg){
 
 		PreparedStatement statement = null;
 		ResultSet filas = null;
-		List<Persona> p = new ArrayList<Persona>();
-		Persona persona;
+		List<Producto> p = new ArrayList<Producto>();
+		Producto producto;
+		Persona persona = new Persona();
 
 		/*
 		 * Con este cálculo puedo ir corriendo las posiciones del registro de mi tabla.
@@ -286,7 +288,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		 * start = (2*5)-5 = 5; start = 5;
 		 * 
 		 * Con esto le indicamos a la sentencia Sql Sql(SELECT * FROM `persona` LIMIT 5
-		 * ,5) que me muestre los tres segundo registro.
+		 * ,5) que me muestre los cinco segundo registro.
 		 * 
 		 * Esto sucesivamente a hasta mostra el final de los registro.
 		 * 
@@ -305,20 +307,23 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		int start = (pagActual * perReg) - perReg;
 
 		try {
-
-			statement = this.conn.getConnection().prepareStatement("SELECT * FROM persona LIMIT ?,?");
+			
+			statement = this.conn.getConnection().prepareStatement("SELECT producto.id, producto.nombre, producto.estatus, producto.descripcion, persona.nombre as pnombre FROM producto, persona WHERE producto.id_persona = persona.cedula LIMIT ?,?");
 			statement.setInt(1, start);
 			statement.setInt(2, perReg);
 
 			filas = statement.executeQuery();
 
 			while (filas.next()) {
+				
+				persona.setNombre(filas.getString("pnombre"));
+				producto = new Producto(
+							filas.getInt("id"), filas.getString("nombre"), 
+							filas.getString("estatus"), filas.getString("descripcion"), persona
+							);
 
-				persona = new Persona(filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"),
-						filas.getString("telefono"));
-				persona.setId(filas.getInt("id"));
-
-				p.add(persona);
+				System.out.println(producto.toString());
+				p.add(producto);
 
 			}
 

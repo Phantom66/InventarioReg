@@ -28,13 +28,14 @@ public class PerfilDAOImpl implements PerfilDAO {
 
 		PreparedStatement statement = null;
 
-		String sql = "INSERT INTO perfiles(name, email, password) VALUES(?,?,?)";
+		String sql = "INSERT INTO perfiles(name, email, password,id_persona) VALUES(?,?,?,?)";
 
 		try {
 			statement = this.conn.getConnection().prepareStatement(sql);
 			statement.setString(1, perfil.getName());
 			statement.setString(2, perfil.getEmail());
 			statement.setString(3, perfil.getPassword());
+			statement.setInt(4, perfil.getPersona().getCedula());
 			statement.executeUpdate();
 
 

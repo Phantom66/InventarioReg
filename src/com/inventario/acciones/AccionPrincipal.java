@@ -401,12 +401,14 @@ public class AccionPrincipal {
 
 			if (password.equalsIgnoreCase(pass)) {
 				
+				//Cédula de persona debe ser validada, por los momentos lo dejaré así para realizar pruebas.
 				Persona p = new Persona(
 							Integer.parseInt(request.getParameter("cedula")), request.getParameter("nombre"),
 							request.getParameter("apellido"),request.getParameter("telefono")
 						);
+				
 				insertarPersona.insertar(p);
-				perfil = new Perfil(0, name, email, password);
+				perfil = new Perfil(0, name, email, password,p);
 				buscarPerfil.insertar(perfil);
 				request.setAttribute("messageSuccess", "Registro Exitoso!!");
 				return "/login.jsp";

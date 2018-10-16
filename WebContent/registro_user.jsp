@@ -24,9 +24,28 @@
 					<div class="panel-body">
 						<form action="RegUser.do" method="post" role="form">
 							<fieldset>
+
 								<div class="form-group">
-									<label for="user">Nombre</label> 
-									<input type="text" class="form-control" id="user" name="user" placeholder="Name(Andres, José, Juan ..)" autofocus required>
+									<label for="cedula">Cedula</label> 
+									<input type="text" class="form-control" id="cedula" name="cedula" placeholder="cedula (12345678)" autofocus required>
+								</div>
+								<div class="form-group">
+									<label for="nombre">Nombre</label> 
+									<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre(Andres, José, Juan ..)" autofocus required>
+								</div>
+								
+								<div class="form-group">
+									<label for="apellido">Apellido</label> 
+									<input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido(Perez, Quero ..)" autofocus required>
+								</div>
+								<div class="form-group">
+									<label for="telefono">Telefono</label> 
+									<input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefon(04120000000)" autofocus required>
+								</div>
+								
+								<div class="form-group">
+									<label for="user">Pseudonimo</label> 
+									<input type="text" class="form-control" id="user" name="user" placeholder="Pseudo(Leo, Pepito ..)" autofocus required>
 								</div>
 								
 								<div class="form-group">

@@ -8,6 +8,7 @@ public class Persona {
 	private String nombre, apellido, telefono;
 	
 	private Producto [] productos;
+	private Perfil [] perfil;
 
 	
 	public Persona(int cedula, String nombre, String apellido, String telefono, Producto[] productos) {
@@ -18,15 +19,24 @@ public class Persona {
 		this.productos = productos;
 	}
 
-	
 
 	public Persona(int cedula, String nombre, String apellido, String telefono) {
-		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
 	}
+
+	
+	public Persona(int id, int cedula, String nombre, String apellido, String telefono, Perfil[] perfil) {
+		this.id = id;
+		this.cedula = cedula;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.telefono = telefono;
+		this.perfil = perfil;
+	}
+
 
 
 	public int getId() {
@@ -87,6 +97,18 @@ public class Persona {
 	public void setProductos(Producto[] productos) {
 		this.productos = productos;
 	}
+
+	
+
+	public Perfil[] getPerfil() {
+		return perfil;
+	}
+
+
+	public void setPerfil(Perfil[] perfil) {
+		this.perfil = perfil;
+	}
+
 
 
 	@Override

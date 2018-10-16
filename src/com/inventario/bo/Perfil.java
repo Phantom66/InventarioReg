@@ -1,12 +1,15 @@
 package com.inventario.bo;
 
+
 public class Perfil {
 	
 	private int id;
 	private String email;
 	private String name;
 	private String password;
+	private Persona persona;
 	
+
 	public Perfil () {
 		
 	}
@@ -17,6 +20,15 @@ public class Perfil {
 		this.email = email;
 		this.name = name;
 		this.password = password;
+	}
+
+	public Perfil(int id, String email, String name, String password, Persona persona) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.name = name;
+		this.password = password;
+		this.persona = persona;
 	}
 
 	public Perfil(String email) {
@@ -64,9 +76,18 @@ public class Perfil {
 	}
 
 
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	
 	@Override
 	public String toString() {
-		return "Perfil [id=" + id + ", email=" + email + ", name=" + name + ", password=" + password + "]";
+		return "Perfil [id=" + id + ", email=" + email + ", name=" + name + ", password=" + password + ", persona="
+				+ persona + "]";
 	}
 	
 	

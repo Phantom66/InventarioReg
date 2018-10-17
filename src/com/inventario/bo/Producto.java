@@ -6,9 +6,10 @@ public class Producto {
 	private String nombre;
 	private String estatus;
 	private String descripcion;
-	
+	private String idPersona;
 	private Persona persona;
 
+	
 	
 	public Producto(int id, String nombre, String estatus, String descripcion, Persona persona) {
 		this.id = id;
@@ -79,12 +80,24 @@ public class Producto {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
+	
+	//No lo voy a colocar en el constructor. Mejorar.
+	public void setIdPersona(String id) {
+		
+		this.idPersona = id;
+		
+	}
+	
+	public String getIdPersona() {
+		
+		return idPersona;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", estatus=" + estatus + ", descripcion=" + descripcion
-				+ ", persona=" + persona + "]";
+				+ ", persona=" + persona + ", id_persona=" + idPersona + "]";
 	}
 	
 	

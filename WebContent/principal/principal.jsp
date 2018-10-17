@@ -32,9 +32,9 @@
 					<td>${temporal.persona.nombre}</td>
 					<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
 					<td><a class="btn btn-primary"
-						href="Editar.do?id=${temporal.id}" role="button">Editar</a></td>
+						href="Editar.do?id=${temporal.idPersona}" role="button">Editar</a></td>
 					<td><a class="btn btn-primary"
-						href="Borrar.do?id=${temporal.id}" role="button">Eliminar</a></td>
+						href="Borrar.do?id=${temporal.idPersona}" role="button">Eliminar</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

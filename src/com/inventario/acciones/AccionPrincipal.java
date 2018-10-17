@@ -312,7 +312,7 @@ public class AccionPrincipal {
 
 		if (session.getAttribute("sessionUsuario") != null) {
 
-			String cedula = request.getParameter("cedula");
+			String cedula = request.getParameter("id");
 
 			PersonaDAO persona = new PersonaDAOImpl();
 			ProductoDAO producto = new ProductoDAOImpl();

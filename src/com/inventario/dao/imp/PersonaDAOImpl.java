@@ -308,7 +308,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		try {
 			
-			statement = this.conn.getConnection().prepareStatement("SELECT producto.id, producto.nombre, producto.estatus, producto.descripcion, persona.nombre as pnombre FROM producto, persona WHERE producto.id_persona = persona.cedula LIMIT ?,?");
+			statement = this.conn.getConnection().prepareStatement("SELECT producto.id, producto.nombre, producto.estatus, producto.descripcion, persona.nombre as pnombre, producto.id_persona FROM producto, persona WHERE producto.id_persona = persona.cedula LIMIT ?,?");
 			statement.setInt(1, start);
 			statement.setInt(2, perReg);
 
@@ -316,12 +316,16 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			while (filas.next()) {
 				
+				//Mejorar esta locura
 				persona.setNombre(filas.getString("pnombre"));
+				
 				producto = new Producto(
 							filas.getInt("id"), filas.getString("nombre"), 
 							filas.getString("estatus"), filas.getString("descripcion"), persona
 							);
-
+				
+				//Mejorar esta locura
+				producto.setIdPersona(filas.getString("id_persona"));
 				System.out.println(producto.toString());
 				p.add(producto);
 

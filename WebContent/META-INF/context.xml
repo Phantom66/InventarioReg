@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Configurando el context path -->
-<Context path="/InventarioReg/"></Context>
+<Context path="/InventarioReg/">
+	<!-- Configurando Real -->
+	<Realm className="org.apache.catalina.realm.JDBCRealm"
+		driverName="com.mysql.jdbc.Driver"
+		connectionURL="jdbc:mysql://localhost:3306/Inventario"
+		connectionName="root" connectionPassword="" 
+		userTable="perfiles"
+		userNameCol="name" userCredCol="password"
+		userRoleTable="roles" roleNameCol="perfil" />
+</Context>

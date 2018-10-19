@@ -25,7 +25,7 @@
 		<label for="inputEmail" class="sr-only">Email address</label> 
 			<input type="text" id="username" class="form-control" name="j_username" placeholder="admin" required autofocus> 
 		<label for="inputPassword" class="sr-only">Password</label> 
-			<input type="password" id="inputPassword" class="form-control" name="j_password" placeholder="Password" required>
+			<input type="password" id="inputPassword" class="form-control" name="j_password" placeholder="password" required>
 		<div class="checkbox mb-3">
 			<label> 
 				<input type="checkbox" value="remember-me"> Remember me

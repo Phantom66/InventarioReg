@@ -3,6 +3,7 @@ package com.inventario.acciones;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -182,7 +183,7 @@ public class AccionPrincipal {
 
 		session = request.getSession();
 
-		if (session.getAttribute("sessionUsuario") != null) {
+		// if (session.getAttribute("sessionUsuario") != null) {
 			PersonaDAOImpl persona = new PersonaDAOImpl();
 
 			int pagActual;
@@ -213,17 +214,20 @@ public class AccionPrincipal {
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
 
-			String user = (String) session.getAttribute("sessionUsuario");
-			System.out.println("Sessión " + user);
+			String user = (String) session.getAttribute("dataName");
+//			HttpSession session = request.getSession(true);
+
+			System.out.println("Sessión " + user );
 
 			return "principal/principal.jsp";
 
-		} else {
-
-			System.out.println("Sessión " + (String) session.getAttribute("sessionUsuario"));
-			return "/login.jsp";
-
-		}
+		// } else {
+		//
+		// System.out.println("Sessión " + (String)
+		// session.getAttribute("sessionUsuario"));
+		// return "/login.jsp";
+		//
+		// }
 
 	}
 	

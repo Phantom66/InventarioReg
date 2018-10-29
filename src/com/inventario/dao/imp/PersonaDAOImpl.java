@@ -316,18 +316,23 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			while (filas.next()) {
 				
-				//Mejorar esta locura
-				persona.setNombre(filas.getString("pnombre"));
+
 				
 				producto = new Producto(
 							filas.getInt("id"), filas.getString("nombre"), 
 							filas.getString("estatus"), filas.getString("descripcion"), persona
 							);
 				
-				//Mejorar esta locura
+				//Mejorar esta locura Producto
 				producto.setIdPersona(filas.getString("id_persona"));
-				producto.getPersona().setCedula(filas.getInt("cedula"));
-				System.out.println(producto.toString());
+				
+				//Mejorar esta locura Persona
+				persona.setNombre(filas.getString("pnombre"));
+				persona.setCedula(filas.getInt("cedula"));
+				producto.setPersona(persona);
+				
+				System.out.println("--P--"+producto.toString());
+				
 				p.add(producto);
 
 			}

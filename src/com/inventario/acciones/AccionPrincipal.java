@@ -213,7 +213,7 @@ public class AccionPrincipal {
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
 
-				System.out.println("user" + session.getId());
+				System.out.println("user" + session.getId() + perPagination.toString());
 
 			return "principal/principal.jsp";
 
@@ -246,7 +246,7 @@ public class AccionPrincipal {
 		persona.salvar(per);
 		product.salvar(pro);
 
-		System.out.print("Estoy actualizando " + per.getCedula() + per.getNombre());
+		System.out.print("Estoy actualizando " + per.getCedula() + " " + per.getNombre());
 
 		return "/Principal.do";
 

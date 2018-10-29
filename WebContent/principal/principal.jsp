@@ -23,18 +23,22 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="temporal" items="${Lista_Productos}">
+			<c:forEach var="producto" items="${Lista_Productos}">
 				<tr>
 					<th scope="row">${temporal.id}</th>
-					<td>${temporal.nombre}</td>
-					<td>${temporal.estatus }</td>
-					<td>${temporal.descripcion}</td>
-					<td>${temporal.persona.nombre}</td>
+					<td>${producto.nombre}</td>
+					<td>${producto.estatus }</td>
+					<td>${producto.descripcion}</td>
+
+
+					<td>${producto.persona.nombre}</td>
 					<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
 					<td><a class="btn btn-primary"
-						href="Editar.do?id=${temporal.persona.cedula}" role="button">Editar</a></td>
+						href="Editar.do?id=${producto.persona.cedula}" role="button">Editar</a></td>
 					<td><a class="btn btn-primary"
-						href="Borrar.do?id=${temporal.persona.cedula}" role="button">Eliminar</a></td>
+						href="Borrar.do?id=${producto.persona.cedula}" role="button">Eliminar</a></td>
+
+
 				</tr>
 			</c:forEach>
 		</tbody>

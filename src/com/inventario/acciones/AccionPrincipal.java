@@ -3,7 +3,6 @@ package com.inventario.acciones;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -160,8 +159,8 @@ public class AccionPrincipal {
 			System.out.println("Eliminando Sessión");
 
 			// Ver la differencia.
-			// session.invalidate();
-			session.removeAttribute("sessionUsuario");
+			session.invalidate();
+			//session.removeAttribute("sessionUsuario");
 			dispatcher = request.getRequestDispatcher("/login.jsp");
 			dispatcher.forward(request, response);
 
@@ -214,9 +213,7 @@ public class AccionPrincipal {
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
 
-			String user = (String) session.getAttribute("dataName");
-
-			System.out.println("Sessión " + user + session.getId());
+				System.out.println("user" + session.getId());
 
 			return "principal/principal.jsp";
 
@@ -302,7 +299,7 @@ public class AccionPrincipal {
 	 */
 	public String getEditar(HttpServletRequest request, HttpServletResponse response) {
 
-		//session = request.getSession();
+		session = request.getSession();
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
 

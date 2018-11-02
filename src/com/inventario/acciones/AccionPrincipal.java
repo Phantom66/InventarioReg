@@ -208,12 +208,13 @@ public class AccionPrincipal {
 				nPages++;
 			}
 
+			System.out.println("user " + session.getId() + perPagination.toString());
 			request.setAttribute("nPages", nPages);
 			request.setAttribute("pagActual", pagActual);
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
 
-				System.out.println("user" + session.getId() + perPagination.toString());
+				
 
 			return "principal/principal.jsp";
 

@@ -316,12 +316,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			while (filas.next()) {
 				
-
-				//Mejorar esta locura Persona ESTO ASÍ ME ESTÁ DANDO FALLO, LO INYECTO AL CONSTRUCTOR DEJANDO CAMPOS EN BLANCO.
-				// persona.setNombre(filas.getString("pnombre"));
-				// persona.setCedula(filas.getInt("cedula"));
-				//producto.setPersona(persona);
-				
 				producto = new Producto(
 							filas.getInt("id"), filas.getString("nombre"), 
 							filas.getString("estatus"), filas.getString("descripcion"), 

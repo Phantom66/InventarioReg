@@ -377,6 +377,7 @@ public class AccionPrincipal {
 		PerfilDAO buscarPerfil = new PerfilDAOImpl();
 		PersonaDAO insertarPersona = new PersonaDAOImpl();
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
+		System.out.println(" " + perfil + " Estoy ");
 
 		if (perfil != null) {
 

@@ -23,6 +23,10 @@
 		<servlet-name>ControladorMain</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>ControladorMain</servlet-name>
+		<url-pattern>/RegUser.es</url-pattern>
+	</servlet-mapping>
 	<!-- <servlet> -->
 	<!-- <servlet-name>ControladorLogin</servlet-name> -->
 	<!-- <servlet-class>com.inventario.con.ControladorLogin</servlet-class> -->

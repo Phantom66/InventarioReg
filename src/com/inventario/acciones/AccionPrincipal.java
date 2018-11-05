@@ -89,85 +89,94 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
+	public String getLoggin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String pass = request.getParameter("password");
+		// String email = request.getParameter("email");
+		// String pass = request.getParameter("password");
 
 		session = request.getSession();
-		RequestDispatcher dispatcher = null;
-		Perfil perfil = new Perfil();
-		PerfilDAO buscarPerfil;
+		System.out.println("Eliminando Sessión");
 
-		// System.out.println(" " + session.getAttribute("sessionUsuario") + " " +
-		// request.getParameter("cerrarSession"));
-		// session.getAttribute("sessionUsuario") quitando para realizar prueba con
-		// validacones de contenedores
-		if ((session.getId() == null) && (request.getParameter("cerrarSession") == null)) {
+		// Ver la differencia.
+		session.invalidate();
+		//session.removeAttribute("sessionUsuario");
+		return "/Principal.do";
+		
+		// Perfil perfil = new Perfil();
+		// PerfilDAO buscarPerfil;
+		//
+		// // System.out.println(" " + session.getAttribute("sessionUsuario") + " " +
+		// // request.getParameter("cerrarSession"));
+		// // session.getAttribute("sessionUsuario") quitando para realizar prueba con
+		// // validacones de contenedores
+		// if ((session.getId() == null) && (request.getParameter("cerrarSession") ==
+		// null)) {
+		//
+		//
+		// // // System.out.println("Llego hasta aquí --->" + email + " --- "+pass);
+		// // if (email != null && pass != null) {
+		// //
+		// // // Solo para probar para capturar las excepciones.
+		// // try {
+		// // buscarPerfil = new PerfilDAOImpl();
+		// // perfil = buscarPerfil.buscarPorClave(email);
+		// //
+		// // } catch (NullPointerException e) {
+		// //
+		// // throw new DataBaseException("Correo no encontrado ", e);
+		// //
+		// // }
+		// // System.out.println("Estoy aquí ----" + perfil);
+		// //
+		// // if (perfil != null) {
+		// //
+		// // System.out.println(pass + " " + perfil.getPassword() + " Estoy en el
+		// // Loggin");
+		// //
+		// // if (email.equalsIgnoreCase(perfil.getEmail())
+		// // &&
+		// SecurityPasswords.encriptar(pass).equalsIgnoreCase(perfil.getPassword()))
+		// // {
+		// //
+		// // session.setAttribute("sessionUsuario", perfil.getName());
+		// //
+		// // return "/Principal.do";
+		// //
+		// // } else {
+		// //
+		// // request.setAttribute("messageError", "Usuario o Contraseña Incorrecta");
+		// //
+		// // return "/Principal.do";
+		// //
+		// // }
+		// //
+		// // } else {
+		// //
+		// // request.setAttribute("messageError", "Usuario no existe, debe
+		// registrarse");
+		// // return "/Principal.do";
+		// // }
+		// //
+		// // } else {
+		// //
+		// // return "/Principal.do";
+		// //
+		// // }
+		//
+		// } else {
+		//
+		// System.out.println("Eliminando Sessión");
+		//
+		// // Ver la differencia.
+		// session.invalidate();
+		// //session.removeAttribute("sessionUsuario");
+		// return "/Principal.do";
+		//
+		// }
 
-			// System.out.println("Llego hasta aquí --->" + email + " --- "+pass);
-			if (email != null && pass != null) {
-
-				// Solo para probar para capturar las excepciones.
-				try {
-					buscarPerfil = new PerfilDAOImpl();
-					perfil = buscarPerfil.buscarPorClave(email);
-
-				} catch (NullPointerException e) {
-
-					throw new DataBaseException("Correo no encontrado ", e);
-
-				}
-				System.out.println("Estoy aquí ----" + perfil);
-
-				if (perfil != null) {
-
-					System.out.println(pass + " " + perfil.getPassword() + " Estoy en el Loggin");
-
-					if (email.equalsIgnoreCase(perfil.getEmail())
-							&& SecurityPasswords.encriptar(pass).equalsIgnoreCase(perfil.getPassword())) {
-
-						session.setAttribute("sessionUsuario", perfil.getName());
-
-						dispatcher = request.getRequestDispatcher("/Principal.do");
-						dispatcher.forward(request, response);
-
-					} else {
-
-						request.setAttribute("messageError", "Usuario o Contraseña Incorrecta");
-						dispatcher = request.getRequestDispatcher("/login.jsp");
-						dispatcher.forward(request, response);
-
-					}
-
-				} else {
-
-					request.setAttribute("messageError", "Usuario no existe, debe registrarse");
-					dispatcher = request.getRequestDispatcher("/login.jsp");
-					dispatcher.forward(request, response);
-				}
-
-			} else {
-
-				dispatcher = request.getRequestDispatcher("/login.jsp");
-				dispatcher.forward(request, response);
-
-			}
-
-		} else {
-
-			System.out.println("Eliminando Sessión");
-
-			// Ver la differencia.
-			session.invalidate();
-			//session.removeAttribute("sessionUsuario");
-			dispatcher = request.getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
-
-		}
-
-		System.out.println(
-				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
+		// System.out.println(
+		// "Usuario " + email + " Password " + pass + " " +
+		// request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 
 	/**

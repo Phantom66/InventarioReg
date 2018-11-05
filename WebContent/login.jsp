@@ -17,17 +17,15 @@
 <link href="css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
-	<form class="form-signin" action="login.do" method="post">
+	<form class="form-signin" action="${pageContext.request.contextPath}/j_security_check" method="POST">
 		<img class="mb-4"
 			src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
 			alt="" width="72" height="72">
 		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="inputEmail" class="sr-only">Email address</label> <input
-			type="email" id="inputEmail" class="form-control" name="email"
-			placeholder="Email address" required autofocus> <label
-			for="inputPassword" class="sr-only">Password</label> <input
-			type="password" id="inputPassword" class="form-control"
-			name="password" placeholder="Password" required>
+		<label for="inputEmail" class="sr-only">Email address</label> 
+			<input type="text" id="username" class="form-control" name="j_username" placeholder="admin" required autofocus> 
+		<label for="inputPassword" class="sr-only">Password</label> 
+			<input type="password" id="inputPassword" class="form-control" name="j_password" placeholder="password" required>
 		<div class="checkbox mb-3">
 			<label> 
 				<input type="checkbox" value="remember-me"> Remember me

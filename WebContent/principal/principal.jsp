@@ -13,26 +13,32 @@
 		<thead class="thead-dark">
 			<tr>
 				<th scope="col">#</th>
-				<th scope="col">Cedula</th>
-				<th scope="col">Nombres y Apellidos</th>
-				<th scope="col">Telefono</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Estatus</th>
+				<th scope="col">Descripcion</th>
+				<th scope="col">Registrado por:</th>
 				<th scope="col"></th>
 				<th scope="col"></th>
 				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="temporal" items="${Lista_Productos}">
+			<c:forEach var="producto" items="${Lista_Productos}">
 				<tr>
 					<th scope="row">${temporal.id}</th>
-					<td>${temporal.cedula}</td>
-					<td>${temporal.nombre }${temporal.apellido}</td>
-					<td>${temporal.telefono}</td>
+					<td>${producto.nombre}</td>
+					<td>${producto.estatus }</td>
+					<td>${producto.descripcion}</td>
+
+
+					<td>${producto.persona.nombre}</td>
 					<td><a class="btn btn-primary" href="#" role="button">PDF</a></td>
 					<td><a class="btn btn-primary"
-						href="Editar.do?cedula=${temporal.cedula}" role="button">Editar</a></td>
+						href="Editar.do?id=${producto.persona.cedula}" role="button">Editar</a></td>
 					<td><a class="btn btn-primary"
-						href="Borrar.do?cedula=${temporal.cedula}" role="button">Eliminar</a></td>
+						href="Borrar.do?id=${producto.persona.cedula}" role="button">Eliminar</a></td>
+
+
 				</tr>
 			</c:forEach>
 		</tbody>

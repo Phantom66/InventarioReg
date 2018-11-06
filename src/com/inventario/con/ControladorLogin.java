@@ -17,10 +17,11 @@ public class ControladorLogin extends HttpServlet {
 			throws ServletException, IOException {
 
 		AccionPrincipal accion = new AccionPrincipal();
-
-			System.out.println(accion.getLoggin(request, response));
-			dispatcher = request.getRequestDispatcher(accion.getLoggin(request, response));
-			dispatcher.forward(request, response);
+		
+		String route = accion.getLoggin(request, response);
+		System.out.println("Estoy aqui cerrando " + route);
+		dispatcher = request.getRequestDispatcher(route);
+		dispatcher.forward(request, response);
 
 	}
 

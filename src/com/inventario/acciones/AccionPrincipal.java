@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,92 +90,17 @@ public class AccionPrincipal {
 	 */
 	public String getLoggin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// String email = request.getParameter("email");
-		// String pass = request.getParameter("password");
 
 		session = request.getSession();
-		System.out.println("Eliminando Sessión");
-
+	
 		// Ver la differencia.
 		session.invalidate();
 		//session.removeAttribute("sessionUsuario");
-		return "/Principal.do";
+		System.out.println("Eliminando Sessión " + session.getId());
+		//Lo realizo de esta manera, debido a que cuando lo reidirigo a Principal.do
+		//me crea un nueva sessión temporal y no elimina la variable sessión, de esta manera si.
+		return "/index.jsp";
 		
-		// Perfil perfil = new Perfil();
-		// PerfilDAO buscarPerfil;
-		//
-		// // System.out.println(" " + session.getAttribute("sessionUsuario") + " " +
-		// // request.getParameter("cerrarSession"));
-		// // session.getAttribute("sessionUsuario") quitando para realizar prueba con
-		// // validacones de contenedores
-		// if ((session.getId() == null) && (request.getParameter("cerrarSession") ==
-		// null)) {
-		//
-		//
-		// // // System.out.println("Llego hasta aquí --->" + email + " --- "+pass);
-		// // if (email != null && pass != null) {
-		// //
-		// // // Solo para probar para capturar las excepciones.
-		// // try {
-		// // buscarPerfil = new PerfilDAOImpl();
-		// // perfil = buscarPerfil.buscarPorClave(email);
-		// //
-		// // } catch (NullPointerException e) {
-		// //
-		// // throw new DataBaseException("Correo no encontrado ", e);
-		// //
-		// // }
-		// // System.out.println("Estoy aquí ----" + perfil);
-		// //
-		// // if (perfil != null) {
-		// //
-		// // System.out.println(pass + " " + perfil.getPassword() + " Estoy en el
-		// // Loggin");
-		// //
-		// // if (email.equalsIgnoreCase(perfil.getEmail())
-		// // &&
-		// SecurityPasswords.encriptar(pass).equalsIgnoreCase(perfil.getPassword()))
-		// // {
-		// //
-		// // session.setAttribute("sessionUsuario", perfil.getName());
-		// //
-		// // return "/Principal.do";
-		// //
-		// // } else {
-		// //
-		// // request.setAttribute("messageError", "Usuario o Contraseña Incorrecta");
-		// //
-		// // return "/Principal.do";
-		// //
-		// // }
-		// //
-		// // } else {
-		// //
-		// // request.setAttribute("messageError", "Usuario no existe, debe
-		// registrarse");
-		// // return "/Principal.do";
-		// // }
-		// //
-		// // } else {
-		// //
-		// // return "/Principal.do";
-		// //
-		// // }
-		//
-		// } else {
-		//
-		// System.out.println("Eliminando Sessión");
-		//
-		// // Ver la differencia.
-		// session.invalidate();
-		// //session.removeAttribute("sessionUsuario");
-		// return "/Principal.do";
-		//
-		// }
-
-		// System.out.println(
-		// "Usuario " + email + " Password " + pass + " " +
-		// request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 
 	/**
@@ -190,6 +114,7 @@ public class AccionPrincipal {
 
 		session = request.getSession();
 
+		//System.out.println("Sessión " + session.getId());
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
 			PersonaDAOImpl persona = new PersonaDAOImpl();
@@ -229,8 +154,8 @@ public class AccionPrincipal {
 
 		} else {
 
-			System.out.println("Sessión " + (String) session.getAttribute("sessionUsuario"));
-			return "/login.jsp";
+			System.out.println("Sessión " + session.getId());
+			return "/Principal.do";
 
 		}
 

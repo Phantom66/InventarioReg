@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+<hibernate-mapping
+	package="/com/inventario/bo/">
+	<class name="Perfil" table="perfil">
+		<id name="id" type="string" />
+		<property name="email" type="string" column="email" />
+		<property name="name" type="string" column="name" />
+		<property name="password" type="string" column="password" />
+	</class>
+</hibernate-mapping>

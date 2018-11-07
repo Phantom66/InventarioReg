@@ -10,8 +10,6 @@ public class Producto {
 	private Persona persona;
 	
 	
-
-	
 	
 	public Producto(int id, String nombre, String estatus, String descripcion, Persona persona) {
 		this.id = id;

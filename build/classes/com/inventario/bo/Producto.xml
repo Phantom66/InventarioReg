@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+<hibernate-mapping
+	package="/com/inventario/bo/">
+	<class name="Producto" table="producto">
+		<id name="id" type="string" />
+		<property name="nombre" type="string" column="nombre" />
+		<property name="estatus" type="string" column="estatus" />
+		<property name="descripcion" type="string" column="descripcion" />
+	</class>
+</hibernate-mapping>

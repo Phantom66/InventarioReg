@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+<hibernate-mapping
+	package="/com/inventario/bo/">
+	<class name="Persona" table="persona">
+		<id name="cedula" type="string" />
+		<property name="nombre" type="string" column="nombre" />
+		<property name="apellido" type="string" column="apellido" />
+		<property name="telefono" type="string" column="telefono" />
+	</class>
+</hibernate-mapping>

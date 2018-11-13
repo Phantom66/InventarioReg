@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <hibernate-mapping
-	package="/com/inventario/bo/">
-	<class name="Perfil" table="perfil">
-		<id name="id" type="string" />
+	package="com.inventario.bo">
+	<class name="Perfil" table="perfiles">
+		<id name="id" type="int" />
 		<property name="email" type="string" column="email" />
 		<property name="name" type="string" column="name" />
 		<property name="password" type="string" column="password" />

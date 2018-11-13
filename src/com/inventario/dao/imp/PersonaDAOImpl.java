@@ -150,7 +150,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 				);
 				// Lo hago de esta manera para realizar prueba, debo optimizar.
-				p.setId(filas.getInt("id"));
+				//p.setId(filas.getInt("id"));
 				persona.add(p);
 
 			}

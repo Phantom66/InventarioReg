@@ -3,7 +3,7 @@ package com.inventario.bo;
 import java.util.Arrays;
 
 public class Persona {
-	private int id;
+	//private int id;
 	private int cedula;
 	private String nombre, apellido, telefono;
 	
@@ -28,15 +28,15 @@ public class Persona {
 		this.telefono = telefono;
 	}
 
-	
-	public Persona(int id, int cedula, String nombre, String apellido, String telefono, Perfil[] perfil) {
-		this.id = id;
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.perfil = perfil;
-	}
+//	
+//	public Persona(int id, int cedula, String nombre, String apellido, String telefono, Perfil[] perfil) {
+//		this.id = id;
+//		this.cedula = cedula;
+//		this.nombre = nombre;
+//		this.apellido = apellido;
+//		this.telefono = telefono;
+//		this.perfil = perfil;
+//	}
 
 
 
@@ -46,7 +46,7 @@ public class Persona {
 		int result = 1;
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
 		result = prime * result + cedula;
-		result = prime * result + id;
+		//result = prime * result + id;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + Arrays.hashCode(perfil);
 		result = prime * result + Arrays.hashCode(productos);
@@ -70,8 +70,8 @@ public class Persona {
 			return false;
 		if (cedula != other.cedula)
 			return false;
-		if (id != other.id)
-			return false;
+		// if (id != other.id)
+		// return false;
 		if (nombre == null) {
 			if (other.nombre != null)
 				return false;
@@ -89,15 +89,15 @@ public class Persona {
 		return true;
 	}
 
-	public int getId() {
-		
-		return id;
-	}
-	
-	public void setId(int id) {
-		
-		this.id = id;
-	}
+//	public int getId() {
+//		
+//		return id;
+//	}
+//	
+//	public void setId(int id) {
+//		
+//		this.id = id;
+//	}
 	
 	public int getCedula() {
 		return cedula;

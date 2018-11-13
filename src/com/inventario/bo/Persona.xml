@@ -6,5 +6,11 @@
 		<property name="nombre" type="string" column="nombre" />
 		<property name="apellido" type="string" column="apellido" />
 		<property name="telefono" type="string" column="telefono" />
+		<list name="productos" cascade="all" inverse="false">
+			<key>
+				<colum name="id_persona" inverse="false"/>
+			</key>
+			<one-to-many class="com.inventario.bo.Producto"/>
+		</list>
 	</class>
 </hibernate-mapping>

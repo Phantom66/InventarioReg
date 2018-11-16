@@ -12,8 +12,8 @@ public class Producto {
 	
 	public Producto() {};
 	
-	public Producto(int id, String nombre, String estatus, String descripcion, Persona persona) {
-		this.id = id;
+	public Producto(String nombre, String estatus, String descripcion, Persona persona) {
+		
 		this.nombre = nombre;
 		this.estatus = estatus;
 		this.descripcion = descripcion;
@@ -22,8 +22,8 @@ public class Producto {
 		
 
 
-	public Producto(int id, String nombre, String estatus, String descripcion) {
-		this.id = id;
+	public Producto(String nombre, String estatus, String descripcion) {
+		
 		this.nombre = nombre;
 		this.estatus = estatus;
 		this.descripcion = descripcion;

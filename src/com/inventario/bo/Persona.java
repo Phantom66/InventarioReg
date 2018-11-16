@@ -4,24 +4,23 @@ import java.util.List;
 
 public class Persona {
 
-	private int cedula;
-	private String nombre, apellido, telefono;
-	
+	//private int cedula;
+	private String cedula, nombre, apellido, telefono;
 	private List <Producto> productos;
 	private List <Perfil> perfil;
 
 	public Persona() {}
 
-	public Persona(int cedula, String nombre, String apellido, String telefono) {
-		super();
+	public Persona(String cedula, String nombre, String apellido, String telefono) {
+		
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
 
 	}
-	public Persona(int cedula, String nombre, String apellido, String telefono, List<Producto> productos) {
-		super();
+	public Persona(String cedula, String nombre, String apellido, String telefono, List<Producto> productos) {
+		
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -29,16 +28,16 @@ public class Persona {
 		this.productos = productos;
 	}
 	
-	public Persona(int cedula, String nombre, String apellido, String telefono, List<Producto> productos,
-			List<Perfil> perfil) {
-		super();
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.productos = productos;
-		this.perfil = perfil;
-	}
+//	public Persona(int cedula, String nombre, String apellido, String telefono, List<Producto> productos,
+//			List<Perfil> perfil) {
+//		super();
+//		this.cedula = cedula;
+//		this.nombre = nombre;
+//		this.apellido = apellido;
+//		this.telefono = telefono;
+//		this.productos = productos;
+//		this.perfil = perfil;
+//	}
 
 
 
@@ -48,7 +47,8 @@ public class Persona {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
-		result = prime * result + cedula;
+		//Probando
+		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
 		result = prime * result + ((productos == null) ? 0 : productos.hashCode());
@@ -98,12 +98,12 @@ public class Persona {
 	}
 
 
-	public int getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
 
-	public void setCedula(int cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 

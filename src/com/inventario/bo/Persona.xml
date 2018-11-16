@@ -1,16 +1,21 @@
-<?xml version="1.0"?>
-<hibernate-mapping
-	package="com.inventario.bo">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.inventario.bo">
 	<class name="Persona" table="persona">
-		<id name="cedula" type="int" />
+		<id name="cedula" type="string" column="cedula"/>
+		
 		<property name="nombre" type="string" column="nombre" />
 		<property name="apellido" type="string" column="apellido" />
 		<property name="telefono" type="string" column="telefono" />
-		<list name="productos" cascade="all" inverse="false">
+		
+		<list name="productos" table="producto" cascade="all" inverse="true">
 			<key>
-				<colum name="id_persona" inverse="false"/>
+				<column name="id_persona"  not-null="true"/>
 			</key>
-			<one-to-many class="com.inventario.bo.Producto"/>
+			<list-index column="order" />
+			<one-to-many class="Producto"/>
 		</list>
+		
 	</class>
 </hibernate-mapping>

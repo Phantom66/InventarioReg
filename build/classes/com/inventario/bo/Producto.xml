@@ -4,7 +4,9 @@
 <hibernate-mapping
 	package="com.inventario.bo">
 	<class name="Producto" table="producto">
-		<id name="id" type="int" column="id"/>
+		<id name="id" type="int" column="id">
+			<generator class="increment"/>
+		</id>
 		
 		<property name="nombre" type="string" column="nombre" />
 		<property name="estatus" type="string" column="estatus" />

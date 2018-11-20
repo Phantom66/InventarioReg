@@ -3,19 +3,30 @@
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.inventario.bo">
 	<class name="Persona" table="persona">
-		<id name="cedula" type="string"/>
-		
-		<property name="nombre" type="string" column="nombre" />
-		<property name="apellido" type="string" column="apellido" />
-		<property name="telefono" type="string" column="telefono" />
-		
-		<list name="productos" table="producto" cascade="all" inverse="true">
-			<key>
-				<column name="id_persona"  not-null="true"/>
-			</key>
-			<list-index column="orden" />
-			<one-to-many class="Producto"/>
-		</list>
+	<id name="cedula" type="string" />
+
+	<property name="nombre" type="string" column="nombre" />
+	<property name="apellido" type="string" column="apellido" />
+	<property name="telefono" type="string" column="telefono" />
+
+	<!--  Relación 1 a M (Persona a Producto)-->
+	<list name="productos" table="producto" cascade="all"
+		inverse="true">
+		<key>
+			<column name="id_persona" not-null="true" />
+		</key>
+		<list-index column="orden" />
+		<one-to-many class="Producto" />
+	</list>
+	
+	<!--  Relación 1 a M (Persona a Perfil)-->
+	<list name="perfil" table="perfiles" cascade="all" inverse="true">
+		<key>
+			<column name="id_persona" not-null="true" />
+		</key>
+		<list-index column="orden" />
+		<one-to-many class="Perfil" />
+	</list>
 		
 	</class>
 </hibernate-mapping>

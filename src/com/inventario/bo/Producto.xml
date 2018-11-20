@@ -8,10 +8,11 @@
 		</id>
 		<property name="nombre" type="string" column="nombre" />
 		<property name="estatus" type="string" column="estatus" />
-		<property name="descripcion" type="string"
-			column="descripcion" />
+		<property name="descripcion" type="string" column="descripcion" />
+		
+		<!--  Relación M a 1 (Producto a Persona)-->
 		<many-to-one name="persona" class="Persona">
-			<column name="id_persona" not-null="true"></column>
+			<column name="id_persona" not-null="true"/>
 		</many-to-one>
 	</class>
 </hibernate-mapping>

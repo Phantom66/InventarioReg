@@ -13,7 +13,7 @@
 			<key>
 				<column name="id_persona"  not-null="true"/>
 			</key>
-			<list-index column="order" />
+			<list-index column="orden" />
 			<one-to-many class="Producto"/>
 		</list>
 		

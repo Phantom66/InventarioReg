@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping
-	package="com.inventario.bo">
+<hibernate-mapping package="com.inventario.bo">
 	<class name="Producto" table="producto">
 		<id name="id" type="int" column="id">
-			<generator class="increment"/>
+			<generator class="increment" />
 		</id>
-		
 		<property name="nombre" type="string" column="nombre" />
 		<property name="estatus" type="string" column="estatus" />
-		<property name="descripcion" type="string" column="descripcion" />
-
-	<!-- <many-to-one name="persona" class="Persona"> -->
-	<!-- <column name="id_persona" not-null="true"></column> -->
-	<!-- </many-to-one> -->
-
+		<property name="descripcion" type="string"
+			column="descripcion" />
+		<many-to-one name="persona" class="Persona">
+			<column name="id_persona" not-null="true"></column>
+		</many-to-one>
 	</class>
 </hibernate-mapping>

@@ -7,9 +7,9 @@
 			<generator class="increment"/>
 		</id>
 		<property name="nombre" type="string" column="name"/>
-		<property name="nPerfil" type="stirng" column="perfil"/>
+		<property name="nperfil" type="string" column="perfil"/>
 		
-		<!--  Relación M a 1 (Perfil a Persona)-->
+		<!--  Relación M a 1 (Perfil a Roles)-->
 		<many-to-one name="perfil" class="Perfil">
 			<column name="id_perfiles" not-null="true"/>
 		</many-to-one>

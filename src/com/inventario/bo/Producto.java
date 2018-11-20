@@ -2,6 +2,8 @@ package com.inventario.bo;
 
 public class Producto {
 	
+	//El id de esta clase como en las otras la dejo que la 
+	//genere Hibernate y no se la paso por constructor
 	private int id;
 	private String nombre;
 	private String estatus;

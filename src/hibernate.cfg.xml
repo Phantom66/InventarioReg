@@ -13,5 +13,6 @@
 		<mapping resource="com/inventario/bo/Persona.xml" />
 		<mapping resource="com/inventario/bo/Perfil.xml" />
 		<mapping resource="com/inventario/bo/Producto.xml" />
+		<mapping resource="com/inventario/bo/Roles.xml" />
 	</session-factory>
 </hibernate-configuration>

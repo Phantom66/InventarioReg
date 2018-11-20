@@ -4,27 +4,29 @@ import java.util.List;
 
 public class Perfil {
 	
+	//El id de esta clase como en las otras la dejo que la 
+	//genere Hibernate y no se la paso por constructor
 	private int id;
-	private String email;
 	private String name;
+	private String email;
 	private String password;
+	
 	private Persona persona;
+	
 	private List<Roles>roles;
 	
-
+	
 	public Perfil () {	}
 	
-	public Perfil(int id, String name, String email, String password) {
-		this.id = id;
-		this.email = email;
+	public Perfil(String name, String email, String password) {
 		this.name = name;
+		this.email = email;
 		this.password = password;
 	}
 
-	public Perfil(int id, String name, String email, String password, Persona persona) {
-		this.id = id;
-		this.email = email;
+	public Perfil(String name, String email, String password, Persona persona) {
 		this.name = name;
+		this.email = email;
 		this.password = password;
 		this.persona = persona;
 	}

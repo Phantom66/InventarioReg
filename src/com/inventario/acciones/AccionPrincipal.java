@@ -172,10 +172,10 @@ public class AccionPrincipal {
 		PersonaDAO persona = new PersonaDAOImpl();
 		ProductoDAO product = new ProductoDAOImpl();
 
-		Persona per = new Persona(Integer.parseInt(request.getParameter("cedula")), request.getParameter("nombre"),
+		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
 		// Mejorar
-		Producto pro = new Producto(0, request.getParameter("producto"), request.getParameter("status"),
+		Producto pro = new Producto(request.getParameter("producto"), request.getParameter("status"),
 				request.getParameter("descripcion"), per);
 
 		persona.salvar(per);
@@ -280,12 +280,12 @@ public class AccionPrincipal {
 		PersonaDAOImpl insertar = new PersonaDAOImpl();
 		ProductoDAOImpl product = new ProductoDAOImpl();
 
-		Persona persona = new Persona(Integer.parseInt(request.getParameter("cedula")), request.getParameter("nombre"),
+		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
 		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
 		insertar.insertar(persona);
 
-		product.insertar(new Producto(0, request.getParameter("producto"), request.getParameter("status"),
+		product.insertar(new Producto(request.getParameter("producto"), request.getParameter("status"),
 				request.getParameter("descripcion"), persona));
 
 		System.out.print("Estoy registrando");
@@ -327,12 +327,12 @@ public class AccionPrincipal {
 
 				// Cédula de persona debe ser validada, por los momentos lo dejaré así para
 				// realizar pruebas.
-				Persona p = new Persona(Integer.parseInt(request.getParameter("cedula")),
+				Persona p = new Persona(request.getParameter("cedula"),
 						request.getParameter("nombre"), request.getParameter("apellido"),
 						request.getParameter("telefono"));
 
 				insertarPersona.insertar(p);
-				perfil = new Perfil(0, name, email, password, p);
+				perfil = new Perfil(name, email, password, p);
 				buscarPerfil.insertar(perfil);
 				request.setAttribute("messageSuccess", "Registro Exitoso!!");
 				return "/login.jsp";

@@ -29,7 +29,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			statement.setString(1, producto.getNombre());
 			statement.setString(2, producto.getEstatus());
 			statement.setString(3, producto.getDescripcion());
-			statement.setInt(4, producto.getPersona().getCedula());
+			statement.setString(4, producto.getPersona().getCedula());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -65,7 +65,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			statement.setString(1, producto.getNombre());
 			statement.setString(2, producto.getEstatus());
 			statement.setString(3, producto.getDescripcion());
-			statement.setInt(4, producto.getPersona().getCedula());
+			statement.setString(4, producto.getPersona().getCedula());
 
 			statement.executeUpdate();
 
@@ -136,7 +136,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			while (filas.next()) {
 
 				// Coloco cero el id, porque esto se generea automático.s
-				Producto p = new Producto(0, filas.getString("nombre"), filas.getString("estatus"),
+				Producto p = new Producto(filas.getString("nombre"), filas.getString("estatus"),
 						filas.getString("descripcion"));
 
 				producto.add(p);
@@ -181,7 +181,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			if (filas.next()) {
 
-				p = new Producto(filas.getInt("id"), filas.getString("nombre"), filas.getString("estatus"),
+				p = new Producto(filas.getString("nombre"), filas.getString("estatus"),
 						filas.getString("descripcion"));
 
 			} else {

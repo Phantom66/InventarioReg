@@ -38,7 +38,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			// return persona.getCedula();
 			
 			statement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setInt(1, persona.getCedula());
+			statement.setString(1, persona.getCedula());
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getApellido());
 			statement.setString(4, persona.getTelefono());
@@ -77,7 +77,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			statement.setString(1, persona.getNombre());
 			statement.setString(2, persona.getApellido());
 			statement.setString(3, persona.getTelefono());
-			statement.setInt(4, persona.getCedula());
+			statement.setString(4, persona.getCedula());
 
 			statement.executeUpdate();
 
@@ -145,7 +145,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 				Persona p = new Persona(
 
-						filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"),
+						filas.getString("cedula"), filas.getString("nombre"), filas.getString("apellido"),
 						filas.getString("telefono")
 
 				);
@@ -192,7 +192,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 			if (filas.next()) {
 
-				persona = new Persona(filas.getInt("cedula"), filas.getString("nombre"), filas.getString("apellido"),
+				persona = new Persona(filas.getString("cedula"), filas.getString("nombre"), filas.getString("apellido"),
 						filas.getString("telefono"));
 
 			} else {
@@ -317,9 +317,9 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 			while (filas.next()) {
 				
 				producto = new Producto(
-							filas.getInt("id"), filas.getString("nombre"), 
+							filas.getString("nombre"), 
 							filas.getString("estatus"), filas.getString("descripcion"), 
-							new Persona(filas.getInt("cedula"), filas.getString("pnombre"), "", "")
+							new Persona(filas.getString("cedula"), filas.getString("pnombre"), "", "")
 							);
 				//Mejorar esta locura Producto
 				producto.setIdPersona(filas.getString("id_persona"));

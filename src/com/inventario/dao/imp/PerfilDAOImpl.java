@@ -35,7 +35,7 @@ public class PerfilDAOImpl implements PerfilDAO {
 			statement.setString(1, perfil.getName());
 			statement.setString(2, perfil.getEmail());
 			statement.setString(3, perfil.getPassword());
-			statement.setInt(4, perfil.getPersona().getCedula());
+			statement.setString(4, perfil.getPersona().getCedula());
 			statement.executeUpdate();
 
 
@@ -91,7 +91,7 @@ public class PerfilDAOImpl implements PerfilDAO {
 
 			if (filas.next()) {
 
-				perfil = new Perfil(filas.getInt("id"), filas.getString("name"), filas.getString("email"),
+				perfil = new Perfil(filas.getString("name"), filas.getString("email"),
 						filas.getString("password"));
 				
 				return perfil;

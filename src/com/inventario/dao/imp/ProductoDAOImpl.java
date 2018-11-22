@@ -138,7 +138,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 				// Coloco cero el id, porque esto se generea automático.s
 				Producto p = new Producto(filas.getString("nombre"), filas.getString("estatus"),
 						filas.getString("descripcion"));
-
+				//Insertando Id
+				p.setId(filas.getInt("id"));
 				producto.add(p);
 
 			}

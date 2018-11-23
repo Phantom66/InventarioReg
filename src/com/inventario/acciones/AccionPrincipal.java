@@ -242,14 +242,15 @@ public class AccionPrincipal {
 
 			PersonaDAO persona = new PersonaDAOImpl();
 			ProductoDAO producto = new ProductoDAOImpl();
+			
 
 			Persona encontrada = persona.buscarPorClave(cedula);
-			Producto encontrado = producto.buscarPorClave(cedula);
+			//Producto encontrado = producto.buscarPorClave(cedula);
 
-			System.out.println(cedula + encontrada + "\n" + encontrado);
+			//System.out.println(cedula + encontrada + "\n" + encontrado);
 
 			request.setAttribute("encontrada", encontrada);
-			request.setAttribute("encontrado", encontrado);
+			//request.setAttribute("encontrado", encontrado);
 
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);

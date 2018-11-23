@@ -1,6 +1,8 @@
 package com.inventario.dao.imp;
 
 import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.inventario.bo.Producto;
@@ -61,11 +63,16 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		// Verifica esto "SELECT * FROM producto WHERE id_persona = ?", lo tenía en mi
 		// consulta
-		// de buscar producto por id;
+		// de buscar producto por id, lo realizo porque traigo producto de la persona específica
+		//Mejorar.
 
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
-		Producto producto = session.get(Producto.class, id);
+		Query consulta = session.createQuery("From Producto producto Where producto.id_persona=:id");
+		consulta.setString("id", id);
+		
+		//obtener este producto
+		Producto producto =;
 		return producto;
 
 	}

@@ -3,21 +3,21 @@ package com.inventario.bo;
 import java.util.List;
 
 public class Perfil {
-	
-	//El id de esta clase como en las otras la dejo que la 
-	//genere Hibernate y no se la paso por constructor
+
+	// El id de esta clase como en las otras la dejo que la
+	// genere Hibernate y no se la paso por constructor
 	private int id;
 	private String name;
 	private String email;
 	private String password;
-	
+
 	private Persona persona;
-	
-	private List<Roles>roles;
-	
-	
-	public Perfil () {	}
-	
+
+	private List<Roles> roles;
+
+	public Perfil() {
+	}
+
 	public Perfil(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
@@ -31,7 +31,28 @@ public class Perfil {
 		this.persona = persona;
 	}
 
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Perfil other = (Perfil) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -85,7 +106,5 @@ public class Perfil {
 		return "Perfil [id=" + id + ", email=" + email + ", name=" + name + ", password=" + password + ", persona="
 				+ persona + ", roles=" + roles + "]";
 	}
-	
-	
 
 }

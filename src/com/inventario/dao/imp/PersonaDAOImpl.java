@@ -323,7 +323,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 							);
 				//Mejorar esta locura Producto
 				producto.setIdPersona(filas.getString("id_persona"));
-
+				producto.setId(filas.getInt("id"));
 				
 				System.out.println("--P-- "+producto.toString());
 				

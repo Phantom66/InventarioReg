@@ -135,8 +135,8 @@ public class AccionPrincipal {
 			List<Producto> perPagination = persona.getPerPagination(pagActual, perReg);
 
 			// N° de filas de nuetra tabla.
-			int rows = persona.getRows();
-			int nPages = rows / perReg;
+			Long rows = persona.getRows();
+			Long nPages = rows / perReg;
 			if (nPages % perReg > 0) {
 
 				nPages++;
@@ -198,7 +198,7 @@ public class AccionPrincipal {
 		PersonaDAO persona = new PersonaDAOImpl();
 
 		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
-		persona.borrar(request.getParameter("cedula"));
+		//persona.borrar(request.getParameter("cedula"));
 
 		return "Principal.do";
 

@@ -3,13 +3,15 @@ package com.inventario.dao.imp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
 import com.inventario.con.DataBase;
 import com.inventario.con.DataBaseException;
+import com.inventario.con.HibernateHelper;
 
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
@@ -18,244 +20,74 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 
 	@Override
-	public void insertar(Persona persona){
+	public void insertar(Persona persona) {
 
-		PreparedStatement statement = null;
-
-		String sql = "INSERT INTO persona(cedula, nombre, apellido, telefono) VALUES  (?,?,?,?)";
-		try {
-
-			// mistatement =
-			// this.conn.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			// Una manera para obtener el id del Insert
-			// ResultSet resul = mistatement.getGeneratedKeys();
-			// int id = 0;
-			// if (resul.next()) {
-			//
-			// id = resul.getInt(1);
-			// }
-
-			// return persona.getCedula();
-			
-			statement = this.conn.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, persona.getCedula());
-			statement.setString(2, persona.getNombre());
-			statement.setString(3, persona.getApellido());
-			statement.setString(4, persona.getTelefono());
-			statement.executeUpdate();
-
-
-		} catch (SQLException e) {
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw new DataBaseException("Error SQL PreparedStatement ", e);
-
-		} finally {
-
-			try {
-				
-				statement.close();
-				this.conn.closeConnection();
-
-			} catch (SQLException e) {
-
-				throw new DataBaseException("Error Close PreparedStatement ", e);
-			}
-		}
+		SessionFactory factoria = HibernateHelper.getSessionFactory();
+		Session session = factoria.openSession();
+		session.beginTransaction();
+		session.save(persona);
+		session.getTransaction().commit();
 
 	}
 
 	@Override
 	public void salvar(Persona persona){
 
-		PreparedStatement statement = null;
-
-		try {
-
-			statement = this.conn.getConnection()
-					.prepareStatement("UPDATE persona SET nombre = ?, apellido = ?, telefono = ? WHERE cedula = ?");
-
-			statement.setString(1, persona.getNombre());
-			statement.setString(2, persona.getApellido());
-			statement.setString(3, persona.getTelefono());
-			statement.setString(4, persona.getCedula());
-
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw new DataBaseException("Error SQL PreparedStatement ", e);
-
-		} finally {
-
-			try {
-				
-				statement.close();
-				this.conn.closeConnection();
-
-			} catch (SQLException e) {
-
-				throw new DataBaseException("Error Close PreparedStatement ", e);
-			}
-		}
-
+		SessionFactory factoria = HibernateHelper.getSessionFactory();
+		Session session = factoria.openSession();
+		session.beginTransaction();
+		session.saveOrUpdate(persona);
+		session.getTransaction().commit();
+		
 	}
 
 	@Override
-	public void borrar(String cedula){
+	public void borrar(Persona persona){
+		
+		SessionFactory factoria = HibernateHelper.getSessionFactory();
+		Session session = factoria.openSession();
+		session.beginTransaction();
 
-		PreparedStatement statement = null;
-
-		try {
-
-			statement = this.conn.getConnection().prepareStatement("DELETE FROM persona WHERE cedula = ?");
-			statement.setString(1, cedula);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw new DataBaseException("Error SQL PreparedStatement ", e);
-
-		} finally {
-
-			try {
-				
-				statement.close();
-				this.conn.closeConnection();
-
-			} catch (SQLException e) {
-
-				throw new DataBaseException("Error close PreparedStatement ", e);
-			}
-		}
-
+		session.delete(persona);
+		session.getTransaction().commit();
+		
+	
 	}
 
 	@Override
 	public List<Persona> buscarTodos(){
 
-		List<Persona> persona = new ArrayList<Persona>();
-		Statement statement = null;
-		ResultSet filas = null;
+		SessionFactory factoria = HibernateHelper.getSessionFactory();
+		Session session = factoria.openSession();
+		
+		@SuppressWarnings("unchecked")
+		List<Persona> persona = session.createQuery("From Persona persona").list();
+		session.close();
 
-		try {
-			statement = this.conn.getConnection().createStatement();
-			filas = statement.executeQuery("SELECT * FROM persona");
-
-			while (filas.next()) {
-
-				Persona p = new Persona(
-
-						filas.getString("cedula"), filas.getString("nombre"), filas.getString("apellido"),
-						filas.getString("telefono")
-
-				);
-				// Lo hago de esta manera para realizar prueba, debo optimizar.
-				//p.setId(filas.getInt("id"));
-				persona.add(p);
-
-			}
-
-			return persona;
-
-		} catch (SQLException e) {
-			System.out.println("Clase no encontrada " + e.getMessage());
-			throw new DataBaseException("Error PreparedStatement ", e);
-
-		} finally {
-
-			try {
-
-				statement.close();
-				this.conn.closeConnection();
-
-			} catch (SQLException e) {
-
-				throw new DataBaseException("Error close PreparedStatement ", e);
-			}
-
-		}
+		return persona;
 
 	}
 
 	@Override
-	public Persona buscarPorClave(String id){
+	public Persona buscarPorClave(String cedula){
 
-		Persona persona = null;
-		PreparedStatement mistatement = null;
-		ResultSet filas = null;
-
-		try {
-
-			mistatement = this.conn.getConnection().prepareStatement("SELECT * FROM persona WHERE cedula = ?");
-			mistatement.setString(1, id);
-			filas = mistatement.executeQuery();
-
-			if (filas.next()) {
-
-				persona = new Persona(filas.getString("cedula"), filas.getString("nombre"), filas.getString("apellido"),
-						filas.getString("telefono"));
-
-			} else {
-
-				throw new DataBaseException("Cedula no encontrada " + id);
-			}
-
-			return persona;
-
-		} catch (SQLException e) {
-
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw new DataBaseException("Error PreparedStatement ", e);
-
-		} finally {
-
-			try {
-				this.conn.closeConnection();
-				mistatement.close();
-
-			} catch (SQLException e) {
-
-				throw new DataBaseException("Error close PreparedStatement ", e);
-			}
-		}
+		SessionFactory factoria = HibernateHelper.getSessionFactory();
+		Session session = factoria.openSession();
+		Persona persona = (Persona)session.get(Persona.class, cedula);
+		
+		return persona;
 
 	}
 	
 	
-	public int getRows(){
+	public Long getRows() {
 
-		int numRows = 0;
+		SessionFactory factoria = HibernateHelper.getSessionFactory();
+		Session session = factoria.openSession();
 
-		Statement statement = null;
-		ResultSet filas = null;
-
-		try {
-			statement = this.conn.getConnection().createStatement();
-			filas = statement.executeQuery("SELECT * FROM persona");
-
-			while (filas.next()) {
-
-				numRows++;
-			}
-
-		} catch (SQLException e) {
-
-			System.out.println("Clase no encontrada" + e.getMessage());
-			throw new DataBaseException("Error Statement ", e);
-
-		} finally {
-			
-			try {
-				
-				statement.close();
-				this.conn.closeConnection();
-				
-				
-			} catch (SQLException e) {
-	
-				throw new DataBaseException("Error close Statement ", e);
-			}
-		}
+		// Un manera de hacerlo
+		Long numRows = (Long) session.createQuery("SELECT COUNT(persona) FROM Persona persona").uniqueResult();
+		session.close();
 
 		return numRows;
 	}

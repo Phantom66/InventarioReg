@@ -72,7 +72,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 		consulta.setString("id", id);
 		
 		//obtener este producto
-		Producto producto =;
+		Producto producto = null;
 		return producto;
 
 	}

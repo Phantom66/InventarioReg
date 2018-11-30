@@ -148,12 +148,12 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
 		
-		Query q = session.createQuery(" From Producto producto, Persona persona ");
+		Query q = session.createQuery(" From Producto ");
 		q.setFirstResult(start);
 		q.setMaxResults(perReg);
 		
 		@SuppressWarnings("unchecked")
-		List<Producto>produc = (List<Producto>)q.list();
+		List<Producto>produc = q.list();
 		
 //		try {
 //			

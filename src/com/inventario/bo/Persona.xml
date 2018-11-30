@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.inventario.bo">
-	<class name="Persona" table="persona">
+	<class name="Persona" table="persona" lazy="true">
 	<id name="cedula" type="string" />
 
 	<property name="nombre" type="string" column="nombre" />

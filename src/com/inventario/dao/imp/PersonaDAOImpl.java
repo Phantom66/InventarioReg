@@ -1,7 +1,6 @@
 package com.inventario.dao.imp;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,8 +11,6 @@ import com.inventario.con.HibernateHelper;
 
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
-
-
 
 	@Override
 	public void insertar(Persona persona) {
@@ -27,35 +24,33 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public void salvar(Persona persona){
+	public void salvar(Persona persona) {
 
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
 		session.beginTransaction();
 		session.saveOrUpdate(persona);
 		session.getTransaction().commit();
-		
+
 	}
 
 	@Override
-	public void borrar(Persona persona){
-		
+	public void borrar(Persona persona) {
+
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
 		session.beginTransaction();
-
 		session.delete(persona);
 		session.getTransaction().commit();
-		
-	
+
 	}
 
 	@Override
-	public List<Persona> buscarTodos(){
+	public List<Persona> buscarTodos() {
 
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
-		
+
 		@SuppressWarnings("unchecked")
 		List<Persona> persona = session.createQuery("From Persona persona").list();
 		session.close();
@@ -65,20 +60,19 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	@Override
-	public Persona buscarPorClave(String cedula){
+	public Persona buscarPorClave(String cedula) {
 
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
-		Persona persona = (Persona)session.get(Persona.class, cedula);
-		
+		Persona persona = (Persona) session.get(Persona.class, cedula);
+
 		return persona;
 
 	}
-	
-	
+
 	/**
-	 * Método para devolver las filas de la
-	 * tabla persona.
+	 * Método para devolver las filas de la tabla persona.
+	 * 
 	 * @return
 	 */
 	public Long getRows() {
@@ -93,7 +87,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		return numRows;
 	}
 
-	
 	public List<Producto> getPerPagination(int pagActual, int perReg) {
 
 		/*
@@ -142,7 +135,6 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		@SuppressWarnings("unchecked")
 		List<Producto> produc = q.list();
-
 
 		return produc;
 

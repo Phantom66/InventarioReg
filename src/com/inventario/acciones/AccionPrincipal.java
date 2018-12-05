@@ -136,7 +136,8 @@ public class AccionPrincipal {
 
 			// N° de filas de nuetra tabla.
 			Long rows = persona.getRows();
-			Long nPages = rows / perReg;
+			int nPages = (int)Math.ceil((double)rows /(double) perReg);
+			
 			if (nPages % perReg > 0) {
 
 				nPages++;
@@ -197,8 +198,9 @@ public class AccionPrincipal {
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
 		PersonaDAO persona = new PersonaDAOImpl();
 
-		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
-		//persona.borrar(request.getParameter("cedula"));
+		//System.out.println("Persona que será eliminada " + persona.buscarPorClave(request.getParameter("cedula")));
+		
+		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
 		return "Principal.do";
 
@@ -283,7 +285,7 @@ public class AccionPrincipal {
 
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
-		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
+		
 		insertar.insertar(persona);
 
 		product.insertar(new Producto(request.getParameter("producto"), request.getParameter("status"),

@@ -34,7 +34,7 @@
 					<td><a class="btn btn-primary"
 						href="Editar.do?id=${producto.persona.cedula}" role="button">Editar</a></td>
 					<td><a class="btn btn-primary"
-						href="Borrar.do?id=${producto.persona.cedula}" role="button">Eliminar</a></td>
+						href="Borrar.do?cedula=${producto.persona.cedula}" role="button">Eliminar</a></td>
 
 				</tr>
 			</c:forEach>

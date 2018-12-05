@@ -67,6 +67,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 				.createQuery("SELECT producto FROM Producto producto WHERE producto.persona.cedula=:id");
 		consulta.setString("id", id);
 
+		@SuppressWarnings("unchecked")
 		List<Producto> p = (List<Producto>) consulta.list();
 
 		Producto producto = null;

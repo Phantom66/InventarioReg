@@ -120,30 +120,33 @@ public class AccionPrincipal {
 			PersonaDAOImpl persona = new PersonaDAOImpl();
 
 			int pagActual;
-			int perReg = 5;
+			final int perReg = 5;
 
 			if (request.getParameter("pagActual") == null) {
 
 				pagActual = 1;
-				// perReg = 3;
+				
 			} else {
 
 				pagActual = Integer.valueOf(request.getParameter("pagActual"));
-				// perReg = 3;
+				
 			}
 
 			List<Producto> perPagination = persona.getPerPagination(pagActual, perReg);
 
 			// N° de filas de nuetra tabla.
 			Long rows = persona.getRows();
+			
 			int nPages = (int)Math.ceil((double)rows /(double) perReg);
+			
+			System.out.println(rows + " "+ nPages);
 			
 			if (nPages % perReg > 0) {
 
 				nPages++;
 			}
 
-			//System.out.println("user " + session.getId() + perPagination.toString());
+			System.out.println(rows + " "+ nPages);
 			request.setAttribute("nPages", nPages);
 			request.setAttribute("pagActual", pagActual);
 			request.setAttribute("perPage", perReg);

@@ -81,7 +81,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		Session session = factoria.openSession();
 
 		// Un manera de hacerlo
-		Long numRows = (Long) session.createQuery("SELECT COUNT(persona) FROM Persona persona").uniqueResult();
+		Long numRows = (Long) session.createQuery("SELECT COUNT(producto) FROM Producto producto").uniqueResult();
 		session.close();
 
 		return numRows;

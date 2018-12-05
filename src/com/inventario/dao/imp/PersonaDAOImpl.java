@@ -1,24 +1,18 @@
 package com.inventario.dao.imp;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
-import com.inventario.con.DataBase;
-import com.inventario.con.DataBaseException;
 import com.inventario.con.HibernateHelper;
 
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
-	private DataBase conn = new DataBase();
 
 
 	@Override
@@ -100,13 +94,7 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	}
 
 	
-	public List<Producto> getPerPagination(int pagActual, int perReg){
-
-		PreparedStatement statement = null;
-		ResultSet filas = null;
-		List<Producto> p = new ArrayList<Producto>();
-		Producto producto;
-		Persona persona = new Persona();
+	public List<Producto> getPerPagination(int pagActual, int perReg) {
 
 		/*
 		 * Con este cálculo puedo ir corriendo las posiciones del registro de mi tabla.
@@ -147,61 +135,18 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
-		
-		Query q = session.createQuery(" From Producto ");
+
+		Query q = session.createQuery("SELECT producto From Producto producto JOIN FETCH producto.persona");
 		q.setFirstResult(start);
 		q.setMaxResults(perReg);
-		
+
 		@SuppressWarnings("unchecked")
-		List<Producto>produc = q.list();
-		
-//		try {
-//			
-//			statement = this.conn.getConnection().prepareStatement("SELECT producto.id, producto.nombre, producto.estatus, producto.descripcion, persona.nombre as pnombre, persona.cedula, producto.id_persona FROM producto, persona WHERE producto.id_persona = persona.cedula LIMIT ?,?");
-//			statement.setInt(1, start);
-//			statement.setInt(2, perReg);
-//
-//			filas = statement.executeQuery();
-//
-//			while (filas.next()) {
-//				
-//				producto = new Producto(
-//							filas.getString("nombre"), 
-//							filas.getString("estatus"), filas.getString("descripcion"), 
-//							new Persona(filas.getString("cedula"), filas.getString("pnombre"), "", "")
-//							);
-//				//Mejorar esta locura Producto
-//				producto.setIdPersona(filas.getString("id_persona"));
-//				producto.setId(filas.getInt("id"));
-//				
-//				System.out.println("--P-- "+producto.toString());
-//				
-//				p.add(producto);
-//
-//			}
+		List<Producto> produc = q.list();
 
-			return produc;
 
-//		} catch (SQLException e) {
-//
-//			System.out.println("Clase no encontrada" + e.getMessage());
-//			throw new DataBaseException("Error Statement ", e);
-//
-//		} finally {
-//
-//			try {
-//				statement.close();
-//				this.conn.closeConnection();
-//
-//			} catch (SQLException e) {
-//
-//				throw new DataBaseException("Error close Statement ", e);
-//			}
-//
-//		}
+		return produc;
 
 	}
-	
 	
 	
 }

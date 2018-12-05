@@ -142,7 +142,7 @@ public class AccionPrincipal {
 				nPages++;
 			}
 
-			System.out.println("user " + session.getId() + perPagination.toString());
+			//System.out.println("user " + session.getId() + perPagination.toString());
 			request.setAttribute("nPages", nPages);
 			request.setAttribute("pagActual", pagActual);
 			request.setAttribute("perPage", perReg);
@@ -245,12 +245,12 @@ public class AccionPrincipal {
 			
 
 			Persona encontrada = persona.buscarPorClave(cedula);
-			//Producto encontrado = producto.buscarPorClave(cedula);
+			Producto encontrado = producto.buscarPorClave(cedula);
 
 			//System.out.println(cedula + encontrada + "\n" + encontrado);
 
 			request.setAttribute("encontrada", encontrada);
-			//request.setAttribute("encontrado", encontrado);
+			request.setAttribute("encontrado", encontrado);
 
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);

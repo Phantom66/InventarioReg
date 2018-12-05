@@ -1,7 +1,7 @@
 package com.inventario.dao.imp;
 
-import java.util.List;
 
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -61,18 +61,22 @@ public class ProductoDAOImpl implements ProductoDAO {
 	@Override
 	public Producto buscarPorClave(String id) throws DataBaseException {
 
-		// Verifica esto "SELECT * FROM producto WHERE id_persona = ?", lo tenía en mi
-		// consulta
-		// de buscar producto por id, lo realizo porque traigo producto de la persona específica
-		//Mejorar.
-
 		SessionFactory factoria = HibernateHelper.getSessionFactory();
 		Session session = factoria.openSession();
-		Query consulta = session.createQuery("From Producto producto Where producto.id_persona=:id");
+		Query consulta = session
+				.createQuery("SELECT producto FROM Producto producto WHERE producto.persona.cedula=:id");
 		consulta.setString("id", id);
-		
-		//obtener este producto
+
+		List<Producto> p = (List<Producto>) consulta.list();
+
 		Producto producto = null;
+
+		for (Producto produc : p) {
+
+			producto = new Producto(produc.getNombre(), produc.getEstatus(), produc.getDescripcion(),
+					produc.getPersona());
+		}
+
 		return producto;
 
 	}

@@ -140,11 +140,7 @@ public class AccionPrincipal {
 			int nPages = (int)Math.ceil((double)rows /(double) perReg);
 			
 			System.out.println(rows + " "+ nPages);
-			
-			if (nPages % perReg > 0) {
 
-				nPages++;
-			}
 
 			System.out.println(rows + " "+ nPages);
 			request.setAttribute("nPages", nPages);

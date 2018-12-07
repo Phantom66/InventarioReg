@@ -1,12 +1,25 @@
 package com.inventario.bo;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="roles")
 public class Roles {
 
 	// El id de esta clase como en las otras la dejo que la
 	// genere Hibernate y no se la paso por constructor
+	@Id
 	private int id;
 	private String nombre;
 	private String nperfil;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_perfiles")
 	private Perfil perfil;
 
 	public Roles() {

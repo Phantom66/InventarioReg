@@ -2,12 +2,28 @@ package com.inventario.bo;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="persona")
 public class Persona {
 
 	// Agarro cédula como Id
-	private String cedula, nombre, apellido, telefono;
+	@Id
+	private String cedula;
+	private String nombre;
+	private String apellido;
+	private String telefono;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
 	private List<Producto> productos;
-	private List<Perfil> perfil;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
+	private List<Perfil> perfiles;
 
 	public Persona() {
 	}
@@ -93,17 +109,17 @@ public class Persona {
 	}
 
 	public List<Perfil> getPerfil() {
-		return perfil;
+		return perfiles;
 	}
 
 	public void setPerfil(List<Perfil> perfil) {
-		this.perfil = perfil;
+		this.perfiles = perfil;
 	}
 
 	@Override
 	public String toString() {
 		return "Persona [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
-				+ ", productos=" + productos + ", perfil=" + perfil + "]";
+				+ "]";
 	}
 
 }

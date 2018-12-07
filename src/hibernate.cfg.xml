@@ -10,9 +10,9 @@
 		<property name="connection.pool_size">5</property>
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="show_sql">true</property>
-		<mapping resource="com/inventario/bo/Persona.xml" />
-		<mapping resource="com/inventario/bo/Perfil.xml" />
-		<mapping resource="com/inventario/bo/Producto.xml" />
-		<mapping resource="com/inventario/bo/Roles.xml" />
+		<mapping class="com.inventario.bo.Persona" />
+		<mapping class="com.inventario.bo.Perfil" />
+		<mapping class="com.inventario.bo.Producto" />
+		<mapping class="com.inventario.bo.Roles" />
 	</session-factory>
 </hibernate-configuration>

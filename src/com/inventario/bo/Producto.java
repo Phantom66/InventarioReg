@@ -1,18 +1,30 @@
 package com.inventario.bo;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="producto")
 public class Producto {
 
 	// El id de esta clase como en las otras la dejo que la
 	// genere Hibernate y no se la paso por constructor
+	@Id
 	private int id;
+	
 	private String nombre;
 	private String estatus;
 	private String descripcion;
-	private String idPersona;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_persona")
 	private Persona persona;
 
-	public Producto() {
-	};
+	public Producto() {	};
 
 	public Producto(String nombre, String estatus, String descripcion, Persona persona) {
 
@@ -92,21 +104,23 @@ public class Producto {
 	}
 
 	// No lo voy a colocar en el constructor. Mejorar.
-	public void setIdPersona(String id) {
-
-		this.idPersona = id;
-
-	}
-
-	public String getIdPersona() {
-
-		return idPersona;
-	}
+//	public void setIdPersona(String id) {
+//
+//		this.idPersona = id;
+//
+//	}
+//
+//	public String getIdPersona() {
+//
+//		return idPersona;
+//	}
 
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", estatus=" + estatus + ", descripcion=" + descripcion
-				+ ", persona=" + persona + ", id_persona=" + idPersona + "]";
+				+  "]";
 	}
+
+	
 
 }

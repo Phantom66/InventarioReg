@@ -114,7 +114,7 @@ public class AccionPrincipal {
 
 		session = request.getSession();
 
-		//System.out.println("Sessión " + session.getId());
+		// System.out.println("Sessión " + session.getId());
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
 			PersonaDAOImpl persona = new PersonaDAOImpl();
@@ -125,30 +125,24 @@ public class AccionPrincipal {
 			if (request.getParameter("pagActual") == null) {
 
 				pagActual = 1;
-				
+
 			} else {
 
 				pagActual = Integer.valueOf(request.getParameter("pagActual"));
-				
+
 			}
 
 			List<Producto> perPagination = persona.getPerPagination(pagActual, perReg);
 
 			// N° de filas de nuetra tabla.
 			Long rows = persona.getRows();
-			
-			int nPages = (int)Math.ceil((double)rows /(double) perReg);
-			
-			System.out.println(rows + " "+ nPages);
 
+			int nPages = (int) Math.ceil((double) rows / (double) perReg);
 
-			System.out.println(rows + " "+ nPages);
 			request.setAttribute("nPages", nPages);
 			request.setAttribute("pagActual", pagActual);
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
-
-				
 
 			return "principal/principal.jsp";
 

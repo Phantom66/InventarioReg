@@ -18,6 +18,7 @@ import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.PersonaDAO;
 import com.inventario.dao.ProductoDAO;
 import com.inventario.dao.imp.PerfilDAOImpl;
+import com.inventario.dao.imp.PersonaDAOFactory;
 import com.inventario.dao.imp.PersonaDAOImpl;
 import com.inventario.dao.imp.ProductoDAOImpl;
 import com.inventario.utils.SecurityPasswords;
@@ -163,7 +164,7 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
-		PersonaDAO persona = new PersonaDAOImpl();
+		PersonaDAO persona = PersonaDAOFactory.getInstance();
 		ProductoDAO product = new ProductoDAOImpl();
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),

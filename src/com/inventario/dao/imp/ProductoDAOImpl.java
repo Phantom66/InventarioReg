@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import com.inventario.bo.Producto;
 import com.inventario.con.JPAHelper;
@@ -24,11 +25,22 @@ public class ProductoDAOImpl implements ProductoDAO {
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
-		manager.persist(producto);
-		tx.commit();
 		
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.persist(producto);
+			tx.commit();
+
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}
 
 	}
 
@@ -44,13 +56,20 @@ public class ProductoDAOImpl implements ProductoDAO {
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
-		
-		manager.merge(producto);
-		
-		tx.commit();
-		manager.close();
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.merge(producto);
+			tx.commit();
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}	
 	}
 
 	@Override
@@ -65,11 +84,21 @@ public class ProductoDAOImpl implements ProductoDAO {
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
-		manager.remove(manager.merge(producto));
-		tx.commit();
-		manager.close();
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.remove(manager.merge(producto));
+			tx.commit();
+
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}	
 
 	}
 

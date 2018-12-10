@@ -5,12 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import com.inventario.bo.Perfil;
-import com.inventario.con.HibernateHelper;
 import com.inventario.con.JPAHelper;
 import com.inventario.dao.PerfilDAO;
 
@@ -27,13 +24,22 @@ public class PerfilDAOImpl implements PerfilDAO {
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
 
-		manager.persist(perfil);
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.persist(perfil);
+			tx.commit();
 
-		tx.commit();
-		manager.close();
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}
 
 	}
 
@@ -49,10 +55,20 @@ public class PerfilDAOImpl implements PerfilDAO {
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		manager.merge(perfil);
-		tx.commit();
-		manager.close();
+	
+		try {
+			tx = manager.getTransaction();
+			manager.merge(perfil);
+			tx.commit();
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}
 
 	}
 
@@ -68,12 +84,20 @@ public class PerfilDAOImpl implements PerfilDAO {
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
-		manager.remove(manager.merge(perfil));
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.remove(manager.merge(perfil));
+			tx.commit();
+		} catch (PersistenceException e) {
 
-		tx.commit();
-		manager.close();
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}	
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import com.inventario.bo.Persona;
@@ -29,10 +30,24 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
 		EntityManager manager = factoriaSession.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
-		manager.persist(persona);
-		tx.commit();
+		
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.persist(persona);
+			tx.commit();
+			
+		}catch(PersistenceException e) {
+			
+			manager.getTransaction().rollback();
+			throw e;
+			
+		}finally {
+			
+			manager.close();
+		}
+
+		
 		
 		
 		
@@ -52,15 +67,22 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
 		EntityManager manager = factoriaSession.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
 		
-		manager.merge(persona);
-		
-		tx.commit();
-		manager.close();
-		
-		
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.merge(persona);
+			tx.commit();
+
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}	
 
 	}
 
@@ -76,13 +98,22 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
 		EntityManager manager = factoriaSession.createEntityManager();
 		EntityTransaction tx = null;
-		tx = manager.getTransaction();
-		tx.begin();
 		
-		manager.remove(manager.merge(persona));
-		
-		tx.commit();
-		manager.close();
+		try {
+			tx = manager.getTransaction();
+			tx.begin();
+			manager.remove(manager.merge(persona));
+			tx.commit();
+			
+		} catch (PersistenceException e) {
+
+			manager.getTransaction().rollback();
+			throw e;
+
+		} finally {
+
+			manager.close();
+		}	
 
 	}
 

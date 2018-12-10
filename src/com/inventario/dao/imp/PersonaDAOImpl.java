@@ -2,12 +2,15 @@ package com.inventario.dao.imp;
 
 
 import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
-import com.inventario.con.HibernateHelper;
+import com.inventario.con.JPAHelper;
 
 
 public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
@@ -15,45 +18,89 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	@Override
 	public void insertar(Persona persona) {
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		session.beginTransaction();
-		session.save(persona);
-		session.getTransaction().commit();
+		//***Factoría con Hibernate
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// session.beginTransaction();
+		// session.save(persona);
+		// session.getTransaction().commit();
+		
+		//JPA
+		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
+		EntityManager manager = factoriaSession.createEntityManager();
+		EntityTransaction tx = null;
+		tx = manager.getTransaction();
+		tx.begin();
+		manager.persist(persona);
+		tx.commit();
+		
+		
+		
 
 	}
 
 	@Override
 	public void salvar(Persona persona) {
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		session.beginTransaction();
-		session.saveOrUpdate(persona);
-		session.getTransaction().commit();
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// session.beginTransaction();
+		// session.saveOrUpdate(persona);
+		// session.getTransaction().commit();
+		
+		//JPA
+		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
+		EntityManager manager = factoriaSession.createEntityManager();
+		EntityTransaction tx = null;
+		tx = manager.getTransaction();
+		tx.begin();
+		
+		manager.merge(persona);
+		
+		tx.commit();
+		manager.close();
+		
+		
 
 	}
 
 	@Override
 	public void borrar(Persona persona) {
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		session.beginTransaction();
-		session.delete(persona);
-		session.getTransaction().commit();
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// session.beginTransaction();
+		// session.delete(persona);
+		// session.getTransaction().commit();
+		
+		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
+		EntityManager manager = factoriaSession.createEntityManager();
+		EntityTransaction tx = null;
+		tx = manager.getTransaction();
+		tx.begin();
+		
+		manager.remove(manager.merge(persona));
+		
+		tx.commit();
+		manager.close();
 
 	}
 
 	@Override
 	public List<Persona> buscarTodos() {
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		
 
 		@SuppressWarnings("unchecked")
-		List<Persona> persona = session.createQuery("From Persona persona").list();
-		session.close();
+		List<Persona> persona = (List<Persona>)manager.createQuery("From Persona persona");
+		
+		manager.close();
+		//session.close();
 
 		return persona;
 
@@ -62,9 +109,18 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	@Override
 	public Persona buscarPorClave(String cedula) {
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		Persona persona = (Persona) session.get(Persona.class, cedula);
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// Persona persona = (Persona) session.get(Persona.class, cedula);
+		
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		
+		@SuppressWarnings("unchecked")
+		TypedQuery<Persona> consulta = (TypedQuery<Persona>)manager.createQuery("SELECT p FROM Persona p WHERE p.cedula=?1");
+		consulta.setParameter(1,cedula);
+		
+		Persona persona =consulta.getSingleResult(); 
 
 		return persona;
 
@@ -77,12 +133,16 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 	 */
 	public Long getRows() {
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
 
 		// Un manera de hacerlo
-		Long numRows = (Long) session.createQuery("SELECT COUNT(producto) FROM Producto producto").uniqueResult();
-		session.close();
+		Long numRows = (Long) manager.createQuery("SELECT COUNT(producto) FROM Producto producto").getSingleResult();
+		
+		manager.close();
 
 		return numRows;
 	}
@@ -126,15 +186,18 @@ public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
 		 */
 		int start = (pagActual * perReg) - perReg;
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-
-		Query q = session.createQuery("SELECT producto From Producto producto JOIN FETCH producto.persona");
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		
+		//Objeto Query(Hibernate) y Objeto Query(JPA) pendiente 
+		Query q = manager.createQuery("SELECT producto From Producto producto JOIN FETCH producto.persona");
 		q.setFirstResult(start);
 		q.setMaxResults(perReg);
 
 		@SuppressWarnings("unchecked")
-		List<Producto> produc = q.list();
+		List<Producto> produc = q.getResultList();
 
 		return produc;
 

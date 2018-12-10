@@ -1,82 +1,112 @@
 package com.inventario.dao.imp;
 
-
 import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import com.inventario.bo.Producto;
-import com.inventario.con.DataBaseException;
-import com.inventario.con.HibernateHelper;
+import com.inventario.con.JPAHelper;
 import com.inventario.dao.ProductoDAO;
 
 public class ProductoDAOImpl implements ProductoDAO {
 
 	@Override
-	public void insertar(Producto producto) throws DataBaseException {
+	public void insertar(Producto producto){
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		session.beginTransaction();
-		session.save(producto);
-		session.getTransaction().commit();
-
-	}
-
-	@Override
-	public void salvar(Producto producto) throws DataBaseException {
-
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		session.beginTransaction();
-		session.saveOrUpdate(producto);
-		session.getTransaction().commit();
-
-	}
-
-	@Override
-	public void borrar(Producto producto) throws DataBaseException {
-
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		session.beginTransaction();
-		session.delete(producto);
-		session.getTransaction().commit();
+		//Hibernate
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// session.beginTransaction();
+		// session.save(producto);
+		// session.getTransaction().commit();
+		
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		EntityTransaction tx = null;
+		tx = manager.getTransaction();
+		tx.begin();
+		manager.persist(producto);
+		tx.commit();
+		
 
 	}
 
 	@Override
-	public List<Producto> buscarTodos() throws DataBaseException {
+	public void salvar(Producto producto){
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// session.beginTransaction();
+		// session.saveOrUpdate(producto);
+		// session.getTransaction().commit();
+		
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		EntityTransaction tx = null;
+		tx = manager.getTransaction();
+		tx.begin();
+		
+		manager.merge(producto);
+		
+		tx.commit();
+		manager.close();
+	}
 
+	@Override
+	public void borrar(Producto producto){
+
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		// session.beginTransaction();
+		// session.delete(producto);
+		// session.getTransaction().commit();
+		
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		EntityTransaction tx = null;
+		tx = manager.getTransaction();
+		tx.begin();
+		manager.remove(manager.merge(producto));
+		tx.commit();
+		manager.close();
+
+	}
+
+	@Override
+	public List<Producto> buscarTodos(){
+
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		
 		@SuppressWarnings("unchecked")
-		List<Producto> producto = session.createQuery("From Producto producto").list();
+		List<Producto> producto = (List<Producto>)manager.createQuery("FROM producto");
+
+//		@SuppressWarnings("unchecked")
+//		List<Producto> producto = session.createQuery("From Producto producto").list();
 
 		return producto;
 
 	}
 
 	@Override
-	public Producto buscarPorClave(String id) throws DataBaseException {
+	public Producto buscarPorClave(String id){
 
-		SessionFactory factoria = HibernateHelper.getSessionFactory();
-		Session session = factoria.openSession();
-		Query consulta = session
-				.createQuery("SELECT producto FROM Producto producto WHERE producto.persona.cedula=:id");
-		consulta.setString("id", id);
+		// SessionFactory factoria = HibernateHelper.getSessionFactory();
+		// Session session = factoria.openSession();
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+		
+		TypedQuery<Producto> consulta = manager.createQuery("SELECT producto FROM Producto producto JOIN FETCH producto.persona WHERE producto.persona.cedula=?1", Producto.class);
+		consulta.setParameter(1, id);
 
-		@SuppressWarnings("unchecked")
-		List<Producto> p = (List<Producto>) consulta.list();
+		// @SuppressWarnings("unchecked")
+		// TypedQuery<Producto> p = (TypedQuery<Producto>) consulta.getSingleResult();
 
-		Producto producto = null;
+		Producto producto = consulta.getSingleResult();
 
-		for (Producto produc : p) {
-
-			producto = new Producto(produc.getNombre(), produc.getEstatus(), produc.getDescripcion(),
-					produc.getPersona());
-		}
 
 		return producto;
 

@@ -113,8 +113,10 @@ public class ProductoDAOImpl implements ProductoDAO {
 		@SuppressWarnings("unchecked")
 		List<Producto> producto = (List<Producto>)manager.createQuery("FROM producto");
 
-//		@SuppressWarnings("unchecked")
-//		List<Producto> producto = session.createQuery("From Producto producto").list();
+	
+		// @SuppressWarnings("unchecked")
+		// List<Producto> producto = session.createQuery("From Producto
+		// producto").list();
 
 		return producto;
 

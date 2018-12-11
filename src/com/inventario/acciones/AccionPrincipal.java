@@ -14,11 +14,11 @@ import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
 import com.inventario.con.DataBaseException;
+import com.inventario.dao.DAOFactory;
 import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.PersonaDAO;
 import com.inventario.dao.ProductoDAO;
-import com.inventario.dao.imp.PerfilDAOImpl;
-import com.inventario.dao.imp.PersonaDAOFactory;
+import com.inventario.dao.imp.DAOAbstractFactory;
 import com.inventario.dao.imp.PersonaDAOImpl;
 import com.inventario.dao.imp.ProductoDAOImpl;
 import com.inventario.utils.SecurityPasswords;
@@ -164,8 +164,11 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
-		PersonaDAO persona = PersonaDAOFactory.getInstance();
-		ProductoDAO product = new ProductoDAOImpl();
+		
+		DAOFactory factoria = DAOAbstractFactory.getInstance();
+		
+		PersonaDAO persona = factoria.getPersonaDAO();
+		ProductoDAO product = factoria.getProductoDAO();
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -190,7 +193,10 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
-		PersonaDAO persona = new PersonaDAOImpl();
+		
+		DAOFactory factoria = DAOAbstractFactory.getInstance();
+		
+		PersonaDAO persona = factoria.getPersonaDAO();
 
 		//System.out.println("Persona que será eliminada " + persona.buscarPorClave(request.getParameter("cedula")));
 		
@@ -236,14 +242,13 @@ public class AccionPrincipal {
 
 			String cedula = request.getParameter("id");
 
-			PersonaDAO persona = new PersonaDAOImpl();
-			ProductoDAO producto = new ProductoDAOImpl();
+			DAOFactory factoria = DAOAbstractFactory.getInstance();
+			PersonaDAO persona = factoria.getPersonaDAO();
+			ProductoDAO producto = factoria.getProductoDAO();
 			
 
 			Persona encontrada = persona.buscarPorClave(cedula);
 			Producto encontrado = producto.buscarPorClave(cedula);
-
-			//System.out.println(cedula + encontrada + "\n" + encontrado);
 
 			request.setAttribute("encontrada", encontrada);
 			request.setAttribute("encontrado", encontrado);
@@ -274,8 +279,10 @@ public class AccionPrincipal {
 		// Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
 		// int cedula = Integer.parseInt(request.getParameter("cedula"));
 
-		PersonaDAOImpl insertar = new PersonaDAOImpl();
-		ProductoDAOImpl product = new ProductoDAOImpl();
+		DAOFactory factoria = DAOAbstractFactory.getInstance();
+		
+		PersonaDAO insertar = factoria.getPersonaDAO();
+		ProductoDAO product = new ProductoDAOImpl();
 
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -305,8 +312,10 @@ public class AccionPrincipal {
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
-		PerfilDAO buscarPerfil = new PerfilDAOImpl();
-		PersonaDAO insertarPersona = new PersonaDAOImpl();
+		DAOFactory factoria = DAOAbstractFactory.getInstance();
+		PerfilDAO buscarPerfil = factoria.getPerfilDAO();
+		PersonaDAO insertarPersona = factoria.getPersonaDAO();
+		
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 		System.out.println(" " + perfil + " Estoy ");
 

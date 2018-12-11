@@ -12,9 +12,10 @@ import javax.persistence.TypedQuery;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
 import com.inventario.con.JPAHelper;
+import com.inventario.dao.PersonaDAO;
 
 
-public class PersonaDAOImpl implements com.inventario.dao.PersonaDAO {
+public class PersonaDAOImpl implements PersonaDAO {
 
 	@Override
 	public void insertar(Persona persona) {

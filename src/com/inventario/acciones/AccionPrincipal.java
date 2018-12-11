@@ -9,18 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
-import com.inventario.con.DataBaseException;
-import com.inventario.dao.DAOFactory;
-import com.inventario.dao.PerfilDAO;
-import com.inventario.dao.PersonaDAO;
-import com.inventario.dao.ProductoDAO;
-import com.inventario.dao.imp.DAOAbstractFactory;
-import com.inventario.dao.imp.PersonaDAOImpl;
-import com.inventario.dao.imp.ProductoDAOImpl;
+import com.inventario.servicio.ServicioPerfil;
+import com.inventario.servicio.ServicioPersona;
+import com.inventario.servicio.ServicioProducto;
+import com.inventario.servicio.impl.ServicioPerfilImpl;
+import com.inventario.servicio.impl.ServicioPersonaImpl;
+import com.inventario.servicio.impl.ServicioProductoImpl;
 import com.inventario.utils.SecurityPasswords;
 
 /**
@@ -33,8 +30,7 @@ public class AccionPrincipal {
 
 	HttpSession session;
 
-	public AccionPrincipal() {
-	}
+	public AccionPrincipal() {}
 
 	/**
 	 * Método que utiliza el reflection de Java para ejecutar los métodos de la
@@ -93,15 +89,16 @@ public class AccionPrincipal {
 			throws ServletException, IOException {
 
 		session = request.getSession();
-	
+
 		// Ver la differencia.
 		session.invalidate();
-		//session.removeAttribute("sessionUsuario");
+		// session.removeAttribute("sessionUsuario");
 		System.out.println("Eliminando Sessión " + session.getId());
-		//Lo realizo de esta manera, debido a que cuando lo reidirigo a Principal.do
-		//me crea un nueva sessión temporal y no elimina la variable sessión, de esta manera si.
+		// Lo realizo de esta manera, debido a que cuando lo reidirigo a Principal.do
+		// me crea un nueva sessión temporal y no elimina la variable sessión, de esta
+		// manera si.
 		return "/index.jsp";
-		
+
 	}
 
 	/**
@@ -118,7 +115,8 @@ public class AccionPrincipal {
 		// System.out.println("Sessión " + session.getId());
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
-			PersonaDAOImpl persona = new PersonaDAOImpl();
+
+			ServicioPersona servicio = new ServicioPersonaImpl();
 
 			int pagActual;
 			final int perReg = 5;
@@ -133,10 +131,10 @@ public class AccionPrincipal {
 
 			}
 
-			List<Producto> perPagination = persona.getPerPagination(pagActual, perReg);
+			List<Producto> perPagination = servicio.getPerPagination(pagActual, perReg);
 
 			// N° de filas de nuetra tabla.
-			Long rows = persona.getRows();
+			Long rows = servicio.getRows();
 
 			int nPages = (int) Math.ceil((double) rows / (double) perReg);
 
@@ -164,11 +162,9 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
-		
-		DAOFactory factoria = DAOAbstractFactory.getInstance();
-		
-		PersonaDAO persona = factoria.getPersonaDAO();
-		ProductoDAO product = factoria.getProductoDAO();
+
+		ServicioPersona persona = new ServicioPersonaImpl();
+		ServicioProducto product = new ServicioProductoImpl();
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -193,13 +189,9 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
-		
-		DAOFactory factoria = DAOAbstractFactory.getInstance();
-		
-		PersonaDAO persona = factoria.getPersonaDAO();
 
-		//System.out.println("Persona que será eliminada " + persona.buscarPorClave(request.getParameter("cedula")));
-		
+		ServicioPersona persona = new ServicioPersonaImpl();
+
 		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
 		return "Principal.do";
@@ -241,11 +233,9 @@ public class AccionPrincipal {
 		if (session.getId() != null) {
 
 			String cedula = request.getParameter("id");
-
-			DAOFactory factoria = DAOAbstractFactory.getInstance();
-			PersonaDAO persona = factoria.getPersonaDAO();
-			ProductoDAO producto = factoria.getProductoDAO();
 			
+			ServicioPersona persona = new ServicioPersonaImpl();
+			ServicioProducto producto = new ServicioProductoImpl();
 
 			Persona encontrada = persona.buscarPorClave(cedula);
 			Producto encontrado = producto.buscarPorClave(cedula);
@@ -279,14 +269,14 @@ public class AccionPrincipal {
 		// Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
 		// int cedula = Integer.parseInt(request.getParameter("cedula"));
 
-		DAOFactory factoria = DAOAbstractFactory.getInstance();
-		
-		PersonaDAO insertar = factoria.getPersonaDAO();
-		ProductoDAO product = new ProductoDAOImpl();
+
+
+		ServicioPersona insertar = new ServicioPersonaImpl();
+		ServicioProducto product = new ServicioProductoImpl();
 
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
-		
+
 		insertar.insertar(persona);
 
 		product.insertar(new Producto(request.getParameter("producto"), request.getParameter("status"),
@@ -312,10 +302,9 @@ public class AccionPrincipal {
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
-		DAOFactory factoria = DAOAbstractFactory.getInstance();
-		PerfilDAO buscarPerfil = factoria.getPerfilDAO();
-		PersonaDAO insertarPersona = factoria.getPersonaDAO();
-		
+		ServicioPerfil buscarPerfil = new ServicioPerfilImpl();
+		ServicioPersona insertarPersona = new ServicioPersonaImpl();
+
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 		System.out.println(" " + perfil + " Estoy ");
 
@@ -333,9 +322,8 @@ public class AccionPrincipal {
 
 				// Cédula de persona debe ser validada, por los momentos lo dejaré así para
 				// realizar pruebas.
-				Persona p = new Persona(request.getParameter("cedula"),
-						request.getParameter("nombre"), request.getParameter("apellido"),
-						request.getParameter("telefono"));
+				Persona p = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
+						request.getParameter("apellido"), request.getParameter("telefono"));
 
 				insertarPersona.insertar(p);
 				perfil = new Perfil(name, email, password, p);

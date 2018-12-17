@@ -129,8 +129,8 @@ public class PersonaDAOImpl implements PersonaDAO {
 		
 
 		@SuppressWarnings("unchecked")
-		List<Persona> persona = (List<Persona>)manager.createQuery("From Persona persona");
-		
+		TypedQuery<Persona> consulta = (TypedQuery<Persona>) manager.createQuery("From Persona");
+		List<Persona>persona = consulta.getResultList();
 		manager.close();
 		//session.close();
 

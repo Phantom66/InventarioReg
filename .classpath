@@ -28,5 +28,22 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javassist-3.18.1-GA.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jboss-logging-3.3.0.Final.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-entitymanager-5.0.12.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core-5.0.0.RELEASE-javadoc.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-core-5.0.0.RELEASE.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/lilibeth/eclipse-workspace/InventarioReg/WebContent/WEB-INF/lib/spring-core-5.0.0.RELEASE-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-5.0.0.RELEASE-javadoc.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-5.0.0.RELEASE.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/lilibeth/eclipse-workspace/InventarioReg/WebContent/WEB-INF/lib/spring-context-5.0.0.RELEASE-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-beans-5.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-support-5.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-expression-5.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-5.0.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

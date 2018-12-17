@@ -9,6 +9,8 @@ public class DAOJPAFactory implements DAOFactory {
 
 	public PersonaDAO getPersonaDAO() {
 
+		
+		
 		return new PersonaDAOImpl();
 	}
 

@@ -111,8 +111,9 @@ public class ProductoDAOImpl implements ProductoDAO {
 		EntityManager manager = factoria.createEntityManager();
 		
 		@SuppressWarnings("unchecked")
-		List<Producto> producto = (List<Producto>)manager.createQuery("FROM producto");
+		TypedQuery<Producto> consulta= (TypedQuery<Producto>)manager.createQuery("FROM producto");
 
+		List<Producto>producto = consulta.getResultList();
 	
 		// @SuppressWarnings("unchecked")
 		// List<Producto> producto = session.createQuery("From Producto

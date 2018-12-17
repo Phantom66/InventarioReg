@@ -61,11 +61,18 @@
 			<form-error-page>/error.jsp</form-error-page>
 		</form-login-config>
 	</login-config>
-	
+
+	<!-- Configuración de Spring -->
 	<context-param>
 	<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:contextoAplicacion.xml</param-value>
 	</context-param>
+	
+	<!--
+		 El Listener permite carga el Framework Spring antes que se despliegue la aplicación
+		 y lea el fichero de configuración
+	 -->
+	 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener
 		</listener-class>

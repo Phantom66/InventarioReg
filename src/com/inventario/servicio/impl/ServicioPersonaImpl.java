@@ -2,13 +2,12 @@ package com.inventario.servicio.impl;
 
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
 import com.inventario.dao.PersonaDAO;
-import com.inventario.dao.imp.PersonaDAOImpl;
+import com.inventario.dao.impl.PersonaDAOImpl;
 import com.inventario.servicio.ServicioPersona;
 
 public class ServicioPersonaImpl implements ServicioPersona {
@@ -18,7 +17,8 @@ public class ServicioPersonaImpl implements ServicioPersona {
 	public ServicioPersonaImpl() {
 		//DAOFactory factoria = DAOAbstractFactory.getInstance();
 		
-		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
+		@SuppressWarnings("resource")
+		ClassPathXmlApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
 				
 		persona = (PersonaDAO)factoria.getBean("personaDAO");
 	}

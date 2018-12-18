@@ -113,7 +113,7 @@ public class AccionPrincipal {
 	public Object getBean(String nombre) {
 		
 		@SuppressWarnings("resource")
-		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
+		ClassPathXmlApplicationContext factoria = new ClassPathXmlApplicationContext("contextAplicationService.xml");
 		return factoria.getBean(nombre);
 		
 	}
@@ -133,7 +133,7 @@ public class AccionPrincipal {
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
 
-			ServicioPersona servicio = new ServicioPersonaImpl();
+			ServicioPersona servicio = (ServicioPersona)getBean("servicioPersonaImpl");
 
 			int pagActual;
 			final int perReg = 5;
@@ -180,8 +180,8 @@ public class AccionPrincipal {
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
 
-		ServicioPersona persona = new ServicioPersonaImpl();
-		ServicioProducto product = new ServicioProductoImpl();
+		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
+		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl");
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -207,7 +207,7 @@ public class AccionPrincipal {
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
 
-		ServicioPersona persona = new ServicioPersonaImpl();
+		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
 
 		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
@@ -251,8 +251,8 @@ public class AccionPrincipal {
 
 			String cedula = request.getParameter("id");
 			
-			ServicioPersona persona = new ServicioPersonaImpl();
-			ServicioProducto producto = new ServicioProductoImpl();
+			ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
+			ServicioProducto producto = (ServicioProducto)getBean("servicioProductoImpl");
 
 			Persona encontrada = persona.buscarPorClave(cedula);
 			Producto encontrado = producto.buscarPorClave(cedula);
@@ -288,8 +288,8 @@ public class AccionPrincipal {
 
 
 
-		ServicioPersona insertar = new ServicioPersonaImpl();
-		ServicioProducto product = new ServicioProductoImpl();
+		ServicioPersona insertar = (ServicioPersona)getBean("servicioPersonaImpl");
+		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl");
 
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));

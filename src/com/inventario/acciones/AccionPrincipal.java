@@ -9,6 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
@@ -99,6 +103,19 @@ public class AccionPrincipal {
 		// manera si.
 		return "/index.jsp";
 
+	}
+	
+	/**
+	 * Creando la factoría del bean que le indiquemos.
+	 * @param nombre
+	 * @return
+	 */
+	public Object getBean(String nombre) {
+		
+		@SuppressWarnings("resource")
+		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
+		return factoria.getBean(nombre);
+		
 	}
 
 	/**

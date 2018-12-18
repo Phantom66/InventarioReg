@@ -4,11 +4,8 @@ import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.inventario.bo.Perfil;
-import com.inventario.dao.DAOFactory;
 import com.inventario.dao.PerfilDAO;
-import com.inventario.dao.impl.DAOAbstractFactory;
 import com.inventario.servicio.ServicioPerfil;
 
 public class ServicioPerfilImpl implements ServicioPerfil {
@@ -19,6 +16,7 @@ public class ServicioPerfilImpl implements ServicioPerfil {
 
 		//DAOFactory factoria = DAOAbstractFactory.getInstance();
 		
+		@SuppressWarnings("resource")
 		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
 		perfil = (PerfilDAO)factoria.getBean("perfilDAO");
 	}

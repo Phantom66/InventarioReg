@@ -12,12 +12,12 @@ import com.inventario.servicio.ServicioPersona;
 
 public class ServicioPersonaImpl implements ServicioPersona {
 	
-	PersonaDAO persona = null;
+	private PersonaDAO persona;
 	
 
 	public PersonaDAO getPersonaDAO() {
 		
-		return this.persona;
+		return persona;
 	}
 	
 	public void setPersonaDAO(PersonaDAO persona) {

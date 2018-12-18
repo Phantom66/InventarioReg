@@ -4,11 +4,17 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="personaDAO" class="com.inventario.dao.imp.PersonaDAOImpl"/>
-	<bean id="productoDAO" class="com.inventario.dao.imp.ProductoDAOImpl"/>
-	<bean id="perfilDAO" class="com.inventario.dao.imp.PerfilDAOImpl"/>
+	<bean id="servicioPersonaImpl" class="com.inventario.servicio.impl.ServicioPersonaImpl">
+		<property name="personaDAO" ref="personaDAO" />
+	</bean>
+	<bean id="servicioProductoImpl" class="com.inventario.servicio.impl.ServicioProductoImpl">
+		<property name="productoDAO" ref="productoDAO"/>
+	</bean>
+	<bean id="servicioPerfilImpl" class="com.inventario.servicio.impl.ServicioPerfilImpl">
+		<property name="perfilDAO" ref="perfilDAO"/>
+	</bean>
 	
-	<bean id="servicioPersonaImpl" class="com.inventario.servicio.impl.ServicioPersonaImpl"/>
-	<bean id="servicioProductoImpl" class="com.inventario.servicio.impl.ServicioProductoImpl"/>
-	<bean id="servicioPerfilImpl" class="com.inventario.servicio.impl.ServicioPerfilImpl"/>
+	<bean id="personaDAO" class="com.inventario.dao.impl.PersonaDAOImpl"/>
+	<bean id="productoDAO" class="com.inventario.dao.impl.ProductoDAOImpl"/>
+	<bean id="perfilDAO" class="com.inventario.dao.impl.PerfilDAOImpl"/>
 </beans>

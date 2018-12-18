@@ -10,7 +10,7 @@ import com.inventario.servicio.ServicioPerfil;
 
 public class ServicioPerfilImpl implements ServicioPerfil {
 
-	PerfilDAO perfil = null;
+	private PerfilDAO perfil = null;
 
 
 	@Override

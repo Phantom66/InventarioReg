@@ -1,17 +1,13 @@
 package com.inventario.servicio.impl;
 
 import java.util.List;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.inventario.bo.Producto;
 import com.inventario.dao.ProductoDAO;
 import com.inventario.servicio.ServicioProducto;
 
 public class ServicioProductoImpl implements ServicioProducto {
 	
-	ProductoDAO producto = null;
+	private ProductoDAO producto;
 
 	@Override
 	public void insertar(Producto producto) {

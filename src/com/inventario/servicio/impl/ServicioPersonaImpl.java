@@ -14,15 +14,17 @@ public class ServicioPersonaImpl implements ServicioPersona {
 	
 	PersonaDAO persona = null;
 	
-	public ServicioPersonaImpl() {
-		//DAOFactory factoria = DAOAbstractFactory.getInstance();
-		
-		@SuppressWarnings("resource")
-		ClassPathXmlApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
-				
-		persona = (PersonaDAO)factoria.getBean("personaDAO");
-	}
 
+	public PersonaDAO getPersonaDAO() {
+		
+		return this.persona;
+	}
+	
+	public void setPersonaDAO(PersonaDAO persona) {
+		
+		this.persona = persona;
+	}
+	
 	@Override
 	public void insertar(Persona persona) {
 		

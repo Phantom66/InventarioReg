@@ -12,14 +12,6 @@ public class ServicioPerfilImpl implements ServicioPerfil {
 
 	PerfilDAO perfil = null;
 
-	public ServicioPerfilImpl() {
-
-		//DAOFactory factoria = DAOAbstractFactory.getInstance();
-		
-		@SuppressWarnings("resource")
-		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
-		perfil = (PerfilDAO)factoria.getBean("perfilDAO");
-	}
 
 	@Override
 	public void insertar(Perfil perfil) {
@@ -52,6 +44,18 @@ public class ServicioPerfilImpl implements ServicioPerfil {
 	public Perfil buscarPorClave(String id) {
 
 		return this.perfil.buscarPorClave(id);
+	}
+
+	@Override
+	public Perfil getPerfilDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPerfilDAO(PerfilDAO perfil) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

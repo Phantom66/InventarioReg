@@ -9,19 +9,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
+import com.inventario.dao.PerfilDAO;
+import com.inventario.dao.PersonaDAO;
+import com.inventario.dao.ProductoDAO;
 import com.inventario.servicio.ServicioPerfil;
 import com.inventario.servicio.ServicioPersona;
 import com.inventario.servicio.ServicioProducto;
 import com.inventario.servicio.impl.ServicioPerfilImpl;
 import com.inventario.servicio.impl.ServicioPersonaImpl;
-import com.inventario.servicio.impl.ServicioProductoImpl;
 import com.inventario.utils.SecurityPasswords;
 
 /**
@@ -134,6 +133,8 @@ public class AccionPrincipal {
 		if (session.getId() != null) {
 
 			ServicioPersona servicio = (ServicioPersona)getBean("servicioPersonaImpl");
+			PersonaDAO persona = (PersonaDAO)getBean("personaDAO");
+			servicio.setPersonaDAO(persona);
 
 			int pagActual;
 			final int perReg = 5;
@@ -182,6 +183,12 @@ public class AccionPrincipal {
 
 		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
 		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl");
+		PersonaDAO person = (PersonaDAO)getBean("personaDAO");
+		ProductoDAO produc = (ProductoDAO)getBean("productoDAO");
+		persona.setPersonaDAO(person);
+		product.setProductoDAO(produc);
+		
+		
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -208,7 +215,9 @@ public class AccionPrincipal {
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
 
 		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
-
+		PersonaDAO person = (PersonaDAO)getBean("personaDAO");
+		persona.setPersonaDAO(person);
+		
 		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
 		return "Principal.do";
@@ -253,6 +262,12 @@ public class AccionPrincipal {
 			
 			ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
 			ServicioProducto producto = (ServicioProducto)getBean("servicioProductoImpl");
+			
+			PersonaDAO person = (PersonaDAO)getBean("personaDAO");
+			persona.setPersonaDAO(person);
+			
+			ProductoDAO produc = (ProductoDAO)getBean("productoDAO");
+			producto.setProductoDAO(produc);
 
 			Persona encontrada = persona.buscarPorClave(cedula);
 			Producto encontrado = producto.buscarPorClave(cedula);
@@ -288,15 +303,21 @@ public class AccionPrincipal {
 
 
 
-		ServicioPersona insertar = (ServicioPersona)getBean("servicioPersonaImpl");
-		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl");
+		ServicioPersona servicioInsertar = (ServicioPersona)getBean("servicioPersonaImpl");
+		ServicioProducto servicioProduct = (ServicioProducto)getBean("servicioProductoImpl");
+		
+		PersonaDAO person = (PersonaDAO)getBean("personaDAO");
+		ProductoDAO producto = (ProductoDAO)getBean("productoDAO");
 
+		servicioInsertar.setPersonaDAO(person);
+		servicioProduct.setProductoDAO(producto);
+		
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
 
-		insertar.insertar(persona);
+		servicioInsertar.insertar(persona);
 
-		product.insertar(new Producto(request.getParameter("producto"), request.getParameter("status"),
+		servicioProduct.insertar(new Producto(request.getParameter("producto"), request.getParameter("status"),
 				request.getParameter("descripcion"), persona));
 
 		System.out.print("Estoy registrando");
@@ -319,8 +340,10 @@ public class AccionPrincipal {
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
-		ServicioPerfil buscarPerfil = new ServicioPerfilImpl();
-		ServicioPersona insertarPersona = new ServicioPersonaImpl();
+		ServicioPerfil buscarPerfil = (ServicioPerfil)getBean("servicioPerfilImpl");
+		ServicioPersona insertarPersona = (ServicioPersona)getBean("servicioPersonaImpl");
+		PerfilDAO per = (PerfilDAO)getBean("perfilDAO");
+		buscarPerfil.setPerfilDAO(per);
 
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 		System.out.println(" " + perfil + " Estoy ");

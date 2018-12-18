@@ -13,16 +13,6 @@ public class ServicioProductoImpl implements ServicioProducto {
 	
 	ProductoDAO producto = null;
 
-	public ServicioProductoImpl() {
-		
-		//DAOFactory factoria =  DAOAbstractFactory.getInstance();
-		
-		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
-		
-		producto = (ProductoDAO)factoria.getBean("productoDAO");
-		
-	}
-
 	@Override
 	public void insertar(Producto producto) {
 		
@@ -54,6 +44,18 @@ public class ServicioProductoImpl implements ServicioProducto {
 	public Producto buscarPorClave(String id) {
 		
 		return this.producto.buscarPorClave(id);
+	}
+
+	@Override
+	public ProductoDAO getProductoDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setProductoDAO(ProductoDAO producto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

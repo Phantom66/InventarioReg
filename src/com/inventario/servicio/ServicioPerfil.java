@@ -3,6 +3,8 @@ package com.inventario.servicio;
 import java.util.List;
 
 import com.inventario.bo.Perfil;
+import com.inventario.dao.PerfilDAO;
+import com.inventario.dao.PersonaDAO;
 
 public interface ServicioPerfil {
 	
@@ -12,5 +14,8 @@ public interface ServicioPerfil {
 	
 	public abstract List<Perfil>buscarTodos();
 	public abstract Perfil buscarPorClave(String id);
+	
+	public Perfil getPerfilDAO();
+	public void setPerfilDAO(PerfilDAO perfil);
 
 }

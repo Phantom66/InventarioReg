@@ -15,7 +15,7 @@ public interface ServicioPerfil {
 	public abstract List<Perfil>buscarTodos();
 	public abstract Perfil buscarPorClave(String id);
 	
-	public Perfil getPerfilDAO();
+	public PerfilDAO getPerfilDAO();
 	public void setPerfilDAO(PerfilDAO perfil);
 
 }

@@ -65,7 +65,7 @@
 	<!-- Configuración de Spring -->
 	<context-param>
 	<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:contextoAplicacion.xml</param-value>
+		<param-value>classpath:contextAplicationService.xml</param-value>
 	</context-param>
 	
 	<!--

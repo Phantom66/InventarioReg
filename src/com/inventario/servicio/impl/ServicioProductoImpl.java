@@ -49,12 +49,13 @@ public class ServicioProductoImpl implements ServicioProducto {
 	@Override
 	public ProductoDAO getProductoDAO() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.producto;
 	}
 
 	@Override
 	public void setProductoDAO(ProductoDAO producto) {
-		// TODO Auto-generated method stub
+		
+		this.producto = producto;
 		
 	}
 

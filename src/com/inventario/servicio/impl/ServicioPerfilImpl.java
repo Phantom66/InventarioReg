@@ -47,14 +47,15 @@ public class ServicioPerfilImpl implements ServicioPerfil {
 	}
 
 	@Override
-	public Perfil getPerfilDAO() {
+	public PerfilDAO getPerfilDAO() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.perfil;
 	}
 
 	@Override
 	public void setPerfilDAO(PerfilDAO perfil) {
-		// TODO Auto-generated method stub
+		
+		this.perfil = perfil;
 		
 	}
 

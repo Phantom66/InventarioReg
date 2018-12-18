@@ -1,4 +1,4 @@
-package com.inventario.dao.imp;
+package com.inventario.dao.impl;
 
 
 import java.util.List;

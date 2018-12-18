@@ -1,4 +1,4 @@
-package com.inventario.dao.imp;
+package com.inventario.dao.impl;
 
 import com.inventario.dao.DAOFactory;
 

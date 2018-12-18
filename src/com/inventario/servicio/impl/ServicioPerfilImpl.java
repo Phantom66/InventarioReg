@@ -2,6 +2,9 @@ package com.inventario.servicio.impl;
 
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.inventario.bo.Perfil;
 import com.inventario.dao.DAOFactory;
 import com.inventario.dao.PerfilDAO;
@@ -14,8 +17,10 @@ public class ServicioPerfilImpl implements ServicioPerfil {
 
 	public ServicioPerfilImpl() {
 
-		DAOFactory factoria = DAOAbstractFactory.getInstance();
-		perfil = factoria.getPerfilDAO();
+		//DAOFactory factoria = DAOAbstractFactory.getInstance();
+		
+		ApplicationContext factoria = new ClassPathXmlApplicationContext("contextoAplicacion.xml");
+		perfil = (PerfilDAO)factoria.getBean("perfilDAO");
 	}
 
 	@Override

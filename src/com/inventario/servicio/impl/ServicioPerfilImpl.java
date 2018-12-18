@@ -5,7 +5,7 @@ import java.util.List;
 import com.inventario.bo.Perfil;
 import com.inventario.dao.DAOFactory;
 import com.inventario.dao.PerfilDAO;
-import com.inventario.dao.imp.DAOAbstractFactory;
+import com.inventario.dao.impl.DAOAbstractFactory;
 import com.inventario.servicio.ServicioPerfil;
 
 public class ServicioPerfilImpl implements ServicioPerfil {

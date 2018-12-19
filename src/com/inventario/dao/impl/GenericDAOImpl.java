@@ -2,10 +2,15 @@ package com.inventario.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
+
+import com.inventario.bo.Persona;
 import com.inventario.con.JPAHelper;
 import com.inventario.dao.GenericDAO;
 
@@ -74,6 +79,23 @@ public abstract class GenericDAOImpl <T, Id extends Serializable> implements Gen
 
 			manager.close();
 		}	
+	}
+	
+	
+	@Override
+	public List<T> buscarTodos() {
+
+		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
+		EntityManager manager = factoria.createEntityManager();
+
+		@SuppressWarnings("unchecked")
+		TypedQuery<T> consulta = (TypedQuery<T>) manager.createQuery("FROM "+claseDePersistencia.getSimpleName()+"t");
+		List<T> persona = consulta.getResultList();
+		manager.close();
+		// session.close();
+
+		return persona;
+
 	}
 
 	

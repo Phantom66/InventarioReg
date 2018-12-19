@@ -1,6 +1,6 @@
 package com.inventario.dao.impl;
 
-import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -9,21 +9,6 @@ import com.inventario.con.JPAHelper;
 import com.inventario.dao.ProductoDAO;
 
 public class ProductoDAOImpl extends GenericDAOImpl<Producto, String> implements ProductoDAO {
-
-	@Override
-	public List<Producto> buscarTodos(){
-
-		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
-		EntityManager manager = factoria.createEntityManager();
-		
-		@SuppressWarnings("unchecked")
-		TypedQuery<Producto> consulta= (TypedQuery<Producto>)manager.createQuery("FROM producto");
-
-		List<Producto>producto = consulta.getResultList();
-
-		return producto;
-
-	}
 
 	@Override
 	public Producto buscarPorClave(String id){

@@ -14,21 +14,6 @@ import com.inventario.dao.PersonaDAO;
 
 public class PersonaDAOImpl extends GenericDAOImpl<Persona, String> implements PersonaDAO {
 
-	@Override
-	public List<Persona> buscarTodos() {
-
-		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
-		EntityManager manager = factoria.createEntityManager();
-
-		@SuppressWarnings("unchecked")
-		TypedQuery<Persona> consulta = (TypedQuery<Persona>) manager.createQuery("From Persona");
-		List<Persona> persona = consulta.getResultList();
-		manager.close();
-		// session.close();
-
-		return persona;
-
-	}
 
 	@Override
 	public Persona buscarPorClave(String cedula) {

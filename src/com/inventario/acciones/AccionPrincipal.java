@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
@@ -55,6 +58,7 @@ public class AccionPrincipal {
 		try {
 			obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
 
+						
 			Method[] metodos = obj.getClass().getDeclaredMethods();
 
 			for (int i = 0; i < metodos.length; i++) {
@@ -105,16 +109,17 @@ public class AccionPrincipal {
 	}
 	
 	/**
-	 * Creando la factoría del bean que le indiquemos.
+	 * Creando Spring a nivel Web
 	 * @param nombre
+	 * @param request
 	 * @return
 	 */
-	public Object getBean(String nombre) {
-		
-		@SuppressWarnings("resource")
-		ClassPathXmlApplicationContext factoria = new ClassPathXmlApplicationContext("contextAplicationService.xml");
+	public Object getBean(String nombre, HttpServletRequest request) {
+
+		WebApplicationContext factoria = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
 		return factoria.getBean(nombre);
-		
+
 	}
 
 	/**
@@ -127,12 +132,12 @@ public class AccionPrincipal {
 	public String getPrincipal(HttpServletRequest request, HttpServletResponse response) {
 
 		session = request.getSession();
-
+		
 		// System.out.println("Sessión " + session.getId());
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
 
-			ServicioPersona servicio = (ServicioPersona)getBean("servicioPersonaImpl");
+			ServicioPersona servicio = (ServicioPersona)getBean("servicioPersonaImpl", request);
 
 			int pagActual;
 			final int perReg = 5;
@@ -179,8 +184,8 @@ public class AccionPrincipal {
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
 
-		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
-		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl");
+		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
+		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl", request);
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -206,7 +211,7 @@ public class AccionPrincipal {
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
 
-		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
+		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
 		
 		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
@@ -250,8 +255,8 @@ public class AccionPrincipal {
 
 			String cedula = request.getParameter("id");
 			
-			ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl");
-			ServicioProducto producto = (ServicioProducto)getBean("servicioProductoImpl");
+			ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
+			ServicioProducto producto = (ServicioProducto)getBean("servicioProductoImpl", request);
 
 			Persona encontrada = persona.buscarPorClave(cedula);
 			Producto encontrado = producto.buscarPorClave(cedula);
@@ -287,8 +292,8 @@ public class AccionPrincipal {
 
 
 
-		ServicioPersona servicioInsertar = (ServicioPersona)getBean("servicioPersonaImpl");
-		ServicioProducto servicioProduct = (ServicioProducto)getBean("servicioProductoImpl");
+		ServicioPersona servicioInsertar = (ServicioPersona)getBean("servicioPersonaImpl", request);
+		ServicioProducto servicioProduct = (ServicioProducto)getBean("servicioProductoImpl", request);
 		
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
@@ -318,8 +323,8 @@ public class AccionPrincipal {
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
-		ServicioPerfil buscarPerfil = (ServicioPerfil)getBean("servicioPerfilImpl");
-		ServicioPersona insertarPersona = (ServicioPersona)getBean("servicioPersonaImpl");
+		ServicioPerfil buscarPerfil = (ServicioPerfil)getBean("servicioPerfilImpl", request);
+		ServicioPersona insertarPersona = (ServicioPersona)getBean("servicioPersonaImpl", request );
 
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 		System.out.println(" " + perfil + " Estoy ");

@@ -3,24 +3,28 @@ package com.inventario.acciones;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.inventario.bo.Perfil;
 import com.inventario.bo.Persona;
 import com.inventario.bo.Producto;
-import com.inventario.con.DataBaseException;
 import com.inventario.dao.PerfilDAO;
 import com.inventario.dao.PersonaDAO;
 import com.inventario.dao.ProductoDAO;
-import com.inventario.dao.imp.PerfilDAOImpl;
-import com.inventario.dao.imp.PersonaDAOImpl;
-import com.inventario.dao.imp.ProductoDAOImpl;
+import com.inventario.servicio.ServicioPerfil;
+import com.inventario.servicio.ServicioPersona;
+import com.inventario.servicio.ServicioProducto;
+import com.inventario.servicio.impl.ServicioPerfilImpl;
+import com.inventario.servicio.impl.ServicioPersonaImpl;
 import com.inventario.utils.SecurityPasswords;
 
 /**
@@ -89,85 +93,36 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void getLoggin(HttpServletRequest request, HttpServletResponse response)
+	public String getLoggin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String pass = request.getParameter("password");
 
 		session = request.getSession();
-		RequestDispatcher dispatcher = null;
-		Perfil perfil = new Perfil();
-		PerfilDAO buscarPerfil;
 
-		// System.out.println(" " + session.getAttribute("sessionUsuario") + " " +
-		// request.getParameter("cerrarSession"));
-		// session.getAttribute("sessionUsuario") quitando para realizar prueba con
-		// validacones de contenedores
-		if ((session.getId() == null) && (request.getParameter("cerrarSession") == null)) {
+		// Ver la differencia.
+		session.invalidate();
+		// session.removeAttribute("sessionUsuario");
+		System.out.println("Eliminando Sessión " + session.getId());
+		// Lo realizo de esta manera, debido a que cuando lo reidirigo a Principal.do
+		// me crea un nueva sessión temporal y no elimina la variable sessión, de esta
+		// manera si.
+		return "/index.jsp";
 
-			// System.out.println("Llego hasta aquí --->" + email + " --- "+pass);
-			if (email != null && pass != null) {
+	}
 
-				// Solo para probar para capturar las excepciones.
-				try {
-					buscarPerfil = new PerfilDAOImpl();
-					perfil = buscarPerfil.buscarPorClave(email);
+	/**
+	 * Creando Spring a nivel Web Y nos aseguramos que Spring cargue el fichero de
+	 * configuración una única vez.
+	 * 
+	 * @param nombre
+	 * @param request
+	 * @return
+	 */
+	public Object getBean(String nombre, HttpServletRequest request) {
 
-				} catch (NullPointerException e) {
+		WebApplicationContext factoria = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(request.getSession().getServletContext());
+		return factoria.getBean(nombre);
 
-					throw new DataBaseException("Correo no encontrado ", e);
-
-				}
-				System.out.println("Estoy aquí ----" + perfil);
-
-				if (perfil != null) {
-
-					System.out.println(pass + " " + perfil.getPassword() + " Estoy en el Loggin");
-
-					if (email.equalsIgnoreCase(perfil.getEmail())
-							&& SecurityPasswords.encriptar(pass).equalsIgnoreCase(perfil.getPassword())) {
-
-						session.setAttribute("sessionUsuario", perfil.getName());
-
-						dispatcher = request.getRequestDispatcher("/Principal.do");
-						dispatcher.forward(request, response);
-
-					} else {
-
-						request.setAttribute("messageError", "Usuario o Contraseña Incorrecta");
-						dispatcher = request.getRequestDispatcher("/login.jsp");
-						dispatcher.forward(request, response);
-
-					}
-
-				} else {
-
-					request.setAttribute("messageError", "Usuario no existe, debe registrarse");
-					dispatcher = request.getRequestDispatcher("/login.jsp");
-					dispatcher.forward(request, response);
-				}
-
-			} else {
-
-				dispatcher = request.getRequestDispatcher("/login.jsp");
-				dispatcher.forward(request, response);
-
-			}
-
-		} else {
-
-			System.out.println("Eliminando Sessión");
-
-			// Ver la differencia.
-			session.invalidate();
-			//session.removeAttribute("sessionUsuario");
-			dispatcher = request.getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
-
-		}
-
-		System.out.println(
-				"Usuario " + email + " Password " + pass + " " + request.getAttribute("sessionUsuario") + " " + perfil);
 	}
 
 	/**
@@ -181,47 +136,43 @@ public class AccionPrincipal {
 
 		session = request.getSession();
 
+		// System.out.println("Sessión " + session.getId());
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
-			PersonaDAOImpl persona = new PersonaDAOImpl();
+
+			ServicioPersona servicio = (ServicioPersona) getBean("servicioPersonaImpl", request);
 
 			int pagActual;
-			int perReg = 5;
+			final int perReg = 5;
 
 			if (request.getParameter("pagActual") == null) {
 
 				pagActual = 1;
-				// perReg = 3;
+
 			} else {
 
 				pagActual = Integer.valueOf(request.getParameter("pagActual"));
-				// perReg = 3;
+
 			}
 
-			List<Producto> perPagination = persona.getPerPagination(pagActual, perReg);
+			List<Producto> perPagination = servicio.getPerPagination(pagActual, perReg);
 
 			// N° de filas de nuetra tabla.
-			int rows = persona.getRows();
-			int nPages = rows / perReg;
-			if (nPages % perReg > 0) {
+			Long rows = servicio.getRows();
 
-				nPages++;
-			}
+			int nPages = (int) Math.ceil((double) rows / (double) perReg);
 
-			System.out.println("user " + session.getId() + perPagination.toString());
 			request.setAttribute("nPages", nPages);
 			request.setAttribute("pagActual", pagActual);
 			request.setAttribute("perPage", perReg);
 			request.setAttribute("Lista_Productos", perPagination);
 
-				
-
 			return "principal/principal.jsp";
 
 		} else {
 
-			System.out.println("Sessión " + (String) session.getAttribute("sessionUsuario"));
-			return "/login.jsp";
+			System.out.println("Sessión " + session.getId());
+			return "/Principal.do";
 
 		}
 
@@ -235,17 +186,30 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
-		PersonaDAO persona = new PersonaDAOImpl();
-		ProductoDAO product = new ProductoDAOImpl();
 
-		Persona per = new Persona(Integer.parseInt(request.getParameter("cedula")), request.getParameter("nombre"),
+		ServicioPersona persona = (ServicioPersona) getBean("servicioPersonaImpl", request);
+		ServicioProducto product = (ServicioProducto) getBean("servicioProductoImpl", request);
+
+		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
-		// Mejorar
-		Producto pro = new Producto(0, request.getParameter("producto"), request.getParameter("status"),
+
+		// Mejorar, esto recibirá varios productos pendiente con la Colección
+		// por lo momentos lo haré así. Tomar en cuenta que el constructor recibe una
+		// colección
+		// o sea, varios productos, buscar la manera de recibir esas cantidades.
+
+		Producto pro = new Producto(request.getParameter("producto"), request.getParameter("status"),
 				request.getParameter("descripcion"), per);
 
+		// Se inyecta el ID del producto
+		pro.setId(Integer.parseInt(request.getParameter("id_producto")));
+		List<Producto> productos = new ArrayList<Producto>();
+
+		productos.add(pro);
+		per.setProductos(productos);
+
 		persona.salvar(per);
-		product.salvar(pro);
+		 product.salvar(pro);
 
 		System.out.print("Estoy actualizando " + per.getCedula() + " " + per.getNombre());
 
@@ -261,10 +225,10 @@ public class AccionPrincipal {
 	 * @throws ServletException
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
-		PersonaDAO persona = new PersonaDAOImpl();
 
-		System.out.println("Persona que será eliminada " + request.getParameter("cedula"));
-		persona.borrar(request.getParameter("cedula"));
+		ServicioPersona persona = (ServicioPersona) getBean("servicioPersonaImpl", request);
+
+		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
 		return "Principal.do";
 
@@ -305,18 +269,10 @@ public class AccionPrincipal {
 		if (session.getId() != null) {
 
 			String cedula = request.getParameter("id");
-
-			PersonaDAO persona = new PersonaDAOImpl();
-			ProductoDAO producto = new ProductoDAOImpl();
+			ServicioPersona persona = (ServicioPersona) getBean("servicioPersonaImpl", request);
 
 			Persona encontrada = persona.buscarPorClave(cedula);
-			Producto encontrado = producto.buscarPorClave(cedula);
-
-			System.out.println(cedula + encontrada + "\n" + encontrado);
-
 			request.setAttribute("encontrada", encontrada);
-			request.setAttribute("encontrado", encontrado);
-
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);
 
@@ -343,15 +299,15 @@ public class AccionPrincipal {
 		// Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
 		// int cedula = Integer.parseInt(request.getParameter("cedula"));
 
-		PersonaDAOImpl insertar = new PersonaDAOImpl();
-		ProductoDAOImpl product = new ProductoDAOImpl();
+		ServicioPersona servicioInsertar = (ServicioPersona) getBean("servicioPersonaImpl", request);
+		ServicioProducto servicioProduct = (ServicioProducto) getBean("servicioProductoImpl", request);
 
-		Persona persona = new Persona(Integer.parseInt(request.getParameter("cedula")), request.getParameter("nombre"),
+		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
-		// int id = insertar.insertar(new Persona(cedula,nombre,apellidos, telefono));
-		insertar.insertar(persona);
 
-		product.insertar(new Producto(0, request.getParameter("producto"), request.getParameter("status"),
+		servicioInsertar.insertar(persona);
+
+		servicioProduct.insertar(new Producto(request.getParameter("producto"), request.getParameter("status"),
 				request.getParameter("descripcion"), persona));
 
 		System.out.print("Estoy registrando");
@@ -374,8 +330,9 @@ public class AccionPrincipal {
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
-		PerfilDAO buscarPerfil = new PerfilDAOImpl();
-		PersonaDAO insertarPersona = new PersonaDAOImpl();
+		ServicioPerfil buscarPerfil = (ServicioPerfil) getBean("servicioPerfilImpl", request);
+		ServicioPersona insertarPersona = (ServicioPersona) getBean("servicioPersonaImpl", request);
+
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 		System.out.println(" " + perfil + " Estoy ");
 
@@ -393,12 +350,11 @@ public class AccionPrincipal {
 
 				// Cédula de persona debe ser validada, por los momentos lo dejaré así para
 				// realizar pruebas.
-				Persona p = new Persona(Integer.parseInt(request.getParameter("cedula")),
-						request.getParameter("nombre"), request.getParameter("apellido"),
-						request.getParameter("telefono"));
+				Persona p = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
+						request.getParameter("apellido"), request.getParameter("telefono"));
 
 				insertarPersona.insertar(p);
-				perfil = new Perfil(0, name, email, password, p);
+				perfil = new Perfil(name, email, password, p);
 				buscarPerfil.insertar(perfil);
 				request.setAttribute("messageSuccess", "Registro Exitoso!!");
 				return "/login.jsp";

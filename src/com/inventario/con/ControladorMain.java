@@ -46,6 +46,7 @@ public class ControladorMain extends HttpServlet {
 			throws ServletException, IOException {
 		url = request.getServletPath().substring(1,request.getServletPath().length()-3);
 		route = main.getAccion(url, request, response);
+		
 		dispatcher = request.getRequestDispatcher(route);
 		dispatcher.forward(request, response);
 	}

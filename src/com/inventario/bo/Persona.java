@@ -1,18 +1,41 @@
 package com.inventario.bo;
 
-import java.util.Arrays;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="persona")
 public class Persona {
-	private int id;
-	private int cedula;
-	private String nombre, apellido, telefono;
-	
-	private Producto [] productos;
-	private Perfil [] perfil;
 
-	public Persona() {};
-	
-	public Persona(int cedula, String nombre, String apellido, String telefono, Producto[] productos) {
+	// Agarro cédula como Id
+	@Id
+	private String cedula;
+	private String nombre;
+	private String apellido;
+	private String telefono;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
+	private List<Producto> productos;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
+	private List<Perfil> perfiles;
+
+	public Persona() {
+	}
+
+	public Persona(String cedula, String nombre, String apellido, String telefono) {
+		this.cedula = cedula;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.telefono = telefono;
+	}
+
+	public Persona(String cedula, String nombre, String apellido, String telefono, List<Producto> productos) {
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -20,37 +43,11 @@ public class Persona {
 		this.productos = productos;
 	}
 
-
-	public Persona(int cedula, String nombre, String apellido, String telefono) {
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-	}
-
-	
-	public Persona(int id, int cedula, String nombre, String apellido, String telefono, Perfil[] perfil) {
-		this.id = id;
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.perfil = perfil;
-	}
-
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
-		result = prime * result + cedula;
-		result = prime * result + id;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + Arrays.hashCode(perfil);
-		result = prime * result + Arrays.hashCode(productos);
-		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
 		return result;
 	}
 
@@ -63,111 +60,66 @@ public class Persona {
 		if (getClass() != obj.getClass())
 			return false;
 		Persona other = (Persona) obj;
-		if (apellido == null) {
-			if (other.apellido != null)
+		if (cedula == null) {
+			if (other.cedula != null)
 				return false;
-		} else if (!apellido.equals(other.apellido))
-			return false;
-		if (cedula != other.cedula)
-			return false;
-		if (id != other.id)
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (!Arrays.equals(perfil, other.perfil))
-			return false;
-		if (!Arrays.equals(productos, other.productos))
-			return false;
-		if (telefono == null) {
-			if (other.telefono != null)
-				return false;
-		} else if (!telefono.equals(other.telefono))
+		} else if (!cedula.equals(other.cedula))
 			return false;
 		return true;
 	}
 
-	public int getId() {
-		
-		return id;
-	}
-	
-	public void setId(int id) {
-		
-		this.id = id;
-	}
-	
-	public int getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
-
-	public void setCedula(int cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
-
 
 	public String getNombre() {
 		return nombre;
 	}
 
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 
 	public String getApellido() {
 		return apellido;
 	}
 
-
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-
 
 	public String getTelefono() {
 		return telefono;
 	}
 
-
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
-
-	public Producto[] getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
-
-	public void setProductos(Producto[] productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 
-	
-
-	public Perfil[] getPerfil() {
-		return perfil;
+	public List<Perfil> getPerfil() {
+		return perfiles;
 	}
 
-
-	public void setPerfil(Perfil[] perfil) {
-		this.perfil = perfil;
+	public void setPerfil(List<Perfil> perfil) {
+		this.perfiles = perfil;
 	}
-
-
 
 	@Override
 	public String toString() {
 		return "Persona [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
-				+ ", productos=" + Arrays.toString(productos) + "]";
+				+ "]";
 	}
-	
-	
-
 
 }

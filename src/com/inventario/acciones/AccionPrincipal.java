@@ -257,16 +257,10 @@ public class AccionPrincipal {
 		if (session.getId() != null) {
 
 			String cedula = request.getParameter("id");
-			
 			ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
-			ServicioProducto producto = (ServicioProducto)getBean("servicioProductoImpl", request);
-
+			
 			Persona encontrada = persona.buscarPorClave(cedula);
-			Producto encontrado = producto.buscarPorClave(cedula);
-
 			request.setAttribute("encontrada", encontrada);
-			request.setAttribute("encontrado", encontrado);
-
 			String user = (String) session.getAttribute("sessionUsuario");
 			System.out.println("Sessión " + user);
 

@@ -30,24 +30,28 @@
 			</div>
 		</div>
 
+		<c:forEach var="productos" items="${encontrada.productos }" >
 
-		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="producto">Producto:</label> <input type="text"
-					class="form-control" id="producto" name="producto"
-					value="${encontrado.nombre }">
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="producto">Producto:</label> <input type="text"
+						class="form-control" id="producto" name="producto"
+						value="${productos.nombre }">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="status">Estatus:</label> <input type="text"
+						class="form-control" id="status" name="status"
+						value="${productos.estatus}">
+				</div>
 			</div>
-			<div class="form-group col-md-6">
-				<label for="status">Estatus:</label> <input type="text"
-					class="form-control" id="status" name="status"
-					value="${encontrado.estatus }">
+			<div class="form-group">
+				<label for="descripcion">Descripcion:</label>
+				<textarea class="form-control" id="descripcion" name="descripcion"
+					rows="3">${productos.descripcion}</textarea>
 			</div>
-		</div>
-		<div class="form-group">
-			<label for="descripcion">Descripcion:</label>
-			<textarea class="form-control" id="descripcion" name="descripcion"
-				rows="3">${encontrado.descripcion}</textarea>
-		</div>
+
+		</c:forEach>
+
 		<button type="submit" class="btn btn-primary">Enviar</button>
 	</form>
 

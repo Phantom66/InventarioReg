@@ -110,12 +110,15 @@ public class AccionPrincipal {
 	
 	/**
 	 * Creando Spring a nivel Web
+	 * Y nos aseguramos que Spring cargue el fichero de configuración
+	 * una única vez.
 	 * @param nombre
 	 * @param request
 	 * @return
 	 */
 	public Object getBean(String nombre, HttpServletRequest request) {
 
+		
 		WebApplicationContext factoria = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
 		return factoria.getBean(nombre);

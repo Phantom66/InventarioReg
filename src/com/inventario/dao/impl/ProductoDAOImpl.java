@@ -3,85 +3,12 @@ package com.inventario.dao.impl;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import com.inventario.bo.Producto;
 import com.inventario.con.JPAHelper;
 import com.inventario.dao.ProductoDAO;
 
-public class ProductoDAOImpl implements ProductoDAO {
-
-	@Override
-	public void insertar(Producto producto){
-		
-		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
-		EntityManager manager = factoria.createEntityManager();
-		EntityTransaction tx = null;
-		
-		try {
-			tx = manager.getTransaction();
-			tx.begin();
-			manager.persist(producto);
-			tx.commit();
-
-		} catch (PersistenceException e) {
-
-			manager.getTransaction().rollback();
-			throw e;
-
-		} finally {
-
-			manager.close();
-		}
-
-	}
-
-	@Override
-	public void salvar(Producto producto){
-		
-		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
-		EntityManager manager = factoria.createEntityManager();
-		EntityTransaction tx = null;
-		try {
-			tx = manager.getTransaction();
-			tx.begin();
-			manager.merge(producto);
-			tx.commit();
-		} catch (PersistenceException e) {
-
-			manager.getTransaction().rollback();
-			throw e;
-
-		} finally {
-
-			manager.close();
-		}	
-	}
-
-	@Override
-	public void borrar(Producto producto){
-		
-		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
-		EntityManager manager = factoria.createEntityManager();
-		EntityTransaction tx = null;
-		try {
-			tx = manager.getTransaction();
-			tx.begin();
-			manager.remove(manager.merge(producto));
-			tx.commit();
-
-		} catch (PersistenceException e) {
-
-			manager.getTransaction().rollback();
-			throw e;
-
-		} finally {
-
-			manager.close();
-		}	
-
-	}
+public class ProductoDAOImpl extends GenericDAOImpl<Producto, String> implements ProductoDAO {
 
 	@Override
 	public List<Producto> buscarTodos(){

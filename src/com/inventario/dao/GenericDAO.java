@@ -13,12 +13,13 @@ import java.util.List;
  */
 public interface GenericDAO<T, Id extends Serializable> {
 
-	public abstract void salvar(T perfil);
+	public abstract void salvar(T t);
 
-	public abstract void borrar(T perfil);
+	public abstract void borrar(T t);
 
 	public abstract List<T> buscarTodos();
 
 	public abstract T buscarPorClave(Id id);
 
+	public abstract void insertar(T t);
 }

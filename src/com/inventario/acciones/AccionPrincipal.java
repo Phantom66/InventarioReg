@@ -3,6 +3,7 @@ package com.inventario.acciones;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,7 +37,8 @@ public class AccionPrincipal {
 
 	HttpSession session;
 
-	public AccionPrincipal() {}
+	public AccionPrincipal() {
+	}
 
 	/**
 	 * Método que utiliza el reflection de Java para ejecutar los métodos de la
@@ -58,7 +60,6 @@ public class AccionPrincipal {
 		try {
 			obj = (T) Class.forName("com.inventario.acciones.AccionPrincipal").newInstance();
 
-						
 			Method[] metodos = obj.getClass().getDeclaredMethods();
 
 			for (int i = 0; i < metodos.length; i++) {
@@ -107,18 +108,17 @@ public class AccionPrincipal {
 		return "/index.jsp";
 
 	}
-	
+
 	/**
-	 * Creando Spring a nivel Web
-	 * Y nos aseguramos que Spring cargue el fichero de configuración
-	 * una única vez.
+	 * Creando Spring a nivel Web Y nos aseguramos que Spring cargue el fichero de
+	 * configuración una única vez.
+	 * 
 	 * @param nombre
 	 * @param request
 	 * @return
 	 */
 	public Object getBean(String nombre, HttpServletRequest request) {
 
-		
 		WebApplicationContext factoria = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(request.getSession().getServletContext());
 		return factoria.getBean(nombre);
@@ -135,12 +135,12 @@ public class AccionPrincipal {
 	public String getPrincipal(HttpServletRequest request, HttpServletResponse response) {
 
 		session = request.getSession();
-		
+
 		// System.out.println("Sessión " + session.getId());
 		// if (session.getAttribute("sessionUsuario") != null)
 		if (session.getId() != null) {
 
-			ServicioPersona servicio = (ServicioPersona)getBean("servicioPersonaImpl", request);
+			ServicioPersona servicio = (ServicioPersona) getBean("servicioPersonaImpl", request);
 
 			int pagActual;
 			final int perReg = 5;
@@ -187,17 +187,29 @@ public class AccionPrincipal {
 	 */
 	public String getActualizar(HttpServletRequest request, HttpServletResponse response) {
 
-		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
-		ServicioProducto product = (ServicioProducto)getBean("servicioProductoImpl", request);
+		ServicioPersona persona = (ServicioPersona) getBean("servicioPersonaImpl", request);
+		ServicioProducto product = (ServicioProducto) getBean("servicioProductoImpl", request);
 
 		Persona per = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
-		// Mejorar
+
+		// Mejorar, esto recibirá varios productos pendiente con la Colección
+		// por lo momentos lo haré así. Tomar en cuenta que el constructor recibe una
+		// colección
+		// o sea, varios productos, buscar la manera de recibir esas cantidades.
+
 		Producto pro = new Producto(request.getParameter("producto"), request.getParameter("status"),
 				request.getParameter("descripcion"), per);
 
+		// Se inyecta el ID del producto
+		pro.setId(Integer.parseInt(request.getParameter("id_producto")));
+		List<Producto> productos = new ArrayList<Producto>();
+
+		productos.add(pro);
+		per.setProductos(productos);
+
 		persona.salvar(per);
-		product.salvar(pro);
+		 product.salvar(pro);
 
 		System.out.print("Estoy actualizando " + per.getCedula() + " " + per.getNombre());
 
@@ -214,8 +226,8 @@ public class AccionPrincipal {
 	 */
 	public String getBorrar(HttpServletRequest request, HttpServletResponse response) {
 
-		ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
-		
+		ServicioPersona persona = (ServicioPersona) getBean("servicioPersonaImpl", request);
+
 		persona.borrar(persona.buscarPorClave(request.getParameter("cedula")));
 
 		return "Principal.do";
@@ -257,8 +269,8 @@ public class AccionPrincipal {
 		if (session.getId() != null) {
 
 			String cedula = request.getParameter("id");
-			ServicioPersona persona = (ServicioPersona)getBean("servicioPersonaImpl", request);
-			
+			ServicioPersona persona = (ServicioPersona) getBean("servicioPersonaImpl", request);
+
 			Persona encontrada = persona.buscarPorClave(cedula);
 			request.setAttribute("encontrada", encontrada);
 			String user = (String) session.getAttribute("sessionUsuario");
@@ -287,11 +299,9 @@ public class AccionPrincipal {
 		// Dejo el campo cédula debido a que lo utilizo en los dos objetos. Mejorar.
 		// int cedula = Integer.parseInt(request.getParameter("cedula"));
 
+		ServicioPersona servicioInsertar = (ServicioPersona) getBean("servicioPersonaImpl", request);
+		ServicioProducto servicioProduct = (ServicioProducto) getBean("servicioProductoImpl", request);
 
-
-		ServicioPersona servicioInsertar = (ServicioPersona)getBean("servicioPersonaImpl", request);
-		ServicioProducto servicioProduct = (ServicioProducto)getBean("servicioProductoImpl", request);
-		
 		Persona persona = new Persona(request.getParameter("cedula"), request.getParameter("nombre"),
 				request.getParameter("apellido"), request.getParameter("telefono"));
 
@@ -320,8 +330,8 @@ public class AccionPrincipal {
 		String password = SecurityPasswords.encriptar(request.getParameter("pass"));
 		String pass = SecurityPasswords.encriptar(request.getParameter("passConfirm"));
 
-		ServicioPerfil buscarPerfil = (ServicioPerfil)getBean("servicioPerfilImpl", request);
-		ServicioPersona insertarPersona = (ServicioPersona)getBean("servicioPersonaImpl", request );
+		ServicioPerfil buscarPerfil = (ServicioPerfil) getBean("servicioPerfilImpl", request);
+		ServicioPersona insertarPersona = (ServicioPersona) getBean("servicioPersonaImpl", request);
 
 		Perfil perfil = buscarPerfil.buscarPorClave(email);
 		System.out.println(" " + perfil + " Estoy ");

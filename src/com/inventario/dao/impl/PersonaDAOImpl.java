@@ -56,6 +56,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 		EntityManager manager = factoriaSession.createEntityManager();
 		EntityTransaction tx = null;
 		
+		System.out.println(" ---" + persona.getProductos());
 		try {
 			tx = manager.getTransaction();
 			tx.begin();

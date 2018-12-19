@@ -31,14 +31,18 @@
 		</div>
 
 		<c:forEach var="productos" items="${encontrada.productos }" >
-
 			<div class="form-row">
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-2">
+					<label for="producto">#</label> <input type="text"
+						class="form-control" id="id_producto" name="id_producto"
+						value="${productos.id }">
+				</div>
+				<div class="form-group col-md-5">
 					<label for="producto">Producto:</label> <input type="text"
 						class="form-control" id="producto" name="producto"
 						value="${productos.nombre }">
 				</div>
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-5">
 					<label for="status">Estatus:</label> <input type="text"
 						class="form-control" id="status" name="status"
 						value="${productos.estatus}">

@@ -14,13 +14,6 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 	@Override
 	public void insertar(Producto producto){
-
-		//Hibernate
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.save(producto);
-		// session.getTransaction().commit();
 		
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
@@ -46,12 +39,6 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 	@Override
 	public void salvar(Producto producto){
-
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.saveOrUpdate(producto);
-		// session.getTransaction().commit();
 		
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
@@ -74,12 +61,6 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 	@Override
 	public void borrar(Producto producto){
-
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.delete(producto);
-		// session.getTransaction().commit();
 		
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
@@ -105,8 +86,6 @@ public class ProductoDAOImpl implements ProductoDAO {
 	@Override
 	public List<Producto> buscarTodos(){
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		
@@ -114,10 +93,6 @@ public class ProductoDAOImpl implements ProductoDAO {
 		TypedQuery<Producto> consulta= (TypedQuery<Producto>)manager.createQuery("FROM producto");
 
 		List<Producto>producto = consulta.getResultList();
-	
-		// @SuppressWarnings("unchecked")
-		// List<Producto> producto = session.createQuery("From Producto
-		// producto").list();
 
 		return producto;
 
@@ -126,17 +101,12 @@ public class ProductoDAOImpl implements ProductoDAO {
 	@Override
 	public Producto buscarPorClave(String id){
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		
 		TypedQuery<Producto> consulta = manager.createQuery("SELECT producto FROM Producto producto JOIN FETCH producto.persona WHERE producto.persona.cedula=?1", Producto.class);
 		consulta.setParameter(1, id);
-
-		// @SuppressWarnings("unchecked")
-		// TypedQuery<Producto> p = (TypedQuery<Producto>) consulta.getSingleResult();
-
+		
 		Producto producto = consulta.getSingleResult();
 
 

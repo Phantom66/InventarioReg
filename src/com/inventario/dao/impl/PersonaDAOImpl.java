@@ -19,13 +19,6 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	@Override
 	public void insertar(Persona persona) {
-
-		//***Factoría con Hibernate
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.save(persona);
-		// session.getTransaction().commit();
 		
 		//JPA
 		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
@@ -57,12 +50,6 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	@Override
 	public void salvar(Persona persona) {
-
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.saveOrUpdate(persona);
-		// session.getTransaction().commit();
 		
 		//JPA
 		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
@@ -89,12 +76,6 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	@Override
 	public void borrar(Persona persona) {
-
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.delete(persona);
-		// session.getTransaction().commit();
 		
 		EntityManagerFactory factoriaSession = JPAHelper.getJPAFactory();
 		EntityManager manager = factoriaSession.createEntityManager();
@@ -121,8 +102,6 @@ public class PersonaDAOImpl implements PersonaDAO {
 	@Override
 	public List<Persona> buscarTodos() {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
 		
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
@@ -140,10 +119,6 @@ public class PersonaDAOImpl implements PersonaDAO {
 
 	@Override
 	public Persona buscarPorClave(String cedula) {
-
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// Persona persona = (Persona) session.get(Persona.class, cedula);
 		
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
@@ -165,9 +140,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 	 */
 	public Long getRows() {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		
+	
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 
@@ -218,8 +191,6 @@ public class PersonaDAOImpl implements PersonaDAO {
 		 */
 		int start = (pagActual * perReg) - perReg;
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		

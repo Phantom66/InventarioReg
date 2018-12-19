@@ -16,11 +16,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 	@Override
 	public void insertar(Perfil perfil) {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.save(perfil);
-		// session.getTransaction().commit();
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
@@ -46,12 +41,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 	@Override
 	public void salvar(Perfil perfil) {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.saveOrUpdate(perfil);
-		// session.getTransaction().commit();
-
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
@@ -75,12 +64,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 	@Override
 	public void borrar(Perfil perfil) {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// session.beginTransaction();
-		// session.delete(perfil);
-		// session.getTransaction().commit();
-
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		EntityTransaction tx = null;
@@ -103,11 +86,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 	@Override
 	public List<Perfil> buscarTodos() {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// @SuppressWarnings("unchecked")
-		// List<Perfil> perfil = session.createQuery("From Perfil perfiles").list();
-
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 
@@ -122,10 +100,6 @@ public class PerfilDAOImpl implements PerfilDAO {
 	@Override
 	public Perfil buscarPorClave(String id) {
 
-		// SessionFactory factoria = HibernateHelper.getSessionFactory();
-		// Session session = factoria.openSession();
-		// Perfil perfil = session.get(Perfil.class, "email");
-		
 		EntityManagerFactory factoria = JPAHelper.getJPAFactory();
 		EntityManager manager = factoria.createEntityManager();
 		
